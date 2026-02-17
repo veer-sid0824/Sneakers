@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complete Your Purchase | NBA Sneaker Showcase</title>
+  <style>
+    /* Global Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+      line-height: 1.6;
+      color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      /* Background image with more transparent overlay (opacity reduced to 0.5) */
+      background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+                        url('assets/images/background-texture.jpg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    /* Dark Mode Body */
+    body.dark-mode {
+      color: #eee;
+      /* Background image with more transparent overlay (opacity reduced to 0.5) */
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                        url('assets/images/background-texture.jpg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #0056b3;
+    }
+
+    /* Header */
+    header {
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex; /* Use flexbox for alignment */
+      flex-direction: column; /* Stack items vertically on small screens */
+      align-items: center; /* Center items horizontally */
+    }
+
+    body.dark-mode header {
+      background-color: #222;
+      border-bottom-color: #444;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    header h1 {
+      margin: 0;
+      color: #333;
+      font-size: 2.5rem;
+      display: flex; /* Allow logo and text to be inline */
+      align-items: center; /* Vertically align logo and text */
+      gap: 10px; /* Space between logo and text */
+      justify-content: center; /* Center the h1 content */
+    }
+
+    body.dark-mode header h1 {
+      color: #eee;
+    }
+
+    .header-logo {
+        height: 50px; /* Adjust size as needed */
+        width: 50px;
+        border-radius: 8px; /* Rounded corners for the logo */
+        object-fit: contain; /* Ensure the image fits */
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    body.dark-mode nav a {
+      color: #88d4ff;
+    }
+
+    body.dark-mode nav a:hover {
+      color: #5bbdff;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 12px;
+      border: none;
+      background-color: #6c757d;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
+    }
+
+    .theme-toggle-button:hover {
+      background-color: #5a6268;
+    }
+
+    /* Main Content - Form Section */
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: rgba(255, 255, 255, 0.5); /* More transparent background for the glass effect */
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      /* Glass transparent effect */
+      backdrop-filter: blur(10px); /* Adjust blur value as needed */
+      -webkit-backdrop-filter: blur(10px); /* For Safari support */
+      border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border for glass look */
+    }
+
+    body.dark-mode main {
+      background-color: rgba(46, 46, 46, 0.5); /* More transparent dark background */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for dark glass look */
+    }
+
+    main h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 2rem;
+    }
+
+    body.dark-mode main h2 {
+      color: #eee;
+    }
+
+    h3 { /* Sub-headings within the form */
+        font-size: 1.5rem;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        color: #444;
+        border-bottom: 2px solid rgba(238, 238, 238, 0.5); /* Lighter border for contrast with glass effect */
+        padding-bottom: 10px;
+    }
+
+    body.dark-mode h3 {
+        color: #ddd;
+        border-bottom-color: rgba(85, 85, 85, 0.5);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    body.dark-mode .form-group label {
+      color: #ccc;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group input[type="number"],
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+      background-color: rgba(249, 249, 249, 0.8); /* Slightly transparent input background */
+      color: #333;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    body.dark-mode .form-group input[type="text"],
+    body.dark-mode .form-group input[type="email"],
+    body.dark-mode .form-group input[type="tel"],
+    body.dark-mode .form-group input[type="number"],
+    body.dark-mode .form-group select {
+      background-color: rgba(68, 68, 68, 0.8); /* Slightly transparent dark input background */
+      border-color: #666;
+      color: #eee;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="email"]:focus,
+    .form-group input[type="tel"]:focus,
+    .form-group input[type="number"]:focus,
+    .form-group select:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 0; /* Override default margin */
+    }
+
+    .submit-button {
+      display: block;
+      width: 100%;
+      padding: 15px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .submit-button:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+    }
+
+    .submit-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    body.dark-mode .submit-button {
+      background-color: #4CAF50;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    body.dark-mode .submit-button:hover {
+      background-color: #45a049;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      background-color: #333;
+      color: white;
+      border-top: 1px solid #444;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode footer {
+      background-color: #111;
+      border-top-color: #333;
+    }
+
+    /* Message Box (replaces alert) */
+    .message-box {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1001; /* Sit on top of modal if any */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+      padding-top: 100px;
+    }
+
+    .message-box-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      position: relative;
+      text-align: center;
+      animation-name: animatetop;
+      animation-duration: 0.4s;
+    }
+
+    body.dark-mode .message-box-content {
+      background-color: #3a3a3a;
+      border-color: #555;
+      color: #eee;
+    }
+
+    .message-box-close-button {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+    }
+
+    .message-box-close-button:hover,
+    .message-box-close-button:focus {
+      color: #000;
+      text-decoration: none;
+    }
+    body.dark-mode .message-box-close-button:hover,
+    body.dark-mode .message-box-close-button:focus {
+      color: #fff;
+    }
+
+    .message-box-text {
+      margin-bottom: 20px;
+      font-size: 1.1em;
+      color: #333;
+    }
+
+    body.dark-mode .message-box-text {
+      color: #eee;
+    }
+
+    .message-box-ok-button {
+      padding: 10px 25px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
+    }
+
+    .message-box-ok-button:hover {
+      background-color: #0056b3;
+    }
+
+    body.dark-mode .message-box-ok-button {
+      background-color: #88d4ff;
+      color: #333;
+    }
+    body.dark-mode .message-box-ok-button:hover {
+      background-color: #5bbdff;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0; /* Remove gap in column layout */
+      }
+      .form-row .form-group {
+        margin-bottom: 20px; /* Add back margin for vertical spacing */
+      }
+      .theme-toggle-button {
+        position: static;
+        margin-top: 15px;
+        width: auto;
+      }
+      header {
+        flex-direction: column; /* Stack header elements vertically */
+      }
+      header h1 {
+        flex-direction: column; /* Stack logo and text vertically */
+        gap: 5px;
+      }
+      nav {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        margin: 20px 10px;
+        padding: 15px;
+      }
+      main h2 {
+        font-size: 1.8rem;
+      }
+      h3 {
+        font-size: 1.3rem;
+      }
+      .form-group input,
+      .form-group select,
+      .submit-button {
+        font-size: 0.95em;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>
+      <!-- Updated path for the logo image to logo.jpg -->
+      <img src="assets/images/logo.jpg" alt="NBA Logo" class="header-logo" onerror="this.onerror=null;this.src='https://placehold.co/50x50/007bff/FFFFFF.png?text=🏀';">
+      NBA Sneaker Showcase
+    </h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="sneakers.html">Sneakers</a>
+      <a href="players.html">Players</a>
+      <a href="rare.html">Rare Drops</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle-button">🌙 Dark Mode</button>
+  </header>
+
+  <main>
+    <h2>Complete Your Purchase</h2>
+    <form id="purchaseForm">
+      <h3>Personal Information</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="john.doe@example.com" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" required>
+      </div>
+
+      <h3>Shipping Address</h3>
+      <div class="form-group">
+        <label for="address">Street Address</label>
+        <input type="text" id="address" name="address" placeholder="123 Basketball Blvd" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" id="city" name="city" placeholder="Hoopsville" required>
+        </div>
+        <div class="form-group">
+          <label for="state">State / Province</label>
+          <input type="text" id="state" name="state" placeholder="CA" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="postalCode">Postal Code</label>
+          <input type="text" id="postalCode" name="postalCode" placeholder="90210" required>
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input type="text" id="country" name="country" placeholder="USA" required>
+        </div>
+      </div>
+
+      <h3>Size Selection</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sizeUS">USA Size</label>
+          <select id="sizeUS" name="sizeUS" required>
+            <option value="">Select US Size</option>
+            <optgroup label="Men's US Sizes">
+              <option value="US6">US 6</option>
+              <option value="US6.5">US 6.5</option>
+              <option value="US7">US 7</option>
+              <option value="US7.5">US 7.5</option>
+              <option value="US8">US 8</option>
+              <option value="US8.5">US 8.5</option>
+              <option value="US9">US 9</option>
+              <option value="US9.5">US 9.5</option>
+              <option value="US10">US 10</option>
+              <option value="US10.5">US 10.5</option>
+              <option value="US11">US 11</option>
+              <option value="US11.5">US 11.5</option>
+              <option value="US12">US 12</option>
+              <option value="US13">US 13</option>
+              <option value="US14">US 14</option>
+            </optgroup>
+            <optgroup label="Women's US Sizes">
+              <option value="US5">US 5</option>
+              <option value="US5.5">US 5.5</option>
+              <option value="US6W">US 6</option>
+              <option value="US6.5W">US 6.5</option>
+              <option value="US7W">US 7</option>
+              <option value="US7.5W">US 7.5</option>
+              <option value="US8W">US 8</option>
+              <option value="US8.5W">US 8.5</option>
+              <option value="US9W">US 9</option>
+              <option value="US9.5W">US 9.5</option>
+              <option value="US10W">US 10</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sizeUK">UK Size</label>
+          <select id="sizeUK" name="sizeUK" required>
+            <option value="">Select UK Size</option>
+            <optgroup label="Men's UK Sizes">
+              <option value="UK5.5">UK 5.5</option>
+              <option value="UK6">UK 6</option>
+              <option value="UK6.5">UK 6.5</option>
+              <option value="UK7">UK 7</option>
+              <option value="UK7.5">UK 7.5</option>
+              <option value="UK8">UK 8</option>
+              <option value="UK8.5">UK 8.5</option>
+              <option value="UK9">UK 9</option>
+              <option value="UK9.5">UK 9.5</option>
+              <option value="UK10">UK 10</option>
+              <option value="UK10.5">UK 10.5</option>
+              <option value="UK11">UK 11</option>
+              <option value="UK12">UK 12</option>
+              <option value="UK13">UK 13</option>
+            </optgroup>
+            <optgroup label="Women's UK Sizes">
+              <option value="UK3.5">UK 3.5</option>
+              <option value="UK4">UK 4</option>
+              <option value="UK4.5">UK 4.5</option>
+              <option value="UK5">UK 5</option>
+              <option value="UK5.5W">UK 5.5</option>
+              <option value="UK6W">UK 6</option>
+              <option value="UK6.5W">UK 6.5</option>
+              <option value="UK7W">UK 7</option>
+              <option value="UK7.5W">UK 7.5</option>
+              <option value="UK8W">UK 8</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
+      <h3>Payment Information</h3>
+      <div class="form-group">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="expiryDate">Expiry Date (MM/YY)</label>
+          <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
+        </div>
+        <div class="form-group">
+          <label for="cvv">CVV</label>
+          <input type="text" id="cvv" name="cvv" placeholder="XXX" maxlength="3" required>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-button">Place Order</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 NBA Sneaker Showcase. All rights reserved.</p>
+  </footer>
+
+  <!-- Message Box (replaces alert) -->
+  <div id="messageBox" class="message-box">
+    <div class="message-box-content">
+      <span class="message-box-close-button">&times;</span>
+      <p id="messageBoxText" class="message-box-text"></p>
+      <button class="message-box-ok-button">OK</button>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle Logic
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        this.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    // Apply saved theme on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️ Light Mode';
+        } else {
+            themeToggleBtn.textContent = '🌙 Dark Mode';
+        }
+    });
+
+    // Message Box Functions
+    const messageBox = document.getElementById('messageBox');
+    const messageBoxText = document.getElementById('messageBoxText');
+    const messageBoxCloseButton = document.querySelector('.message-box-close-button');
+    const messageBoxOkButton = document.querySelector('.message-box-ok-button');
+
+    function showMessageBox(message) {
+      messageBoxText.textContent = message;
+      messageBox.style.display = 'block';
+    }
+
+    function hideMessageBox() {
+      messageBox.style.display = 'none';
+    }
+
+    messageBoxCloseButton.addEventListener('click', hideMessageBox);
+    messageBoxOkButton.addEventListener('click', hideMessageBox);
+    window.addEventListener('click', (event) => {
+      if (event.target == messageBox) {
+        hideMessageBox();
+      }
+    });
+
+    // Form Submission Logic
+    document.getElementById('purchaseForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      // Basic validation: Check if all required fields are filled
+      const requiredFields = this.querySelectorAll('[required]');
+      let allFieldsFilled = true;
+      for (let i = 0; i < requiredFields.length; i++) {
+        if (!requiredFields[i].value.trim()) {
+          allFieldsFilled = false;
+          break;
+        }
+      }
+
+      if (!allFieldsFilled) {
+        showMessageBox('Please fill in all required fields.');
+        return;
+      }
+
+      // Further validation for specific fields (optional, but good practice)
+      const email = document.getElementById('email').value;
+      if (!/\S+@\S+\.\S+/.test(email)) {
+        showMessageBox('Please enter a valid email address.');
+        return;
+      }
+
+      const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+      if (!/^\d{16}$/.test(cardNumber)) {
+        showMessageBox('Please enter a valid 16-digit card number.');
+        return;
+      }
+
+      const expiryDate = document.getElementById('expiryDate').value;
+      if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) {
+        showMessageBox('Please enter a valid expiry date (MM/YY).');
+        return;
+      }
+
+      const cvv = document.getElementById('cvv').value;
+      if (!/^\d{3}$/.test(cvv)) {
+        showMessageBox('Please enter a valid 3-digit CVV.');
+        return;
+      }
+
+      // If all validations pass, simulate successful purchase
+      showMessageBox('Purchase successful! Thank you for your order.');
+      this.reset(); // Clear the form
+    });
+
+    // Input formatting for card number and expiry date
+    document.getElementById('cardNumber').addEventListener('input', function (e) {
+      e.target.value = e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+    });
+
+    document.getElementById('expiryDate').addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      e.target.value = value;
+    });
+  </script>
+</body>
+</html>

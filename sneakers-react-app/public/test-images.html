@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .test-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .test-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #f0f0f0;
+        }
+
+        .test-item p {
+            margin: 10px 0 0 0;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .status.ok {
+            background: #4ade80;
+            color: white;
+        }
+
+        .status.error {
+            background: #f87171;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🏀 Sneaker Images Test</h1>
+    <p>Testing if sneaker images are accessible from the public folder...</p>
+
+    <div class="test-grid">
+        <!-- Anthony Edwards -->
+        <div class="test-item">
+            <img src="/assets/images/sneakers/anthony-edwards/ae-1-with-love.jpg" alt="AE 1 With Love"
+                onload="this.nextElementSibling.innerHTML = '<span class=\'status ok\'>✓ LOADED</span>'"
+                onerror="this.nextElementSibling.innerHTML = '<span class=\'status error\'>✗ FAILED</span>'">
+            <p id="status-1">Loading...</p>
+            <p><strong>AE 1 With Love</strong></p>
+        </div>
+
+        <div class="test-item">
+            <img src="/assets/images/sneakers/anthony-edwards/ae-1-velocity-blue.jpg" alt="AE 1 Velocity Blue"
+                onload="this.nextElementSibling.innerHTML = '<span class=\'status ok\'>✓ LOADED</span>'"
+                onerror="this.nextElementSibling.innerHTML = '<span class=\'status error\'>✗ FAILED</span>'">
+            <p id="status-2">Loading...</p>
+            <p><strong>AE 1 Velocity Blue</strong></p>
+        </div>
+
+        <!-- Stephen Curry -->
+        <div class="test-item">
+            <img src="/assets/images/sneakers/stephen-curry/curry-11-future.jpg" alt="Curry 11 Future"
+                onload="this.nextElementSibling.innerHTML = '<span class=\'status ok\'>✓ LOADED</span>'"
+                onerror="this.nextElementSibling.innerHTML = '<span class=\'status error\'>✗ FAILED</span>'">
+            <p id="status-3">Loading...</p>
+            <p><strong>Curry 11 Future</strong></p>
+        </div>
+
+        <!-- Giannis -->
+        <div class="test-item">
+            <img src="/assets/images/sneakers/giannis-antetokounmpo/freak-5-greece.jpg" alt="Freak 5 Greece"
+                onload="this.nextElementSibling.innerHTML = '<span class=\'status ok\'>✓ LOADED</span>'"
+                onerror="this.nextElementSibling.innerHTML = '<span class=\'status error\'>✗ FAILED</span>'">
+            <p id="status-4">Loading...</p>
+            <p><strong>Freak 5 Greece</strong></p>
+        </div>
+
+        <!-- James Harden -->
+        <div class="test-item">
+            <img src="/assets/images/sneakers/james-harden/harden-7-black.jpg" alt="Harden 7 Black"
+                onload="this.nextElementSibling.innerHTML = '<span class=\'status ok\'>✓ LOADED</span>'"
+                onerror="this.nextElementSibling.innerHTML = '<span class=\'status error\'>✗ FAILED</span>'">
+            <p id="status-5">Loading...</p>
+            <p><strong>Harden 7 Black</strong></p>
+        </div>
+
+        <!-- Kyrie Irving -->
+        <div class="test-item">
+            <img src="/assets/images/sneakers/kyrie-irving/kyrie-8-infinity.jpg" alt="Kyrie 8 Infinity"
+                onload="this.nextElementSibling.innerHTML = '<span class=\'status ok\'>✓ LOADED</span>'"
+                onerror="this.nextElementSibling.innerHTML = '<span class=\'status error\'>✗ FAILED</span>'">
+            <p id="status-6">Loading...</p>
+            <p><strong>Kyrie 8 Infinity</strong></p>
+        </div>
+
+        <!-- Player Images -->
+        <div class="test-item">
+            <img src="/assets/images/players/anthony-edwards.jpg" alt="Anthony Edwards"
+                onload="this.nextElementSibling.innerHTML = '<span class=\'status ok\'>✓ LOADED</span>'"
+                onerror="this.nextElementSibling.innerHTML = '<span class=\'status error\'>✗ FAILED</span>'">
+            <p id="status-7">Loading...</p>
+            <p><strong>Anthony Edwards (Player)</strong></p>
+        </div>
+
+        <div class="test-item">
+            <img src="/assets/images/players/stephen-curry.jpg" alt="Stephen Curry"
+                onload="this.nextElementSibling.innerHTML = '<span class=\'status ok\'>✓ LOADED</span>'"
+                onerror="this.nextElementSibling.innerHTML = '<span class=\'status error\'>✗ FAILED</span>'">
+            <p id="status-8">Loading...</p>
+            <p><strong>Stephen Curry (Player)</strong></p>
+        </div>
+    </div>
+
+    <script>
+        console.log('Image test page loaded');
+        console.log('If images show "FAILED", check:');
+        console.log('1. Dev server is running');
+        console.log('2. Files exist in public/assets/images/');
+        console.log('3. File paths match exactly (case-sensitive)');
+    </script>
+</body>
+
+</html>

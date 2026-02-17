@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Players | NBA Sneaker Showcase</title>
+  
+  <style>
+    /* General Body and Container Styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    /* Header Styles */
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 1rem 0;
+        text-align: center;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    header nav a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 15px;
+        font-size: 1.1rem;
+    }
+
+    header nav a:hover {
+        text-decoration: underline;
+    }
+
+    /* Player Grid Section */
+    .player-grid {
+        display: grid; /* Use CSS Grid for powerful 2D layouts */
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive columns */
+        gap: 20px; /* Space between grid items */
+        padding: 20px;
+        max-width: 1200px; /* Limit overall width */
+        margin: 20px auto; /* Center the grid */
+    }
+
+    .player-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        text-decoration: none; /* Remove underline from links */
+        color: #333;
+        overflow: hidden; /* Ensures image corners are rounded with card */
+        display: flex; /* Use flexbox for content within the card */
+        flex-direction: column; /* Stack image and text vertically */
+        align-items: center; /* Center content horizontally */
+        padding-bottom: 15px; /* Padding below the name */
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .player-card:hover {
+        transform: translateY(-5px); /* Lift card on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+    }
+
+    .player-card img {
+        width: 100%; /* Image takes full width of its container */
+        height: 200px; /* Fixed height for all images */
+        object-fit: contain; /* CHANGED: Ensures entire image is visible, may leave empty space */
+        background-color: #eee; /* Optional: A background color for the empty space */
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .player-card h4 {
+        margin: 15px 0 0; /* Space above the name, no bottom margin as padding handles it */
+        font-size: 1.2rem;
+        padding: 0 10px; /* Add horizontal padding to prevent text from touching edges */
+        text-align: center;
+    }
+
+    /* Footer Styles */
+    footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 1rem 0;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        margin-top: 40px; /* Add some space above the footer */
+    }
+
+    /* Responsive Adjustments (Media Queries) */
+    @media (max-width: 768px) {
+        .player-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Fewer columns on smaller screens */
+            gap: 15px;
+        }
+
+        .player-card img {
+            height: 180px; /* Slightly smaller image height on tablets */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .player-grid {
+            grid-template-columns: 1fr; /* Single column on very small screens */
+            padding: 15px;
+            gap: 10px;
+        }
+
+        .player-card {
+            padding-bottom: 10px;
+        }
+
+        .player-card img {
+            height: 160px; /* Even smaller image height on mobile */
+        }
+
+        .player-card h4 {
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+        }
+
+        header nav {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NBA Sneaker Showcase</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="sneakers.html">Sneakers</a>
+      <a href="players.html">Players</a>
+      <a href="rare.html">Rare Drops</a>
+    </nav>
+  </header>
+
+  <section>
+    <h3 style="text-align:center; margin-bottom: 20px;">Explore by Player</h3>
+    <div class="player-grid">
+      <a href="jordan.html" class="player-card">
+        <img src="assets/images/jordan.jpg" alt="Michael Jordan" />
+        <h4>Michael Jordan</h4>
+      </a>
+      <a href="lebron.html" class="player-card">
+        <img src="assets/images/lebron.jpg" alt="LeBron James" />
+        <h4>LeBron James</h4>
+      </a>
+      <a href="kobe.html" class="player-card">
+        <img src="assets/images/kobe.jpg" alt="Kobe Bryant" />
+        <h4>Kobe Bryant</h4>
+      </a>
+      <a href="curry.html" class="player-card">
+        <img src="assets/images/curry.jpg" alt="Stephen Curry" />
+        <h4>Stephen Curry</h4>
+      </a>
+      <a href="kyrie.html" class="player-card">
+        <img src="assets/images/kyrie.jpg" alt="Kyrie Irving" />
+        <h4>Kyrie Irving</h4>
+      </a>
+      <a href="harden.html" class="player-card">
+        <img src="assets/images/harden.jpg" alt="James Harden" />
+        <h4>James Harden</h4>
+      </a>
+      <a href="dwade.html" class="player-card">
+        <img src="assets/images/dwade.jpg" alt="Dwyane Wade" />
+        <h4>Dwyane Wade</h4>
+      </a>
+      <a href="giannis.html" class="player-card">
+        <img src="assets/images/giannis.jpg" alt="Giannis Antetokounmpo" />
+        <h4>Giannis Antetokounmpo</h4>
+      </a>
+      <a href="kd.html" class="player-card">
+        <img src="assets/images/kevin.jpg" alt="Kevin Durant" />
+        <h4>Kevin Durant</h4>
+      </a>
+      <a href="anthony.html" class="player-card">
+        <img src="assets/images/anthony.jpg" alt="Anthony Edwards" />
+        <h4>Anthony Edwards</h4>
+      </a>
+      <a href="wade.html" class="player-card">
+        <img src="assets/images/dwade.jpg" alt="Dwyane Wade" />
+        <h4>Dwyane Wade</h4>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 NBA Sneaker Showcase. All rights reserved.</p>
+  </footer>
+</body>
+</html>

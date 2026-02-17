@@ -1,0 +1,41 @@
+[
+  {
+    "id": "1",
+    "name": "Michael Jordan",
+    "team": "Chicago Bulls",
+    "position": "Shooting Guard",
+    "bio": "Michael Jeffrey Jordan, also known by his initials MJ, is an American businessman and former professional basketball player.",
+    "image": "https://placehold.co/600x400/png?text=Michael+Jordan",
+    "achievements": [
+      "6x NBA Champion",
+      "5x NBA MVP",
+      "14x NBA All-Star"
+    ]
+  },
+  {
+    "id": "2",
+    "name": "LeBron James",
+    "team": "Los Angeles Lakers",
+    "position": "Small Forward",
+    "bio": "LeBron Raymone James Sr. is an American professional basketball player for the Los Angeles Lakers of the National Basketball Association.",
+    "image": "https://placehold.co/600x400/png?text=LeBron+James",
+    "achievements": [
+      "4x NBA Champion",
+      "4x NBA MVP",
+      "19x NBA All-Star"
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Kobe Bryant",
+    "team": "Los Angeles Lakers",
+    "position": "Shooting Guard",
+    "bio": "Kobe Bean Bryant was an American professional basketball player. A shooting guard, he spent his entire 20-year career with the Los Angeles Lakers.",
+    "image": "https://placehold.co/600x400/png?text=Kobe+Bryant",
+    "achievements": [
+      "5x NBA Champion",
+      "1x NBA MVP",
+      "18x NBA All-Star"
+    ]
+  }
+]

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeBron James Sneakers | NBA Sneaker Showcase</title>
+  <style>
+    /* General body and typography */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f4f4f4; /* Light mode background */
+      color: #333; /* Light mode text color */
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #eee;
+    }
+
+    /* Header styles */
+    header {
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
+
+    body.dark-mode header {
+      background-color: #222;
+      border-bottom-color: #444;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode header h1 {
+      color: #eee;
+    }
+
+    /* Navigation styles */
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #007bff;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #0056b3;
+    }
+
+    body.dark-mode nav a {
+      color: #88d4ff;
+    }
+
+    body.dark-mode nav a:hover {
+      color: #5bbdff;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 12px;
+      border: none;
+      background-color: #6c757d;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
+    }
+
+    .theme-toggle-button:hover {
+      background-color: #5a6268;
+    }
+
+    /* Section styles */
+    section {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode section {
+      background-color: #2e2e2e;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    section h3 {
+      color: #333;
+    }
+
+    body.dark-mode section h3 {
+      color: #eee;
+    }
+
+    /* Sneaker grid and card styles */
+    .sneaker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 11fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .sneaker-card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    body.dark-mode .sneaker-card {
+      background-color: #3a3a3a;
+      border-color: #555;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .sneaker-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .sneaker-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .sneaker-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .sneaker-card h4 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode .sneaker-card h4 {
+      color: #eee;
+    }
+
+    /* Footer styles */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      background-color: #333;
+      color: white;
+      border-top: 1px solid #444;
+    }
+
+    body.dark-mode footer {
+      background-color: #111;
+      border-top-color: #333;
+    }
+
+    /* Styles for the modal */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        max-width: 700px; /* Max width for larger screens */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        animation-name: animatetop;
+        animation-duration: 0.4s;
+        border-radius: 8px;
+        position: relative;
+        text-align: left; /* Align text within modal content */
+        color: #333; /* Default text color for light mode */
+    }
+
+    /* Dark mode specific styles for modal content */
+    body.dark-mode .modal-content {
+        background-color: #333;
+        color: #eee;
+        border-color: #555;
+    }
+
+    .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    body.dark-mode .close-button {
+        color: #eee;
+    }
+
+    body.dark-mode .close-button:hover,
+    body.dark-mode .close-button:focus {
+        color: #fff;
+    }
+
+
+    /* Animation for the modal */
+    @keyframes animatetop {
+        from {top: -300px; opacity: 0}
+        to {top: 0; opacity: 1}
+    }
+
+    .modal-details p {
+        margin-bottom: 5px;
+        line-height: 1.4;
+    }
+
+    .modal-details strong {
+        min-width: 120px; /* Adjust as needed for alignment */
+        display: inline-block;
+    }
+
+    .modal-buy-button {
+        display: block;
+        width: fit-content;
+        margin: 20px auto 0;
+        padding: 12px 25px;
+        background-color: #28a745; /* Green buy button */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+        cursor: pointer;
+        text-decoration: none; /* If it's an anchor tag */
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-buy-button:hover {
+        background-color: #218838;
+    }
+
+    body.dark-mode .modal-buy-button {
+        background-color: #4CAF50; /* Slightly different green for dark mode */
+    }
+
+    body.dark-mode .modal-buy-button:hover {
+        background-color: #45a049;
+    }
+
+    .related-products {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+    }
+
+    body.dark-mode .related-products {
+        border-top-color: #555;
+    }
+
+    .related-products h3 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    body.dark-mode .related-products h3 {
+        color: #eee;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .related-item {
+        text-align: center;
+    }
+
+    .related-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .related-item img:hover {
+        transform: scale(1.05);
+    }
+
+    .related-item p {
+        font-size: 0.9em;
+        margin: 0;
+        color: #555;
+    }
+
+    body.dark-mode .related-item p {
+        color: #bbb;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .modal-content {
+            width: 90%;
+            margin: 10% auto;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .modal-content {
+            width: 95%;
+            margin: 5% auto;
+            padding: 15px;
+        }
+        .modal-details p {
+            font-size: 0.9em;
+        }
+        .close-button {
+            font-size: 24px;
+            top: 5px;
+            right: 10px;
+        }
+        .related-grid {
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LeBron James Sneakers</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="sneakers.html">Sneakers</a>
+      <a href="players.html">Players</a>
+      <a href="rare.html">Rare Drops</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle-button">🌙 Dark Mode</button>
+  </header>
+
+  <section>
+    <h3 style="text-align:center; margin-bottom: 20px;">LeBron Collection</h3>
+    <div class="sneaker-grid">
+      <div class="sneaker-card"
+           data-model="N/A"
+           data-release-date="2004-03-27"
+           data-series="Nike LeBron 1"
+           data-nickname="TR 1"
+           data-thickness="Regular Sole"
+           data-upper-material="Leather"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="training"
+           data-color="white"
+           data-colorway="White/Black-Varsity Crimson"
+           data-description="The Nike Air Zoom LeBron 1 (AZL1), known as the 'TR 1', was LeBron James's first signature shoe, marking the beginning of a legendary line of sneakers. It featured a Zoom Air unit for cushioning."
+           data-price="110.00"
+           data-stock="5"
+           data-related-products='[]'>
+        <img src="assets/images/lebron1.jpg" alt="LeBron TR 1">
+        <h4>LeBron TR 1</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="FV2345-001"
+           data-release-date="2024-03-23"
+           data-series="Nike LeBron 21"
+           data-nickname="Grandma's Couch Light Blue"
+           data-thickness="Regular Sole"
+           data-upper-material="Textile/Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="light-blue"
+           data-colorway="Light Blue/Multi-Color"
+           data-description="The Nike LeBron 21 Premium EP 'Grandma's Couch Light Blue' features a unique, plush upper inspired by home comforts, combining performance with a nostalgic aesthetic."
+           data-price="200.00"
+           data-stock="8"
+           data-related-products='[]'>
+        <img src="assets/images/le2.jpg" alt="LeBron Zoom 2">
+        <h4>Nike LeBron 21 Premium EP 'Grandma's Couch Light Blue'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="DM1124-001"
+           data-release-date="2022-09-01"
+           data-series="Nike LeBron Witness 7"
+           data-nickname="Lakers Graffiti"
+           data-thickness="Regular Sole"
+           data-upper-material="Mesh/Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="multi-color"
+           data-colorway="Black/Court Purple-Amarillo"
+           data-description="The Nike LeBron Witness 7 SE 'Lakers Graffiti' blends Lakers colors with a bold graffiti-inspired graphic, offering responsiveness and support for the court."
+           data-price="100.00"
+           data-stock="15"
+           data-related-products='[]'>
+        <img src="assets/images/le3.jpg" alt="LeBron 3">
+        <h4>Nike LeBron Witness 7 SE 'Lakers Graffiti'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CZ4052-100"
+           data-release-date="2021-09-01"
+           data-series="Nike LeBron Witness 6"
+           data-nickname="White Metallic Pewter"
+           data-thickness="Regular Sole"
+           data-upper-material="Mesh/Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="white"
+           data-colorway="White/Metallic Pewter-Black"
+           data-description="The Nike LeBron Witness 6 EP 'White Metallic Pewter' provides a lightweight and supportive fit for players seeking agility and comfort on the basketball court."
+           data-price="90.00"
+           data-stock="12"
+           data-related-products='[]'>
+        <img src="assets/images/le4.jpg" alt="LeBron 4">
+        <h4>Nike Lebron Witness 6 EP 'White Metallic Pewter'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="HV5148-600"
+           data-release-date="2024-12-26"
+           data-series="Nike LeBron 22"
+           data-nickname="Limelight"
+           data-thickness="Regular Sole"
+           data-upper-material="Mesh/Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="red"
+           data-colorway="Solar Red/White/Vapor Green/Dusty Cactus"
+           data-description="The Nike LeBron 22 'Limelight' features a vibrant red colorway and enhanced support wings, designed to illuminate LeBron's ability to shine under pressure."
+           data-price="190.00"
+           data-stock="10"
+           data-related-products='[]'>
+        <img src="assets/images/lebron5.jpg" alt="LeBron 5">
+        <h4>LeBron 22 Limelight</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="HQ3480-001"
+           data-release-date="2025-07-17"
+           data-series="Nike LeBron 21 Prime"
+           data-nickname="93"
+           data-thickness="Regular Sole"
+           data-upper-material="Nubuck/Leather/Mesh"
+           data-closure="Lacing/Strap"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="black"
+           data-colorway="Black/White/Fire Red/Metallic Gold"
+           data-description="The Nike LeBron 21 Prime 93 'Diamond Turf' combines basketball performance with turf heritage, featuring a bold midfoot strap and a black nubuck upper."
+           data-price="210.00"
+           data-stock="7"
+           data-related-products='[]'>
+        <img src="assets/images/lebron6.jpg" alt="LeBron 6">
+        <h4>LeBron 21 Prime 93'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="897648-600"
+           data-release-date="2018-02-15"
+           data-series="Nike LeBron 15"
+           data-nickname="Hollywood"
+           data-thickness="Regular Sole"
+           data-upper-material="BattleKnit"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="High Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="red"
+           data-colorway="Team Red/Metallic Gold-Black"
+           data-description="The Nike LeBron 15 'Hollywood' showcases a premium BattleKnit upper in a vibrant red, combining luxurious aesthetics with high-performance features."
+           data-price="185.00"
+           data-stock="4"
+           data-related-products='[]'>
+        <img src="assets/images/leking.jpg" alt="LeBron 7 Red Carpet">
+        <h4>Nike LeBron 15 'Hollywood'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AO2915-001"
+           data-release-date="2018-02-17"
+           data-series="Nike Kith x LeBron 15"
+           data-nickname="King's Cloak"
+           data-thickness="Regular Sole"
+           data-upper-material="BattleKnit"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="High Top"
+           data-toe-type="Round Toe"
+           data-occasion="lifestyle"
+           data-color="multi-color"
+           data-colorway="Black/Multi-Color"
+           data-description="The Kith x LeBron 15 'King's Cloak' features a removable strap system and a rich, embroidered upper, designed for both on-court performance and off-court style."
+           data-price="250.00"
+           data-stock="3"
+           data-related-products='[]'>
+        <img src="assets/images/leclock.jpg" alt="LeBron 8 South Beach">
+        <h4>Nike Kith x LeBron Performance 15 'King's Cloak'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="HV8455-600"
+           data-release-date="2025-03-19"
+           data-series="Nike LeBron 22"
+           data-nickname="Bryce's World"
+           data-thickness="Regular Sole"
+           data-upper-material="Textile/Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="red"
+           data-colorway="Bright Crimson/Vapor Green-Black"
+           data-description="The Nike LeBron 22 'Bryce's World' is inspired by LeBron's son, Bryce, featuring a vibrant color palette and a design optimized for dynamic play."
+           data-price="180.00"
+           data-stock="9"
+           data-related-products='[]'>
+        <img src="assets/images/lebryce.jpg" alt="LeBron">
+        <h4>Nike LeBron 22 'Bryce's World'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="FZ1094-002"
+           data-release-date="2025-05-01"
+           data-series="Nike LeBron 22 SE"
+           data-nickname="Dunkman"
+           data-thickness="Regular Sole"
+           data-upper-material="Textile/Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="black"
+           data-colorway="Black/Electric Green"
+           data-description="The Nike LeBron 22 SE 'Dunkman' features the iconic Dunkman silhouette on a powerful performance shoe, known for its robust support and responsive cushioning."
+           data-price="180.00"
+           data-stock="6"
+           data-related-products='[]'>
+        <img src="assets/images/lebron10.jpg" alt="LeBron 10 Cork">
+        <h4>LeBron 22 SE</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CT6047-100"
+           data-release-date="2020-06-25"
+           data-series="Nike LeBron 17"
+           data-nickname="Graffiti"
+           data-thickness="Regular Sole"
+           data-upper-material="KnitPosite"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="High Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="white"
+           data-colorway="White/Black-Red"
+           data-description="Taking cues from the LeBron 4, the LeBron 17 'Graffiti' combines Foamposite tech with a freestyle interpretation of LeBron's values, inspired by New York City street art."
+           data-price="170.00"
+           data-stock="7"
+           data-related-products='[]'>
+        <img src="assets/images/lebron11.jpg" alt="LeBron 11 Graffiti">
+        <h4>LeBron 17 Graffiti</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="FZ1095-001"
+           data-release-date="2024-12-05"
+           data-series="Nike LeBron 22"
+           data-nickname="Tunnel Vision"
+           data-thickness="Regular Sole"
+           data-upper-material="Synthetic Leather"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="black"
+           data-colorway="Black/Lemon Chroma-Laser Fuchsia"
+           data-description="The Nike LeBron 22 'Tunnel Vision' features dark hues with bright accents, symbolizing LeBron's focus before games, with powerful cushioning and stability."
+           data-price="150.00"
+           data-stock="11"
+           data-related-products='[]'>
+        <img src="assets/images/lebron12.jpg" alt="LeBron 12 Data">
+        <h4>LeBron 22 Tunnel Vision</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="FJ1567-103"
+           data-release-date="2024-08-01"
+           data-series="Nike LeBron NXXT Gen AMPD EP"
+           data-nickname="White Black"
+           data-thickness="Regular Sole"
+           data-upper-material="Textile/Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="white"
+           data-colorway="White/Black/Metallic Gold"
+           data-description="The Nike LeBron NXXT Gen AMPD EP 'White Black' features a large forefoot Air Zoom unit for responsive cornering and a flexible court feel, designed for dynamic players."
+           data-price="147.00"
+           data-stock="14"
+           data-related-products='[]'>
+        <img src="assets/images/lebron15.jpg" alt="LeBron 15 Equality">
+        <h4>LeBron NXXT Gen AMPD EP</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="DR8784-300"
+           data-release-date="2023-01-01"
+           data-series="Nike LeBron NXXT Gen EP"
+           data-nickname="Geode Teal"
+           data-thickness="Regular Sole"
+           data-upper-material="Mesh/Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="teal"
+           data-colorway="Geode Teal/Black-Bright Crimson"
+           data-description="The Nike LeBron NXXT Gen EP 'Geode Teal' offers next-gen performance with a striking teal color, built for explosive movements and court versatility."
+           data-price="160.00"
+           data-stock="10"
+           data-related-products='[]'>
+        <img src="assets/images/lelal.jpg" alt="LeBron 18 Lakers">
+        <h4>Nike Lebron NXXT Gen EP Basketball Shoes 'Geode Teal'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="DJ5423-300"
+           data-release-date="2022-09-29"
+           data-series="Nike LeBron 20"
+           data-nickname="Time Machine"
+           data-thickness="Regular Sole"
+           data-upper-material="Polyester"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="multi-color"
+           data-colorway="Barely Green/Multi-color/Medium Soft Pink"
+           data-description="The Nike LeBron 20 'Time Machine' features a futuristic design with a knitted upper, double-stacked Swooshes, and a graphic print midsole for optimal support."
+           data-price="200.00"
+           data-stock="8"
+           data-related-products='[]'>
+        <img src="assets/images/lebron20.jpg" alt="LeBron 20 Time Machine">
+        <h4>LeBron 20 Time Machine</h4>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 NBA Sneaker Showcase. All rights reserved.</p>
+  </footer>
+
+  <div id="sneakerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modalSneakerName"></h2>
+      <div class="modal-details">
+        <p><strong>Model:</strong> <span id="modalModel"></span></p>
+        <p><strong>Release Date:</strong> <span id="modalReleaseDate"></span></p>
+        <p><strong>Series:</strong> <span id="modalSeries"></span></p>
+        <p><strong>Nickname:</strong> <span id="modalNickname"></span></p>
+        <p><strong>Thickness:</strong> <span id="modalThickness"></span></p>
+        <p><strong>Upper Material:</strong> <span id="modalUpperMaterial"></span></p>
+        <p><strong>Closure:</strong> <span id="modalClosure"></span></p>
+        <p><strong>Sole Material:</strong> <span id="modalSoleMaterial"></span></p>
+        <p><strong>Upper:</strong> <span id="modalUpper"></span></p>
+        <p><strong>Toe Type:</strong> <span id="modalToeType"></span></p>
+        <p><strong>Occasion:</strong> <span id="modalOccasion"></span></p>
+        <p><strong>Color:</strong> <span id="modalColor"></span></p>
+        <p><strong>Colorway:</strong> <span id="modalColorway"></span></p>
+        <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+        <p><strong>Stock:</strong> <span id="modalStock"></span> units</p>
+        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+      </div>
+      <a id="modalBuyButton" class="modal-buy-button" href="buy.html">Buy Now</a>
+
+      <div class="related-products">
+        <h3>You might also like:</h3>
+        <div id="relatedProductsGrid" class="related-grid">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle Logic
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        this.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    // Apply saved theme on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️ Light Mode';
+        } else {
+            themeToggleBtn.textContent = '🌙 Dark Mode';
+        }
+    });
+
+    // Sneaker Card Modal Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const sneakerCards = document.querySelectorAll('.sneaker-card');
+        const modal = document.getElementById('sneakerModal');
+        const closeButton = document.querySelector('.close-button');
+
+        // Modal detail elements
+        const modalSneakerName = document.getElementById('modalSneakerName');
+        const modalModel = document.getElementById('modalModel');
+        const modalReleaseDate = document.getElementById('modalReleaseDate');
+        const modalSeries = document.getElementById('modalSeries');
+        const modalNickname = document.getElementById('modalNickname');
+        const modalThickness = document.getElementById('modalThickness');
+        const modalUpperMaterial = document.getElementById('modalUpperMaterial');
+        const modalClosure = document.getElementById('modalClosure');
+        const modalSoleMaterial = document.getElementById('modalSoleMaterial');
+        const modalUpper = document.getElementById('modalUpper');
+        const modalToeType = document.getElementById('modalToeType');
+        const modalOccasion = document.getElementById('modalOccasion');
+        const modalColor = document.getElementById('modalColor');
+        const modalColorway = document.getElementById('modalColorway');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalStock = document.getElementById('modalStock');
+        const modalDescription = document.getElementById('modalDescription');
+        const relatedProductsGrid = document.getElementById('relatedProductsGrid');
+        const modalBuyButton = document.getElementById('modalBuyButton'); // Get the buy button
+
+
+        sneakerCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Populate modal details
+                modalSneakerName.textContent = card.querySelector('h4').textContent;
+                modalModel.textContent = card.dataset.model || 'N/A';
+                modalReleaseDate.textContent = card.dataset.releaseDate || 'N/A';
+                modalSeries.textContent = card.dataset.series || 'N/A';
+                modalNickname.textContent = card.dataset.nickname || 'N/A';
+                modalThickness.textContent = card.dataset.thickness || 'N/A';
+                modalUpperMaterial.textContent = card.dataset.upperMaterial || 'N/A';
+                modalClosure.textContent = card.dataset.closure || 'N/A';
+                modalSoleMaterial.textContent = card.dataset.soleMaterial || 'N/A';
+                modalUpper.textContent = card.dataset.upper || 'N/A';
+                modalToeType.textContent = card.dataset.toeType || 'N/A';
+                modalOccasion.textContent = card.dataset.occasion || 'N/A';
+                modalColor.textContent = card.dataset.color || 'N/A';
+                modalColorway.textContent = card.dataset.colorway || 'N/A';
+                modalPrice.textContent = parseFloat(card.dataset.price).toFixed(2) || 'N/A';
+                modalStock.textContent = card.dataset.stock || 'N/A';
+                modalDescription.textContent = card.dataset.description || 'N/A';
+
+                // Set the href for the "Buy Now" button
+                modalBuyButton.href = `buy.html?model=${card.dataset.model}&name=${encodeURIComponent(card.querySelector('h4').textContent)}&price=${card.dataset.price}`;
+
+                // Handle Related Products
+                relatedProductsGrid.innerHTML = ''; // Clear previous related products
+                if (card.dataset.relatedProducts) {
+                    try {
+                        const relatedProducts = JSON.parse(card.dataset.relatedProducts);
+                        if (relatedProducts.length > 0) {
+                            relatedProducts.forEach(product => {
+                                const relatedItemDiv = document.createElement('div');
+                                relatedItemDiv.classList.add('related-item');
+
+                                const img = document.createElement('img');
+                                img.src = product.image;
+                                img.alt = product.name;
+                                img.title = product.name;
+                                relatedItemDiv.appendChild(img);
+
+                                const p = document.createElement('p');
+                                p.textContent = product.name;
+                                relatedItemDiv.appendChild(p);
+
+                                relatedProductsGrid.appendChild(relatedItemDiv);
+                            });
+                        } else {
+                             relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products found for this item.</p>';
+                        }
+                    } catch (e) {
+                        console.error("Error parsing related products JSON:", e);
+                        relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">Error loading related products.</p>';
+                    }
+                } else {
+                    relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products available.</p>';
+                }
+
+
+                modal.style.display = 'block'; // Show the modal
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none'; // Hide the modal when close button is clicked
+        });
+
+        // Hide the modal if clicked outside of the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+  </script>
+</body>
+</html>

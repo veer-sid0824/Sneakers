@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giannis Antetokounmpo Sneakers | NBA Sneaker Showcase</title>
+  <style>
+    /* General body and typography */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f4f4f4; /* Light mode background */
+      color: #333; /* Light mode text color */
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #eee;
+    }
+
+    /* Header styles */
+    header {
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
+
+    body.dark-mode header {
+      background-color: #222;
+      border-bottom-color: #444;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode header h1 {
+      color: #eee;
+    }
+
+    /* Navigation styles */
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #007bff;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #0056b3;
+    }
+
+    body.dark-mode nav a {
+      color: #88d4ff;
+    }
+
+    body.dark-mode nav a:hover {
+      color: #5bbdff;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 12px;
+      border: none;
+      background-color: #6c757d;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
+    }
+
+    .theme-toggle-button:hover {
+      background-color: #5a6268;
+    }
+
+    /* Section styles */
+    section {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode section {
+      background-color: #2e2e2e;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    section h3 {
+      color: #333;
+    }
+
+    body.dark-mode section h3 {
+      color: #eee;
+    }
+
+    /* Sneaker grid and card styles */
+    .sneaker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .sneaker-card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    body.dark-mode .sneaker-card {
+      background-color: #3a3a3a;
+      border-color: #555;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .sneaker-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .sneaker-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .sneaker-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .sneaker-card h4 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode .sneaker-card h4 {
+      color: #eee;
+    }
+
+    /* Footer styles */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      background-color: #333;
+      color: white;
+      border-top: 1px solid #444;
+    }
+
+    body.dark-mode footer {
+      background-color: #111;
+      border-top-color: #333;
+    }
+
+    /* Styles for the modal */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        max-width: 700px; /* Max width for larger screens */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        animation-name: animatetop;
+        animation-duration: 0.4s;
+        border-radius: 8px;
+        position: relative;
+        text-align: left; /* Align text within modal content */
+        color: #333; /* Default text color for light mode */
+    }
+
+    /* Dark mode specific styles for modal content */
+    body.dark-mode .modal-content {
+        background-color: #333;
+        color: #eee;
+        border-color: #555;
+    }
+
+    .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    body.dark-mode .close-button {
+        color: #eee;
+    }
+
+    body.dark-mode .close-button:hover,
+    body.dark-mode .close-button:focus {
+        color: #fff;
+    }
+
+
+    /* Animation for the modal */
+    @keyframes animatetop {
+        from {top: -300px; opacity: 0}
+        to {top: 0; opacity: 1}
+    }
+
+    .modal-details p {
+        margin-bottom: 5px;
+        line-height: 1.4;
+    }
+
+    .modal-details strong {
+        min-width: 120px; /* Adjust as needed for alignment */
+        display: inline-block;
+    }
+
+    .modal-buy-button {
+        display: block;
+        width: fit-content;
+        margin: 20px auto 0;
+        padding: 12px 25px;
+        background-color: #28a745; /* Green buy button */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+        cursor: pointer;
+        text-decoration: none; /* If it's an anchor tag */
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-buy-button:hover {
+        background-color: #218838;
+    }
+
+    body.dark-mode .modal-buy-button {
+        background-color: #4CAF50; /* Slightly different green for dark mode */
+    }
+
+    body.dark-mode .modal-buy-button:hover {
+        background-color: #45a049;
+    }
+
+    .related-products {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+    }
+
+    body.dark-mode .related-products {
+        border-top-color: #555;
+    }
+
+    .related-products h3 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    body.dark-mode .related-products h3 {
+        color: #eee;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .related-item {
+        text-align: center;
+    }
+
+    .related-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .related-item img:hover {
+        transform: scale(1.05);
+    }
+
+    .related-item p {
+        font-size: 0.9em;
+        margin: 0;
+        color: #555;
+    }
+
+    body.dark-mode .related-item p {
+        color: #bbb;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .modal-content {
+            width: 90%;
+            margin: 10% auto;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .modal-content {
+            width: 95%;
+            margin: 5% auto;
+            padding: 15px;
+        }
+        .modal-details p {
+            font-size: 0.9em;
+        }
+        .close-button {
+            font-size: 24px;
+            top: 5px;
+            right: 10px;
+        }
+        .related-grid {
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Giannis Antetokounmpo Sneakers</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="players.html">Back to Players</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle-button">🌙 Dark Mode</button>
+  </header>
+
+  <main>
+    <section class="player-sneakers">
+      <h2>Top Sneakers Worn by Giannis Antetokounmpo</h2>
+      <h3 style="text-align:center; margin-bottom: 20px;">Giannis Collection</h3>
+    <div class="sneaker-grid">
+      <div class="sneaker-card"
+            data-model="DQ8060-001"
+            data-release-date="2022-09-01"
+            data-series="Giannis Immortality 4 EP"
+            data-nickname="Immortality"
+            data-thickness="Regular Sole"
+            data-upper-material="Mesh"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Low Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="black"
+            data-colorway="Black/White/Red"
+            data-description="The Giannis Immortality 4 EP 'Immortality' is designed for multi-directional play, offering lightweight comfort and responsiveness for all court positions."
+            data-price="90.00"
+            data-stock="25"
+            data-related-products='[{"name": "Nike Giannis "Immortality 2"", "image": "assets/images/giannisimmortality2.jpg"}, {"name": "Nike Giannis Immortality 3", "image": "assets/images/giannisimmortality3.jpg"}]'>
+        <img src="assets/images/giannis1.jpg" alt="Nike Zoom Freak 1">
+        <h4>Giannis 4 EP 'Immortality'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DZ2948-600"
+            data-release-date="2023-12-25"
+            data-series="Giannis Freak 6"
+            data-nickname="Christmas"
+            data-thickness="Regular Sole"
+            data-upper-material="Textile"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Mid Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="red"
+            data-colorway="Red/Green/Gold"
+            data-description="The Giannis Freak 6 'Christmas' brings festive cheer to the court with its vibrant red, green, and gold color scheme, packed with performance tech."
+            data-price="140.00"
+            data-stock="15"
+            data-related-products='[{"name": "Giannis Freak 6 "White"", "image": "assets/images/giannis3.jpg"}, {"name": "Giannis Freak 6 "Candy Funhouse"", "image": "assets/images/giannis4.jpg"}]'>
+        <img src="assets/images/giannis2.jpg" alt="Nike Zoom Freak 2">
+        <h4>Giannis Freak 6 'Christmas'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DZ2948-100"
+            data-release-date="2023-11-10"
+            data-series="Giannis Freak 6"
+            data-nickname="White"
+            data-thickness="Regular Sole"
+            data-upper-material="Synthetic"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Mid Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="white"
+            data-colorway="White/Black/Grey"
+            data-description="A clean and classic look, the Giannis Freak 6 'White' provides a pristine base with subtle black and grey accents, built for versatile play."
+            data-price="135.00"
+            data-stock="20"
+            data-related-products='[{"name": "Giannis Freak 6 "Christmas"", "image": "assets/images/giannis2.jpg"}, {"name": "Giannis Freak 6 "Candy Funhouse"", "image": "assets/images/giannis4.jpg"}]'>
+        <img src="assets/images/giannis3.jpg" alt="Nike Zoom Freak 3">
+        <h4>Giannis Freak 6 'White'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DZ2948-500"
+            data-release-date="2024-01-20"
+            data-series="Giannis Freak 6"
+            data-nickname="Candy Funhouse"
+            data-thickness="Regular Sole"
+            data-upper-material="Textile"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Mid Top"
+            data-toe-type="Round Toe"
+            data-occasion="lifestyle"
+            data-color="multi-color"
+            data-colorway="Pink/Blue/Yellow/Green"
+            data-description="Step into a world of color with the Giannis Freak 6 'Candy Funhouse', a playful and vibrant sneaker designed for everyday comfort and style."
+            data-price="130.00"
+            data-stock="18"
+            data-related-products='[{"name": "Giannis Freak 6 "White"", "image": "assets/images/giannis3.jpg"}, {"name": "Nike Zoom Freak 4 "BHM"", "image": "assets/images/giannisbhm.jpg"}]'>
+        <img src="assets/images/giannis4.jpg" alt="Nike Zoom Freak 4">
+        <h4>Giannis Freak 6 'Candy Funhouse'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DM1124-001"
+            data-release-date="2023-07-01"
+            data-series="Giannis Freak 5"
+            data-nickname="Default"
+            data-thickness="Regular Sole"
+            data-upper-material="Mesh"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Low Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="black"
+            data-colorway="Black/White/Grey"
+            data-description="The foundational Giannis Freak 5 model, offering a balanced blend of cushioning and responsiveness for dynamic players."
+            data-price="120.00"
+            data-stock="30"
+            data-related-products='[{"name": "Nike Zoom Freak 5 "Oreo"", "image": "assets/images/giannisoreo.jpg"}]'>
+        <img src="assets/images/giannis5.jpg" alt="Nike Zoom Freak 5">
+        <h4>Giannis Freak 5</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DZ2948-001"
+            data-release-date="2023-10-01"
+            data-series="Giannis Freak 6"
+            data-nickname="Default"
+            data-thickness="Regular Sole"
+            data-upper-material="Textile"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Mid Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="black"
+            data-colorway="Black/White"
+            data-description="The standard release of the Giannis Freak 6, designed for explosive power and stability on the court."
+            data-price="130.00"
+            data-stock="22"
+            data-related-products='[{"name": "Giannis Freak 6 "Christmas"", "image": "assets/images/giannis2.jpg"}, {"name": "Giannis Freak 6 "White"", "image": "assets/images/giannis3.jpg"}]'>
+        <img src="assets/images/giannis6.jpg" alt="Nike Zoom Freak 6">
+        <h4>Giannis Freak 6</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DM0824-001"
+            data-release-date="2024-08-15"
+            data-series="Nike Giannis Immortality 4"
+            data-nickname="Immortality 4"
+            data-thickness="Thin Sole"
+            data-upper-material="Synthetic"
+            data-closure="Lacing"
+            data-sole-material="EVA"
+            data-upper="Low Top"
+            data-toe-type="Round Toe"
+            data-occasion="lifestyle"
+            data-color="grey"
+            data-colorway="Grey/Black/Volt"
+            data-description="The Nike Giannis Immortality 4 provides a minimalist and lightweight feel, perfect for casual wear with a touch of athletic style."
+            data-price="85.00"
+            data-stock="28"
+            data-related-products='[{"name": "Giannis 4 EP "Immortality"", "image": "assets/images/giannis1.jpg"}, {"name": "Nike Giannis "Immortality 2"", "image": "assets/images/giannisimmortality2.jpg"}]'>
+        <img src="assets/images/giannis22.jpg" alt="Nike Giannis Immortality 1">
+        <h4>Nike Giannis 'Immortality 4'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DM0824-002"
+            data-release-date="2022-02-10"
+            data-series="Nike Giannis Immortality 2"
+            data-nickname="Immortality 2"
+            data-thickness="Thin Sole"
+            data-upper-material="Mesh"
+            data-closure="Lacing"
+            data-sole-material="EVA"
+            data-upper="Low Top"
+            data-toe-type="Round Toe"
+            data-occasion="lifestyle"
+            data-color="blue"
+            data-colorway="Blue/White/Black"
+            data-description="The second iteration of the Immortality line, offering lightweight comfort and a stylish blue and white design for everyday wear."
+            data-price="80.00"
+            data-stock="35"
+            data-related-products='[{"name": "Giannis 4 EP "Immortality"", "image": "assets/images/giannis1.jpg"}, {"name": "Nike Giannis Immortality 3", "image": "assets/images/giannisimmortality3.jpg"}]'>
+        <img src="assets/images/giannisimmortality2.jpg" alt="Nike Giannis Immortality 2">
+        <h4>Nike Giannis 'Immortality 2'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DM0824-003"
+            data-release-date="2023-03-05"
+            data-series="Nike Giannis Immortality 3"
+            data-nickname="Immortality 3"
+            data-thickness="Regular Sole"
+            data-upper-material="Textile"
+            data-closure="Lacing"
+            data-sole-material="EVA"
+            data-upper="Low Top"
+            data-toe-type="Round Toe"
+            data-occasion="lifestyle"
+            data-color="red"
+            data-colorway="Red/Black/White"
+            data-description="The third chapter of the Immortality series, combining casual comfort with a striking red and black aesthetic."
+            data-price="85.00"
+            data-stock="28"
+            data-related-products='[{"name": "Nike Giannis "Immortality 2"", "image": "assets/images/giannisimmortality2.jpg"}, {"name": "Giannis 4 EP "Immortality"", "image": "assets/images/giannis1.jpg"}]'>
+        <img src="assets/images/giannisimmortality3.jpg" alt="Nike Giannis Immortality 3">
+        <h4>Nike Giannis Immortality 3</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DA0694-001"
+            data-release-date="2021-06-01"
+            data-series="Nike Giannis Freak Legacy"
+            data-nickname="Legacy"
+            data-thickness="Regular Sole"
+            data-upper-material="Leather/Mesh"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Mid Top"
+            data-toe-type="Round Toe"
+            data-occasion="lifestyle"
+            data-color="white"
+            data-colorway="White/Black/Green"
+            data-description="A tribute to Giannis's journey, the Freak Legacy blends classic design elements with modern comfort, suitable for casual wear."
+            data-price="100.00"
+            data-stock="12"
+            data-related-products='[{"name": "Nike Zoom Freak 2 "Milwaukee Bucks"", "image": "assets/images/giannisbucks.jpg"}]'>
+        <img src="assets/images/giannislegacy.jpg" alt="Nike Giannis Freak Legacy">
+        <h4>Nike Giannis Freak 'Legacy'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DA0957-600"
+            data-release-date="2022-02-18"
+            data-series="Nike Zoom Freak 3"
+            data-nickname="All-Star"
+            data-thickness="Regular Sole"
+            data-upper-material="Textile"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Mid Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="multi-color"
+            data-colorway="Red/Blue/Gold"
+            data-description="The 'All-Star' edition of the Zoom Freak 3 features a vibrant, multi-color design to stand out on the court during the All-Star break."
+            data-price="130.00"
+            data-stock="9"
+            data-related-products='[{"name": "Nike Zoom Freak 4 "BHM"", "image": "assets/images/giannisbhm.jpg"}]'>
+        <img src="assets/images/giannisallstar.jpg" alt="Nike Zoom Freak 3 'All-Star'">
+        <h4>Nike Zoom Freak 3 'All-Star'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DM1124-003"
+            data-release-date="2023-02-01"
+            data-series="Nike Zoom Freak 4"
+            data-nickname="BHM"
+            data-thickness="Regular Sole"
+            data-upper-material="Textile"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Low Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="multi-color"
+            data-colorway="Black/Gold/Purple"
+            data-description="The Black History Month edition of the Zoom Freak 4, featuring intricate patterns and a meaningful color palette."
+            data-price="135.00"
+            data-stock="7"
+            data-related-products='[{"name": "Giannis Freak 6 "Candy Funhouse"", "image": "assets/images/giannis4.jpg"}]'>
+        <img src="assets/images/giannisbhm.jpg" alt="Nike Zoom Freak 4 'BHM'">
+        <h4>Nike Zoom Freak 4 'BHM'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="DM1124-002"
+            data-release-date="2023-09-15"
+            data-series="Nike Zoom Freak 5"
+            data-nickname="Oreo"
+            data-thickness="Regular Sole"
+            data-upper-material="Mesh"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Low Top"
+            data-toe-type="Round Toe"
+            data-occasion="lifestyle"
+            data-color="black"
+            data-colorway="Black/White/Grey"
+            data-description="A classic 'Oreo' color scheme for the Zoom Freak 5, offering a clean and versatile look for both on and off the court."
+            data-price="125.00"
+            data-stock="18"
+            data-related-products='[{"name": "Giannis Freak 5", "image": "assets/images/giannis5.jpg"}]'>
+        <img src="assets/images/giannisoreo.jpg" alt="Nike Zoom Freak 5 'Oreo'">
+        <h4>Nike Zoom Freak 5 'Oreo'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="CK5424-300"
+            data-release-date="2020-09-01"
+            data-series="Nike Zoom Freak 2"
+            data-nickname="Milwaukee Bucks"
+            data-thickness="Regular Sole"
+            data-upper-material="Textile"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Low Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="green"
+            data-colorway="Green/Cream/Black"
+            data-description="Show your team pride with the 'Milwaukee Bucks' Zoom Freak 2, featuring the team's signature green and cream colors."
+            data-price="120.00"
+            data-stock="10"
+            data-related-products='[{"name": "Nike Giannis Freak "Legacy"", "image": "assets/images/giannislegacy.jpg"}]'>
+        <img src="assets/images/giannisbucks.jpg" alt="Nike Zoom Freak 2 'Milwaukee Bucks'">
+        <h4>Nike Zoom Freak 2 'Milwaukee Bucks'</h4>
+      </div>
+    </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 NBA Sneaker Showcase</p>
+  </footer>
+
+  <div id="sneakerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modalSneakerName"></h2>
+      <div class="modal-details">
+        <p><strong>Model:</strong> <span id="modalModel"></span></p>
+        <p><strong>Release Date:</strong> <span id="modalReleaseDate"></span></p>
+        <p><strong>Series:</strong> <span id="modalSeries"></span></p>
+        <p><strong>Nickname:</strong> <span id="modalNickname"></span></p>
+        <p><strong>Thickness:</strong> <span id="modalThickness"></span></p>
+        <p><strong>Upper Material:</strong> <span id="modalUpperMaterial"></span></p>
+        <p><strong>Closure:</strong> <span id="modalClosure"></span></p>
+        <p><strong>Sole Material:</strong> <span id="modalSoleMaterial"></span></p>
+        <p><strong>Upper:</strong> <span id="modalUpper"></span></p>
+        <p><strong>Toe Type:</strong> <span id="modalToeType"></span></p>
+        <p><strong>Occasion:</strong> <span id="modalOccasion"></span></p>
+        <p><strong>Color:</strong> <span id="modalColor"></span></p>
+        <p><strong>Colorway:</strong> <span id="modalColorway"></span></p>
+        <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+        <p><strong>Stock:</strong> <span id="modalStock"></span> units</p>
+        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+      </div>
+      <button class="modal-buy-button">Buy Now</button>
+
+      <div class="related-products">
+        <h3>You might also like:</h3>
+        <div id="relatedProductsGrid" class="related-grid">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle Logic
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        this.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    // Apply saved theme on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️ Light Mode';
+        } else {
+            themeToggleBtn.textContent = '🌙 Dark Mode';
+        }
+    });
+
+    // Sneaker Card Modal Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const sneakerCards = document.querySelectorAll('.sneaker-card');
+        const modal = document.getElementById('sneakerModal');
+        const closeButton = document.querySelector('.close-button');
+
+        // Modal detail elements
+        const modalSneakerName = document.getElementById('modalSneakerName');
+        const modalModel = document.getElementById('modalModel');
+        const modalReleaseDate = document.getElementById('modalReleaseDate');
+        const modalSeries = document.getElementById('modalSeries');
+        const modalNickname = document.getElementById('modalNickname');
+        const modalThickness = document.getElementById('modalThickness');
+        const modalUpperMaterial = document.getElementById('modalUpperMaterial');
+        const modalClosure = document.getElementById('modalClosure');
+        const modalSoleMaterial = document.getElementById('modalSoleMaterial');
+        const modalUpper = document.getElementById('modalUpper');
+        const modalToeType = document.getElementById('modalToeType');
+        const modalOccasion = document.getElementById('modalOccasion');
+        const modalColor = document.getElementById('modalColor');
+        const modalColorway = document.getElementById('modalColorway');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalStock = document.getElementById('modalStock');
+        const modalDescription = document.getElementById('modalDescription');
+        const relatedProductsGrid = document.getElementById('relatedProductsGrid');
+
+        sneakerCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Populate modal details
+                modalSneakerName.textContent = card.querySelector('h4').textContent;
+                modalModel.textContent = card.dataset.model || 'N/A';
+                modalReleaseDate.textContent = card.dataset.releaseDate || 'N/A';
+                modalSeries.textContent = card.dataset.series || 'N/A';
+                modalNickname.textContent = card.dataset.nickname || 'N/A';
+                modalThickness.textContent = card.dataset.thickness || 'N/A';
+                modalUpperMaterial.textContent = card.dataset.upperMaterial || 'N/A';
+                modalClosure.textContent = card.dataset.closure || 'N/A';
+                modalSoleMaterial.textContent = card.dataset.soleMaterial || 'N/A';
+                modalUpper.textContent = card.dataset.upper || 'N/A';
+                modalToeType.textContent = card.dataset.toeType || 'N/A';
+                modalOccasion.textContent = card.dataset.occasion || 'N/A';
+                modalColor.textContent = card.dataset.color || 'N/A';
+                modalColorway.textContent = card.dataset.colorway || 'N/A';
+                modalPrice.textContent = parseFloat(card.dataset.price).toFixed(2) || 'N/A';
+                modalStock.textContent = card.dataset.stock || 'N/A';
+                modalDescription.textContent = card.dataset.description || 'N/A';
+
+                // Handle Related Products
+                relatedProductsGrid.innerHTML = ''; // Clear previous related products
+                if (card.dataset.relatedProducts) {
+                    try {
+                        const relatedProducts = JSON.parse(card.dataset.relatedProducts);
+                        if (relatedProducts.length > 0) {
+                            relatedProducts.forEach(product => {
+                                const relatedItemDiv = document.createElement('div');
+                                relatedItemDiv.classList.add('related-item');
+
+                                const img = document.createElement('img');
+                                img.src = product.image;
+                                img.alt = product.name;
+                                img.title = product.name;
+                                relatedItemDiv.appendChild(img);
+
+                                const p = document.createElement('p');
+                                p.textContent = product.name;
+                                relatedItemDiv.appendChild(p);
+
+                                relatedProductsGrid.appendChild(relatedItemDiv);
+                            });
+                        } else {
+                             relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products found for this item.</p>';
+                        }
+                    } catch (e) {
+                        console.error("Error parsing related products JSON:", e);
+                        relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">Error loading related products.</p>';
+                    }
+                } else {
+                    relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products available.</p>';
+                }
+
+
+                modal.style.display = 'block'; // Show the modal
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none'; // Hide the modal when close button is clicked
+        });
+
+        // Hide the modal if clicked outside of the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Buy Now button functionality
+        document.querySelector('.modal-buy-button').addEventListener('click', () => {
+            window.location.href = 'buy.html';
+        });
+    });
+  </script>
+</body>
+</html>

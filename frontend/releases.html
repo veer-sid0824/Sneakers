@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sneaker Droplist | Release Calendar</title>
+    <style>
+        /* CSS Variables for easy theme switching */
+        :root {
+            --bg-dark: #121212;
+            --card-dark: #1e1e1e;
+            --text-light: #e0e0e0;
+            --accent-color: #00bcd4; /* Cyan/Aqua */
+            --highlight-color: #ff9800; /* Orange for countdowns */
+            --border-dark: #333;
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Light Mode Variables (applied via class) */
+        .light-mode {
+            --bg-dark: #f4f4f4;
+            --card-dark: #ffffff;
+            --text-light: #333333;
+            --accent-color: #007bff;
+            --highlight-color: #d32f2f;
+            --border-dark: #ddd;
+            --shadow-dark: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            transition: background-color 0.5s, color 0.5s;
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--card-dark);
+            padding: 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 8px var(--shadow-dark);
+        }
+
+        header h1 {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 2em;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--accent-color);
+            margin: 0 15px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--highlight-color);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-button {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            padding: 10px 15px;
+            border: none;
+            background-color: var(--accent-color);
+            color: var(--card-dark);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .theme-toggle-button:hover {
+            background-color: var(--highlight-color);
+        }
+
+        /* Main Content and Filters */
+        .container {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            background-color: var(--card-dark);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px var(--shadow-dark);
+        }
+
+        .filter-bar label {
+            font-weight: bold;
+            margin-right: 5px;
+            color: var(--text-light);
+        }
+
+        .filter-bar select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid var(--border-dark);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .light-mode .filter-bar select {
+            background-color: white;
+            color: #333;
+        }
+
+        .filter-bar select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        /* Release Grid (The Timeline) */
+        .release-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .release-card {
+            background-color: var(--card-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px var(--shadow-dark);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .release-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px var(--shadow-dark);
+        }
+
+        .card-media {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .card-media img,
+        .card-media iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-content h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.5em;
+            line-height: 1.2;
+        }
+
+        .card-details p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+
+        .card-details strong {
+            color: var(--text-light);
+        }
+
+        .release-date {
+            font-weight: bold;
+            color: var(--highlight-color);
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Countdown Timer Styling */
+        .countdown-container {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: var(--bg-dark);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .light-mode .countdown-container {
+            background-color: #eee;
+        }
+
+        .countdown-container.released {
+            background-color: #28a745; /* Green for released */
+            color: white;
+            font-weight: bold;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: space-around;
+            color: var(--highlight-color);
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .countdown-timer div {
+            text-align: center;
+        }
+
+        .countdown-timer span {
+            display: block;
+            font-size: 0.5em;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-top: -5px;
+        }
+        
+        .countdown-container.released .countdown-timer {
+             color: white;
+             font-size: 1.2em;
+        }
+        
+        .countdown-container.released .countdown-timer span {
+            color: white;
+            font-weight: 600;
+            font-size: 0.7em;
+        }
+
+
+        .buy-link {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background-color: var(--accent-color);
+            color: var(--card-dark);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .buy-link:hover {
+            background-color: var(--highlight-color);
+        }
+        
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            header h1 {
+                font-size: 1.5em;
+            }
+            .theme-toggle-button {
+                position: static;
+                transform: none;
+                margin-top: 10px;
+            }
+            .filter-bar {
+                justify-content: space-between;
+                padding: 15px;
+            }
+            .release-grid {
+                grid-template-columns: 1fr;
+            }
+            .release-card {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SNEAKER DROPLIST: Release Calendar</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="remaind.html">Remainder</a>
+        </nav>
+        <button id="theme-toggle" class="theme-toggle-button">☀️ Light Mode</button>
+    </header>
+
+    <div class="container">
+        <div class="filter-bar">
+            <div>
+                <label for="brand-filter">Brand:</label>
+                <select id="brand-filter">
+                    <option value="all">All Brands</option>
+                    <option value="nike">Nike</option>
+                    <option value="puma">Puma</option>
+                    <option value="jordan">Jordan Brand</option>
+                </select>
+            </div>
+            <div>
+                <label for="collection-filter">Collection:</label>
+                <select id="collection-filter">
+                    <option value="all">All Collections</option>
+                    <option value="nba">NBA Signatures</option>
+                    <option value="wnba">WNBA PEs</option>
+                    <option value="retro">Retro Classics</option>
+                </select>
+            </div>
+            <div>
+                <label for="sort-date">Sort By:</label>
+                <select id="sort-date">
+                    <option value="upcoming">Upcoming (Soonest)</option>
+                    <option value="recent">Recent (Latest)</option>
+                    <option value="name">Name (A-Z)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="release-grid">
+            
+            <div class="release-card" data-release-time="2025-12-05T10:00:00">
+                <div class="card-media">
+                    <iframe 
+                        src="https://www.youtube.com/embed/0DvCu_PpdMM" 
+                        title="Nike Ja 2 Teaser" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="card-content">
+                    <div class="card-details">
+                        <h2>Nike Ja 2 'Grizzly'</h2>
+                        <span class="release-date">Release Date: Dec 05, 2025</span>
+                        <p><strong>Brand:</strong> Nike</p>
+                        <p><strong>Collection:</strong> NBA Signatures</p>
+                        <p><strong>Price:</strong> $110.00</p>
+                        <p>Ja Morant's second signature model in a bold colorway inspired by the Memphis Grizzlies team colors.</p>
+                    </div>
+                    <div class="countdown-container">
+                        <p style="margin: 0; font-size: 0.9em;">Dropping in:</p>
+                        <div class="countdown-timer" id="countdown-1"></div>
+                        <a href="remaind.html" class="buy-link">Set Drop Reminder</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="release-card" data-release-time="2026-01-15T09:00:00">
+                <div class="card-media">
+                    <iframe 
+                        src="https://www.youtube.com/embed/bADHKFmp2MY" 
+                        title="Wembanyama Shoe Teaser" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="card-content">
+                    <div class="card-details">
+                        <h2>Nike Air Zoom GT Cut 3 'Wemby PE'</h2>
+                        <span class="release-date">Release Date: Jan 15, 2026</span>
+                        <p><strong>Brand:</strong> Nike</p>
+                        <p><strong>Collection:</strong> NBA PEs</p>
+                        <p><strong>Price:</strong> $190.00</p>
+                        <p>Victor Wembanyama's Player Exclusive featuring alien-inspired details and premium Zoom Strobe Pro cushioning.</p>
+                    </div>
+                    <div class="countdown-container">
+                        <p style="margin: 0; font-size: 0.9em;">Dropping in:</p>
+                        <div class="countdown-timer" id="countdown-2"></div>
+                        <a href="remaind.html" class="buy-link">Set Drop Reminder</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="release-card" data-release-time="2025-11-25T11:00:00">
+                <div class="card-media">
+                    <iframe 
+                        src="https://www.youtube.com/embed/-piiuY6ApY0" 
+                        title="Puma MB.05 Reveal" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="card-content">
+                    <div class="card-details">
+                        <h2>Puma MB.05 'Star Dust'</h2>
+                        <span class="release-date">Release Date: Nov 25, 2025</span>
+                        <p><strong>Brand:</strong> Puma</p>
+                        <p><strong>Collection:</strong> NBA Signatures</p>
+                        <p><strong>Price:</strong> $130.00</p>
+                        <p>LaMelo Ball's latest model, featuring iridescent highlights and responsive Nitro Foam cushioning.</p>
+                    </div>
+                    <div class="countdown-container">
+                        <p style="margin: 0; font-size: 0.9em;">Dropping in:</p>
+                        <div class="countdown-timer" id="countdown-3"></div>
+                        <a href="remaind.html" class="buy-link">Set Drop Reminder</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="release-card" data-release-time="2025-12-15T10:00:00">
+                <div class="card-media">
+                    <img src="assets/images/nm15.jpg" alt="Nike NM X The Legacy Low">
+                </div>
+                <div class="card-content">
+                    <div class="card-details">
+                        <h2>Nike RL I Retro 'The Patriot'</h2>
+                        <span class="release-date">Release Date: Dec 15, 2025</span>
+                        <p><strong>Brand:</strong> Nike</p>
+                        <p><strong>Collection:</strong> WNBA Retro (Rebecca Lobo)</p>
+                        <p><strong>Price:</strong> $175.00</p>
+                        <p>The highly anticipated return of Lobo's first signature shoe, featuring premium leather and classic Air cushioning.</p>
+                    </div>
+                    <div class="countdown-container">
+                        <p style="margin: 0; font-size: 0.9em;">Dropping in:</p>
+                        <div class="countdown-timer" id="countdown-4"></div>
+                        <a href="remaind.html" class="buy-link">Set Drop Reminder</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="release-card" data-release-time="2025-09-01T09:00:00">
+                <div class="card-media">
+                    <img src="assets/images/jordan1chicago.jpg" alt="Nike Air Penny 2 PE Liberty">
+                </div>
+                <div class="card-content">
+                    <div class="card-details">
+                        <h2>Nike Air Max Uptempo '95 'OG Black'</h2>
+                        <span class="release-date">Release Date: Sep 01, 2025</span>
+                        <p><strong>Brand:</strong> Nike</p>
+                        <p><strong>Collection:</strong> Retro Classics</p>
+                        <p><strong>Price:</strong> $160.00</p>
+                        <p>The timeless black and white classic, back in all its full-length Max Air glory.</p>
+                    </div>
+                    <div class="countdown-container released">
+                        <div class="countdown-timer" id="countdown-5">
+                            RELEASED!
+                        </div>
+                        <a href="buy.html" class="buy-link" style="background-color: #777;">View Resale Market</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 WNBA Sneaker Showcase. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // === Theme Toggle Logic ===
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-mode');
+            const isLightMode = document.body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+            this.textContent = isLightMode ? '🌙 Dark Mode' : '☀️ Light Mode';
+        });
+
+        // Apply saved theme on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggleBtn.textContent = '🌙 Dark Mode';
+            } else {
+                themeToggleBtn.textContent = '☀️ Light Mode';
+            }
+        });
+
+
+        // === Countdown Timer Logic ===
+        const releaseCards = document.querySelectorAll('.release-card');
+
+        releaseCards.forEach((card, index) => {
+            const releaseTimeString = card.getAttribute('data-release-time');
+            const releaseTime = new Date(releaseTimeString).getTime();
+            // Use index for the ID since the grid is generated dynamically
+            const countdownElement = document.getElementById(`countdown-${index + 1}`); 
+            const countdownContainer = countdownElement.closest('.countdown-container');
+            const buyLink = card.querySelector('.buy-link');
+            
+            // Immediately execute the update function to prevent a blank display
+            updateCountdown(); 
+            
+            // Set up a 1-second interval update
+            const interval = setInterval(updateCountdown, 1000);
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = releaseTime - now;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    countdownContainer.classList.add('released');
+                    countdownElement.innerHTML = `
+                        <p style="margin: 0; font-weight: bold; font-size: 1.1em;">
+                            RELEASED!
+                        </p>
+                    `;
+                    // Update button for released items
+                    buyLink.textContent = 'Buy Now'; 
+                    buyLink.style.backgroundColor = 'var(--highlight-color)';
+                    // Change the link for released shoes to buy.html
+                    buyLink.href = 'buy.html'; 
+
+                } else {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    countdownElement.innerHTML = `
+                        <div>${days}<span style="color: ${days > 0 ? 'var(--highlight-color)' : 'var(--text-light)'}">DAYS</span></div>
+                        <div>${hours}<span style="color: ${days > 0 ? 'var(--highlight-color)' : 'var(--text-light)'}">HRS</span></div>
+                        <div>${minutes}<span style="color: ${days > 0 ? 'var(--highlight-color)' : 'var(--text-light)'}">MINS</span></div>
+                        <div>${seconds}<span style="color: ${days > 0 ? 'var(--highlight-color)' : 'var(--text-light)'}">SECS</span></div>
+                    `;
+                    // Ensure the link for upcoming shoes is always remaind.html
+                    buyLink.href = 'remaind.html'; 
+                }
+            }
+        });
+    </script>
+</body>
+</html>

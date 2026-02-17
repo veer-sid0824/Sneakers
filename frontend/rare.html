@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rare Drops | NBA Sneaker Showcase</title>
+
+  <style>
+    /* Global Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif; /* Assuming you have Poppins or a similar sans-serif font */
+      background: linear-gradient(to bottom right, #f6f9fc, #e3f2fd); /* Light mode background */
+      color: #111;
+      line-height: 1.6;
+      transition: all 0.3s ease-in-out; /* Smooth transition for dark mode toggle */
+    }
+
+    a {
+      text-decoration: none;
+      color: #0077cc;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #ff4081;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Light mode header background */
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      position: relative; /* For positioning the dark mode toggle */
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 8px;
+    }
+
+    nav a {
+      margin: 0 14px;
+      color: #fff;
+      font-weight: 500;
+      position: relative; /* For active indicator */
+    }
+
+    nav a:hover {
+      color: #4dd0e1;
+    }
+
+    nav a.active::after { /* Style for active link */
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: #4dd0e1; /* Highlight color */
+        left: 0;
+        bottom: -5px;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+    }
+
+    nav a.active {
+        color: #4dd0e1; /* Active link color */
+    }
+
+    nav a.active:hover::after,
+    nav a.active::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+    }
+
+    /* Dark Mode Toggle Button */
+    #darkToggle {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      padding: 6px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      background: #0077cc; /* Default light button color */
+      color: white;
+      transition: background 0.3s ease;
+    }
+
+    #darkToggle:hover {
+      background: #005fa3;
+    }
+
+    /* Sections */
+    section {
+      padding: 50px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      color: #212121; /* Light mode text color */
+      margin-bottom: 20px;
+      text-align: center; /* Ensure consistent centering as in player page */
+    }
+
+    p {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+      color: #444; /* Light mode text color */
+    }
+
+    /* Sneaker Grid (similar to index for consistency) */
+    .sneaker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjusted minmax for better rare card size */
+      gap: 25px;
+      justify-content: center; /* Center grid items if not full row */
+    }
+
+    .sneaker-card {
+      background: #ffffff; /* Light mode card background */
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease; /* Transitions for dark mode */
+      display: flex;
+      flex-direction: column;
+      cursor: pointer; /* Make cards clickable */
+    }
+
+    .sneaker-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
+    }
+
+    .sneaker-card img {
+      width: 100%;
+      height: 280px; /* Fixed height for rare sneaker images */
+      object-fit: contain; /* Show full image, may have letterboxing */
+      background-color: #eee; /* Background for letterboxing */
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .sneaker-card:hover img {
+      transform: scale(1.02); /* Slight zoom on hover */
+    }
+
+    .sneaker-card h4 {
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 1.2rem;
+      color: #333; /* Light mode text color */
+      flex-grow: 1; /* Allows title to take up remaining space */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(to right, #2c5364, #203a43); /* Light mode footer background */
+      color: #ccc;
+      text-align: center;
+      padding: 18px;
+      width: 100%;
+      box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.2);
+      margin-top: 50px; /* Ensure space above footer */
+    }
+
+    /* DARK MODE STYLES */
+    body.dark-mode {
+      background: linear-gradient(to bottom right, #1e1e1e, #2c2c2c);
+      color: #e0e0e0;
+    }
+
+    body.dark-mode header {
+      background: linear-gradient(to right, #111, #222, #333);
+      color: #f0f0f0;
+    }
+
+    body.dark-mode nav a {
+      color: #e0e0e0;
+    }
+
+    body.dark-mode nav a:hover {
+      color: #90caf9;
+    }
+
+    body.dark-mode nav a.active {
+        color: #90caf9;
+    }
+
+    body.dark-mode nav a.active::after {
+        background-color: #90caf9;
+    }
+
+    body.dark-mode #darkToggle {
+      background: #2196f3;
+      color: white;
+    }
+
+    body.dark-mode #darkToggle:hover {
+      background: #1976d2;
+    }
+
+    body.dark-mode h3 {
+      color: #f0f0f0;
+    }
+
+    body.dark-mode p {
+      color: #ccc;
+    }
+
+    body.dark-mode .sneaker-card {
+      background-color: #2a2a2a;
+      color: #eee;
+      box-shadow: 0 6px 18px rgba(255, 255, 255, 0.05);
+    }
+
+    body.dark-mode .sneaker-card h4 {
+      color: #f1f1f1;
+    }
+
+    body.dark-mode .sneaker-card img {
+        background-color: #3a3a3a; /* Darker background for letterboxing in dark mode */
+    }
+
+    body.dark-mode footer {
+      background: linear-gradient(to right, #222, #111);
+      color: #ccc;
+    }
+
+    /* Modal styles (copied from previous examples, ensure consistency) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.7);
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 700px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        animation-name: animatetop;
+        animation-duration: 0.4s;
+        border-radius: 8px;
+        position: relative;
+        text-align: left;
+        color: #333;
+    }
+
+    body.dark-mode .modal-content {
+        background-color: #333;
+        color: #eee;
+        border-color: #555;
+    }
+
+    .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    body.dark-mode .close-button {
+        color: #eee;
+    }
+
+    body.dark-mode .close-button:hover,
+    body.dark-mode .close-button:focus {
+        color: #fff;
+    }
+
+    @keyframes animatetop {
+        from {top: -300px; opacity: 0}
+        to {top: 0; opacity: 1}
+    }
+
+    .modal-details p {
+        margin-bottom: 5px;
+        line-height: 1.4;
+    }
+
+    .modal-details strong {
+        min-width: 120px;
+        display: inline-block;
+    }
+
+    .modal-buy-button {
+        display: block;
+        width: fit-content;
+        margin: 20px auto 0;
+        padding: 12px 25px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-buy-button:hover {
+        background-color: #218838;
+    }
+
+    body.dark-mode .modal-buy-button {
+        background-color: #4CAF50;
+    }
+
+    body.dark-mode .modal-buy-button:hover {
+        background-color: #45a049;
+    }
+
+    .related-products {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+    }
+
+    body.dark-mode .related-products {
+        border-top-color: #555;
+    }
+
+    .related-products h3 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    body.dark-mode .related-products h3 {
+        color: #eee;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .related-item {
+        text-align: center;
+    }
+
+    .related-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .related-item img:hover {
+        transform: scale(1.05);
+    }
+
+    .related-item p {
+        font-size: 0.9em;
+        margin: 0;
+        color: #555;
+    }
+
+    body.dark-mode .related-item p {
+        color: #bbb;
+    }
+
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      #darkToggle {
+        position: static;
+        margin-top: 10px;
+      }
+      header nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+      }
+      .sneaker-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        padding: 15px;
+        gap: 20px;
+      }
+      .sneaker-card img {
+        height: 240px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      .sneaker-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 15px;
+      }
+      .sneaker-card img {
+        height: 200px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>NBA Sneaker Showcase</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="sneakers.html">Sneakers</a>
+      <a href="players.html">Players</a>
+      <a href="rare.html" class="active">Rare Drops</a>
+    </nav>
+    <button id="darkToggle" class="btn">Dark Mode</button>
+  </header>
+
+  <section>
+    <h3>Rare Drops</h3>
+    <p style="text-align: center; margin-bottom: 30px;">
+      Discover some of the most coveted and limited-edition NBA sneakers ever released.
+    </p>
+    <div class="sneaker-grid">
+      <div class="sneaker-card"
+            data-model="CK9388-001"
+            data-release-date="2020-08-29"
+            data-series="Nike Zoom Kobe 5 Protro"
+            data-nickname="5 Rings"
+            data-thickness="Regular Sole"
+            data-upper-material="Synthetic"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Low Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="yellow"
+            data-colorway="Del Sol/Metallic Gold-Concord"
+            data-description="The Nike Zoom Kobe 5 Protro '5 Rings' commemorates Kobe Bryant's fifth NBA championship with a vibrant yellow and purple gradient upper, adorned with five ring graphics."
+            data-price="180.00"
+            data-stock="1"
+            data-related-products='[{"name": "Kobe 6 Protro Grinch", "image": "assets/images/kobe-grinch.jpg"}, {"name": "Kobe 4 Protro Carpe Diem", "image": "assets/images/kobe-carpediem.jpg"}]'>
+        <img src="assets/images/kobechamp.jpg" alt="Kobe 6 Championship PE">
+        <h4>Nike Zoom Kobe 5 Protro '5 Rings'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="BQ5594-600"
+            data-release-date="2020-02-15"
+            data-series="Nike LeBron 17 EP"
+            data-nickname="LeBron 4 Red Graffiti"
+            data-thickness="Regular Sole"
+            data-upper-material="KnitPosite"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="High Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="red"
+            data-colorway="University Red/Black-White"
+            data-description="The Nike LeBron 17 EP 'LeBron 4 Red Graffiti' is inspired by the iconic LeBron 4 'Graffiti' PE, featuring a bold red upper with graffiti script and translucent air units."
+            data-price="200.00"
+            data-stock="2"
+            data-related-products='[{"name": "LeBron 4 Retro Graffiti", "image": "assets/images/lebron17-graffiti.jpg"}, {"name": "LeBron 17 Currency", "image": "assets/images/lebron-currency.jpg"}]'>
+        <img src="assets/images/lebronwatch.jpg" alt="LeBron Watch PE">
+        <h4>Nike LeBron 17 EP 'LeBron 4 Red Graffiti'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="555088-061"
+            data-release-date="2021-12-15"
+            data-series="Air Jordan 1 Retro High OG"
+            data-nickname="Patent Bred"
+            data-thickness="Regular Sole"
+            data-upper-material="Patent Leather"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="High Top"
+            data-toe-type="Round Toe"
+            data-occasion="lifestyle"
+            data-color="red"
+            data-colorway="Black/White-Varsity Red"
+            data-description="The Air Jordan 1 Retro High OG 'Patent Bred' reimagines the classic 'Bred' colorway with a glossy patent leather finish, offering a luxurious twist on a timeless silhouette."
+            data-price="170.00"
+            data-stock="3"
+            data-related-products='[{"name": "Air Jordan 1 Chicago", "image": "assets/images/jordan1-chicago.jpg"}, {"name": "Air Jordan 1 Royal", "image": "assets/images/jordan1-royal.jpg"}]'>
+        <img src="assets/images/jordan85.jpg" alt="Air Jordan 1 OG 1985">
+        <h4>Air Jordan 1 Retro High OG 'Patent Bred'</h4>
+      </div>
+      <div class="sneaker-card"
+            data-model="1276228-006"
+            data-release-date="2016-06-10"
+            data-series="Under Armour Curry 2"
+            data-nickname="MVP Back-to-Back"
+            data-thickness="Regular Sole"
+            data-upper-material="SpeedForm"
+            data-closure="Lacing"
+            data-sole-material="Rubber Sole"
+            data-upper="Mid Top"
+            data-toe-type="Round Toe"
+            data-occasion="basketball"
+            data-color="white"
+            data-colorway="Black/White-Gold"
+            data-description="The Curry 2 MVP 'Back-to-Back' celebrates Stephen Curry's consecutive MVP awards with a split design featuring a black and white theme, representing his journey to greatness."
+            data-price="130.00"
+            data-stock="1"
+            data-related-products='[{"name": "Curry 1 MVP", "image": "assets/images/curry1-mvp.jpg"}, {"name": "Curry 4 More Rings", "image": "assets/images/curry4-morerings.jpg"}]'>
+        <img src="assets/images/curryback2back.jpg" alt="Curry 2 MVP “Back-to-Back”">
+        <h4>Curry 2 MVP “Back-to-Back”</h4>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 NBA Sneaker Showcase. All rights reserved.</p>
+  </footer>
+
+  <div id="sneakerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modalSneakerName"></h2>
+      <div class="modal-details">
+        <p><strong>Model:</strong> <span id="modalModel"></span></p>
+        <p><strong>Release Date:</strong> <span id="modalReleaseDate"></span></p>
+        <p><strong>Series:</strong> <span id="modalSeries"></span></p>
+        <p><strong>Nickname:</strong> <span id="modalNickname"></span></p>
+        <p><strong>Thickness:</strong> <span id="modalThickness"></span></p>
+        <p><strong>Upper Material:</strong> <span id="modalUpperMaterial"></span></p>
+        <p><strong>Closure:</strong> <span id="modalClosure"></span></p>
+        <p><strong>Sole Material:</strong> <span id="modalSoleMaterial"></span></p>
+        <p><strong>Upper:</strong> <span id="modalUpper"></span></p>
+        <p><strong>Toe Type:</strong> <span id="modalToeType"></span></p>
+        <p><strong>Occasion:</strong> <span id="modalOccasion"></span></p>
+        <p><strong>Color:</strong> <span id="modalColor"></span></p>
+        <p><strong>Colorway:</strong> <span id="modalColorway"></span></p>
+        <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+        <p><strong>Stock:</strong> <span id="modalStock"></span> units</p>
+        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+      </div>
+      <button class="modal-buy-button">Buy Now</button>
+
+      <div class="related-products">
+        <h3>You might also like:</h3>
+        <div id="relatedProductsGrid" class="related-grid">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle Logic
+    document.getElementById('darkToggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        // Cleaned up textContent to remove emoji unicode characters
+        this.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+    });
+
+    // Apply saved theme on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const themeToggleBtn = document.getElementById('darkToggle');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggleBtn.textContent = 'Light Mode';
+        } else {
+            themeToggleBtn.textContent = 'Dark Mode';
+        }
+    });
+
+    // Sneaker Card Modal Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const sneakerCards = document.querySelectorAll('.sneaker-card');
+        const modal = document.getElementById('sneakerModal');
+        const closeButton = document.querySelector('.close-button');
+        const modalBuyButton = document.querySelector('.modal-buy-button'); // Get the buy button
+
+        // Modal detail elements
+        const modalSneakerName = document.getElementById('modalSneakerName');
+        const modalModel = document.getElementById('modalModel');
+        const modalReleaseDate = document.getElementById('modalReleaseDate');
+        const modalSeries = document.getElementById('modalSeries');
+        const modalNickname = document.getElementById('modalNickname');
+        const modalThickness = document.getElementById('modalThickness');
+        const modalUpperMaterial = document.getElementById('modalUpperMaterial');
+        const modalClosure = document.getElementById('modalClosure');
+        const modalSoleMaterial = document.getElementById('modalSoleMaterial');
+        const modalUpper = document.getElementById('modalUpper');
+        const modalToeType = document.getElementById('modalToeType');
+        const modalOccasion = document.getElementById('modalOccasion');
+        const modalColor = document.getElementById('modalColor');
+        const modalColorway = document.getElementById('modalColorway');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalStock = document.getElementById('modalStock');
+        const modalDescription = document.getElementById('modalDescription');
+        const relatedProductsGrid = document.getElementById('relatedProductsGrid');
+
+        sneakerCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Populate modal details
+                modalSneakerName.textContent = card.querySelector('h4').textContent;
+                modalModel.textContent = card.dataset.model || 'N/A';
+                modalReleaseDate.textContent = card.dataset.releaseDate || 'N/A';
+                modalSeries.textContent = card.dataset.series || 'N/A';
+                modalNickname.textContent = card.dataset.nickname || 'N/A';
+                modalThickness.textContent = card.dataset.thickness || 'N/A';
+                modalUpperMaterial.textContent = card.dataset.upperMaterial || 'N/A';
+                modalClosure.textContent = card.dataset.closure || 'N/A';
+                modalSoleMaterial.textContent = card.dataset.soleMaterial || 'N/A';
+                modalUpper.textContent = card.dataset.upper || 'N/A';
+                modalToeType.textContent = card.dataset.toeType || 'N/A';
+                modalOccasion.textContent = card.dataset.occasion || 'N/A';
+                modalColor.textContent = card.dataset.color || 'N/A';
+                modalColorway.textContent = card.dataset.colorway || 'N/A';
+                modalPrice.textContent = parseFloat(card.dataset.price).toFixed(2) || 'N/A';
+                modalStock.textContent = card.dataset.stock || 'N/A';
+                modalDescription.textContent = card.dataset.description || 'N/A';
+
+                // Handle Related Products
+                relatedProductsGrid.innerHTML = ''; // Clear previous related products
+                if (card.dataset.relatedProducts) {
+                    try {
+                        const relatedProducts = JSON.parse(card.dataset.relatedProducts);
+                        if (relatedProducts.length > 0) {
+                            relatedProducts.forEach(product => {
+                                const relatedItemDiv = document.createElement('div');
+                                relatedItemDiv.classList.add('related-item');
+
+                                const img = document.createElement('img');
+                                img.src = product.image;
+                                img.alt = product.name;
+                                img.title = product.name;
+                                relatedItemDiv.appendChild(img);
+
+                                const p = document.createElement('p');
+                                p.textContent = product.name;
+                                relatedItemDiv.appendChild(p);
+
+                                relatedProductsGrid.appendChild(relatedItemDiv);
+                            });
+                        } else {
+                             relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products found for this item.</p>';
+                        }
+                    } catch (e) {
+                        console.error("Error parsing related products JSON:", e);
+                        relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">Error loading related products.</p>';
+                    }
+                } else {
+                    relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products available.</p>';
+                }
+
+                modal.style.display = 'block'; // Show the modal
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none'; // Hide the modal when close button is clicked
+        });
+
+        // Hide the modal if clicked outside of the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Buy Now button functionality (Redirects to buy.html)
+        document.querySelector('.modal-buy-button').addEventListener('click', () => {
+            const sneakerName = modalSneakerName.textContent;
+            
+            // Redirect to buy.html, passing the item name in the URL
+            window.location.href = "buy.html?item=" + encodeURIComponent(sneakerName);
+        });
+    });
+  </script>
+
+</body>
+</html>

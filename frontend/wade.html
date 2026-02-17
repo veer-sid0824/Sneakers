@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dwyane Wade Sneakers</title>
+  <style>
+    /* General body and typography */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f4f4f4; /* Light mode background */
+      color: #333; /* Light mode text color */
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #eee;
+    }
+
+    /* Header styles */
+    header {
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
+
+    body.dark-mode header {
+      background-color: #222;
+      border-bottom-color: #444;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode header h1 {
+      color: #eee;
+    }
+
+    /* Navigation styles */
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #007bff;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #0056b3;
+    }
+
+    body.dark-mode nav a {
+      color: #88d4ff;
+    }
+
+    body.dark-mode nav a:hover {
+      color: #5bbdff;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 12px;
+      border: none;
+      background-color: #6c757d;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
+    }
+
+    .theme-toggle-button:hover {
+      background-color: #5a6268;
+    }
+
+    /* Section styles */
+    section {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode section {
+      background-color: #2e2e2e;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    section h3 {
+      color: #333;
+    }
+
+    body.dark-mode section h3 {
+      color: #eee;
+    }
+
+    /* Sneaker grid and card styles */
+    .sneaker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 11fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .sneaker-card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    body.dark-mode .sneaker-card {
+      background-color: #3a3a3a;
+      border-color: #555;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .sneaker-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .sneaker-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .sneaker-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .sneaker-card h4 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode .sneaker-card h4 {
+      color: #eee;
+    }
+
+    /* Footer styles */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      background-color: #333;
+      color: white;
+      border-top: 1px solid #444;
+    }
+
+    body.dark-mode footer {
+      background-color: #111;
+      border-top-color: #333;
+    }
+
+    /* Styles for the modal */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        max-width: 700px; /* Max width for larger screens */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        animation-name: animatetop;
+        animation-duration: 0.4s;
+        border-radius: 8px;
+        position: relative;
+        text-align: left; /* Align text within modal content */
+        color: #333; /* Default text color for light mode */
+    }
+
+    /* Dark mode specific styles for modal content */
+    body.dark-mode .modal-content {
+        background-color: #333;
+        color: #eee;
+        border-color: #555;
+    }
+
+    .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    body.dark-mode .close-button {
+        color: #eee;
+    }
+
+    body.dark-mode .close-button:hover,
+    body.dark-mode .close-button:focus {
+        color: #fff;
+    }
+
+
+    /* Animation for the modal */
+    @keyframes animatetop {
+        from {top: -300px; opacity: 0}
+        to {top: 0; opacity: 1}
+    }
+
+    .modal-details p {
+        margin-bottom: 5px;
+        line-height: 1.4;
+    }
+
+    .modal-details strong {
+        min-width: 120px; /* Adjust as needed for alignment */
+        display: inline-block;
+    }
+
+    .modal-buy-button {
+        display: block;
+        width: fit-content;
+        margin: 20px auto 0;
+        padding: 12px 25px;
+        background-color: #28a745; /* Green buy button */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+        cursor: pointer;
+        text-decoration: none; /* If it's an anchor tag */
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-buy-button:hover {
+        background-color: #218838;
+    }
+
+    body.dark-mode .modal-buy-button {
+        background-color: #4CAF50; /* Slightly different green for dark mode */
+    }
+
+    body.dark-mode .modal-buy-button:hover {
+        background-color: #45a049;
+    }
+
+    .related-products {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+    }
+
+    body.dark-mode .related-products {
+        border-top-color: #555;
+    }
+
+    .related-products h3 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    body.dark-mode .related-products h3 {
+        color: #eee;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .related-item {
+        text-align: center;
+    }
+
+    .related-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .related-item img:hover {
+        transform: scale(1.05);
+    }
+
+    .related-item p {
+        font-size: 0.9em;
+        margin: 0;
+        color: #555;
+    }
+
+    body.dark-mode .related-item p {
+        color: #bbb;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .modal-content {
+            width: 90%;
+            margin: 10% auto;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .modal-content {
+            width: 95%;
+            margin: 5% auto;
+            padding: 15px;
+        }
+        .modal-details p {
+            font-size: 0.9em;
+        }
+        .close-button {
+            font-size: 24px;
+            top: 5px;
+            right: 10px;
+        }
+        .related-grid {
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dwyane Wade Sneakers</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="players.html">Back to Players</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle-button">🌙 Dark Mode</button>
+  </header>
+
+  <main>
+    <section class="player-sneakers">
+      <h2>Top Sneakers Worn by Dwyane Wade</h2>
+      
+      <h3 style="text-align:center; margin-bottom: 20px;">Way of Wade Collection</h3>
+      <div class="sneaker-grid">
+        <div class="sneaker-card"
+             data-model="N/A"
+             data-release-date="2012-10-23"
+             data-series="Li-Ning Way of Wade 1"
+             data-nickname="Canvas"
+             data-thickness="Regular Sole"
+             data-upper-material="Canvas/Synthetic"
+             data-closure="Lacing"
+             data-sole-material="Rubber Sole"
+             data-upper="Mid Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="white"
+             data-colorway="White/Red-Black"
+             data-description="The Li-Ning Way of Wade 'Canvas' was an early and unique iteration of Dwyane Wade's signature line, known for its distinctive material choice and bold color scheme."
+             data-price="120.00"
+             data-stock="3"
+             data-related-products='[]'>
+          <img src="assets/images/wade1.jpg" alt="Li-Ning Way of Wade 1">
+          <h4>Li-Ning Way of Wade 'Canvas'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAU049-21"
+             data-release-date="2025-01-01"
+             data-series="Li-Ning Way of Wade 11"
+             data-nickname="Mint"
+             data-thickness="Regular Sole"
+             data-upper-material="Textile/Synthetic"
+             data-closure="Lacing"
+             data-sole-material="Rubber Sole"
+             data-upper="Low Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="mint"
+             data-colorway="Mint Green/Black"
+             data-description="The Li-Ning Way of Wade 11 'Mint' combines innovative Li-Ning technologies for enhanced responsiveness and court control, all in a fresh, vibrant mint colorway."
+             data-price="225.00"
+             data-stock="7"
+             data-related-products='[]'>
+          <img src="assets/images/wade2.jpg" alt="Li-Ning Way of Wade 2 'Encore'">
+          <h4>Li-Ning Way of Wade 11 'Mint'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAV017-1"
+             data-release-date="2025-06-06"
+             data-series="Wade All City 13"
+             data-nickname="Cotton Candy"
+             data-thickness="Regular Sole"
+             data-upper-material="Textile"
+             data-closure="Lacing"
+             data-sole-material="Rubber Sole"
+             data-upper="Low Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="white"
+             data-colorway="Off White/Blue/Purple"
+             data-description="The Li-Ning Way of Wade All City 13 'Cotton Candy' offers a playful yet performance-driven design, ideal for versatile players who appreciate comfort and style."
+             data-price="80.25"
+             data-stock="12"
+             data-related-products='[]'>
+          <img src="assets/images/wade3.jpg" alt="Li-Ning Way of Wade 3">
+          <h4>Li-Ning Way of Wade 13 'Cotton Candy'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAS075-7"
+             data-release-date="2024-11-09"
+             data-series="Way Of Wade 10"
+             data-nickname="Black Dragon"
+             data-thickness="Regular Sole"
+             data-upper-material="Mesh"
+             data-closure="Lacing"
+             data-sole-material="Rubber Sole"
+             data-upper="High Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="black"
+             data-colorway="Black/Orange"
+             data-description="The Li-Ning Way of Wade 10 'Black Dragon' is designed for elite indoor performance, featuring a light and responsive BOOM midsole and full-length carbon-fiber plate for optimal training."
+             data-price="166.00"
+             data-stock="6"
+             data-related-products='[]'>
+          <img src="assets/images/wade4.jpg" alt="Li-Ning Way of Wade 4 'Liberty'">
+          <h4>Li-Ning Way of Wade 10 'Black Dragon'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAU049-6"
+             data-release-date="2024-07-01"
+             data-series="Li-Ning Way of Wade 11"
+             data-nickname="Hall Of Fame"
+             data-thickness="Regular Sole"
+             data-upper-material="Cow Leather"
+             data-closure="Lacing"
+             data-sole-material="Rubber + PHYLON Midsole + TPU"
+             data-upper="High Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="white"
+             data-colorway="White/Grey"
+             data-description="The Li-Ning Way of Wade 11 'Hall of Fame' celebrates Dwyane Wade's induction, featuring premium materials and advanced cushioning for top-tier performance."
+             data-price="199.99"
+             data-stock="5"
+             data-related-products='[]'>
+          <img src="assets/images/wade5.jpg" alt="Li-Ning Way of Wade 5 'White Hot'">
+          <h4>Li-Ning Way of Wade 11 'Hall Of Fame'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAS083-20"
+             data-release-date="2024-07-01"
+             data-series="Li-Ning Way of Wade 10 Low"
+             data-nickname="Origin"
+             data-thickness="Regular Sole"
+             data-upper-material="Textile + Synthetic"
+             data-closure="Lacing"
+             data-sole-material="Rubber + PHYLON Midsole + TPU"
+             data-upper="Low Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="brown"
+             data-colorway="Sandy Ice Brown"
+             data-description="The Li-Ning Way of Wade 10 Low 'Origin' offers impressive bounce and cushioning with its full-length BOOM midsole and carbon-fiber plate, ideal for all indoor court sports."
+             data-price="199.00"
+             data-stock="8"
+             data-related-products='[]'>
+          <img src="assets/images/wade6.jpg" alt="Li-Ning Way of Wade 6">
+          <h4>Li-Ning Way of Wade 10 Low 'Origin'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAS115-9"
+             data-release-date="2023-04-15"
+             data-series="Way Of Wade 10"
+             data-nickname="Florida"
+             data-thickness="Regular Sole"
+             data-upper-material="Leather"
+             data-closure="Lacing"
+             data-sole-material="Rubber Sole"
+             data-upper="High Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="white"
+             data-colorway="WHITE/YELLOW/PURPLE"
+             data-description="The Li-Ning Way of Wade 10 'Florida' pays homage to Dwyane Wade's career in the 'Sunshine State' with vibrant colors and high-performance features for cushioning and traction."
+             data-price="202.23"
+             data-stock="4"
+             data-related-products='[]'>
+          <img src="assets/images/wade7.jpg" alt="Li-Ning Way of Wade 7 'Last Dance'">
+          <h4>Li-Ning Way of Wade 10 'Florida'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="N/A"
+             data-release-date="2023-01-01"
+             data-series="Wade 808 5 Ultra"
+             data-nickname="Pisces"
+             data-thickness="Regular Sole"
+             data-upper-material="Textile"
+             data-closure="Lacing"
+             data-sole-material="TUFF RB + GCU"
+             data-upper="Low Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="pink"
+             data-colorway="Pink/White"
+             data-description="The Li-Ning Way of Wade 808 5 Ultra 'Pisces' offers exceptional responsiveness and lightweight performance with its SUPER BOOM drop-in midsole, ideal for indoor games."
+             data-price="159.00"
+             data-stock="9"
+             data-related-products='[]'>
+          <img src="assets/images/wade8.jpg" alt="Li-Ning Way of Wade 8">
+          <h4>Li-Ning Way of Wade 808 5 Ultra 'Pisces'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="N/A"
+             data-release-date="2024-03-01"
+             data-series="Li-Ning Way of Wade 11"
+             data-nickname="South Coast"
+             data-thickness="Regular Sole"
+             data-upper-material="Textile/Leather"
+             data-closure="Lacing"
+             data-sole-material="GCU Rubber Outsole"
+             data-upper="Low Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="blue"
+             data-colorway="Blue/Orange-White"
+             data-description="The Li-Ning Way of Wade 11 'South Coast' is designed for explosive players, offering lightness, speed, stability, and support with its BOOM midsole and CARBON CORE DRIVE SYSTEM."
+             data-price="189.00"
+             data-stock="6"
+             data-related-products='[]'>
+          <img src="assets/images/wade9.jpg" alt="Li-Ning Way of Wade 9">
+          <h4>Li-Ning Way of Wade 11 'South Coast'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="N/A"
+             data-release-date="2025-02-15"
+             data-series="Li-Ning Way of Wade 11"
+             data-nickname="Rainbow"
+             data-thickness="Regular Sole"
+             data-upper-material="Textile/Synthetic"
+             data-closure="Lacing"
+             data-sole-material="Rubber Sole"
+             data-upper="Low Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="multi-color"
+             data-colorway="Multi-color"
+             data-description="The Li-Ning Way of Wade 11 'Rainbow' features a vibrant multi-color design, combining visual flair with advanced performance technologies for dynamic play."
+             data-price="189.00"
+             data-stock="5"
+             data-related-products='[]'>
+          <img src="assets/images/wade10.jpg" alt="Li-Ning Way of Wade 10">
+          <h4>Li-Ning Way of Wade 11 'Rainbow'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAU049-20"
+             data-release-date="2024-06-01"
+             data-series="Li-Ning Way of Wade 11"
+             data-nickname="Statue"
+             data-thickness="Regular Sole"
+             data-upper-material="Textile"
+             data-closure="Lacing"
+             data-sole-material="Rubber + EVA Midsole + TPU"
+             data-upper="Low Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="grey"
+             data-colorway="Grey/Mint (wear-away to mint)"
+             data-description="The Li-Ning Way of Wade 11 'Statue' commemorates Dwyane Wade's enduring legacy, featuring a unique wear-away upper that reveals a mint color and advanced cushioning for superior performance."
+             data-price="225.00"
+             data-stock="10"
+             data-related-products='[]'>
+          <img src="assets/images/wade11.jpg" alt="Li-Ning Way of Wade 11">
+          <h4>Li-Ning Way of Wade 11 'Statue'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAS075-26"
+             data-release-date="2023-05-06"
+             data-series="Way Of Wade 10"
+             data-nickname="The First Pick"
+             data-thickness="Regular Sole"
+             data-upper-material="Textile/Synthetic"
+             data-closure="Lacing"
+             data-sole-material="Rubber Sole"
+             data-upper="Low Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="purple"
+             data-colorway="Purple/Black-Gold"
+             data-description="The Li-Ning Way of Wade 10 'The First Pick' symbolizes Dwyane Wade's journey with innovative lightweight design, BOOM technology, and enhanced protection for explosive movements."
+             data-price="296.00"
+             data-stock="2"
+             data-related-products='[]'>
+          <img src="assets/images/wade12.jpg" alt="Li-Ning Wade All City">
+          <h4>Li-Ning Way of Wade 10 'The First Pick'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAU049-1"
+             data-release-date="2024-06-29"
+             data-series="Way Of Wade 11"
+             data-nickname="305"
+             data-thickness="Regular Sole"
+             data-upper-material="Leather"
+             data-closure="Lacing"
+             data-sole-material="Rubber Sole"
+             data-upper="High Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="beige"
+             data-colorway="Beige/Black"
+             data-description="The Li-Ning Way of Wade 11 '305' is a tribute to Miami's vibrant culture, combining cutting-edge technology with a sleek aesthetic for unparalleled on-court functionality and style."
+             data-price="170.13"
+             data-stock="8"
+             data-related-products='[]'>
+          <img src="assets/images/wade808.jpg" alt="Li-Ning Wade 808 Series">
+          <h4>Li-Ning Wade 11 '305'</h4>
+        </div>
+        <div class="sneaker-card"
+             data-model="ABAP113-12"
+             data-release-date="2020-01-18"
+             data-series="Way Of Wade 8"
+             data-nickname="Liberty"
+             data-thickness="Regular Sole"
+             data-upper-material="Leather"
+             data-closure="Lacing"
+             data-sole-material="Rubber Sole"
+             data-upper="High Top"
+             data-toe-type="Round Toe"
+             data-occasion="basketball"
+             data-color="green"
+             data-colorway="Green/teal"
+             data-description="The Li-Ning Way of Wade 8 'Liberty' features a distinctive green and teal colorway, offering excellent cushioning, slip-resistance, and wearability for all-season basketball."
+             data-price="94.16"
+             data-stock="5"
+             data-related-products='[]'>
+          <img src="assets/images/wade13.jpg" alt="Li-Ning Wade Fission Series">
+          <h4>Li-Ning Way of Wade 8 'Liberty'</h4>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 NBA Sneaker Showcase</p>
+  </footer>
+
+  <div id="sneakerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modalSneakerName"></h2>
+      <div class="modal-details">
+        <p><strong>Model:</strong> <span id="modalModel"></span></p>
+        <p><strong>Release Date:</strong> <span id="modalReleaseDate"></span></p>
+        <p><strong>Series:</strong> <span id="modalSeries"></span></p>
+        <p><strong>Nickname:</strong> <span id="modalNickname"></span></p>
+        <p><strong>Thickness:</strong> <span id="modalThickness"></span></p>
+        <p><strong>Upper Material:</strong> <span id="modalUpperMaterial"></span></p>
+        <p><strong>Closure:</strong> <span id="modalClosure"></span></p>
+        <p><strong>Sole Material:</strong> <span id="modalSoleMaterial"></span></p>
+        <p><strong>Upper:</strong> <span id="modalUpper"></span></p>
+        <p><strong>Toe Type:</strong> <span id="modalToeType"></span></p>
+        <p><strong>Occasion:</strong> <span id="modalOccasion"></span></p>
+        <p><strong>Color:</strong> <span id="modalColor"></span></p>
+        <p><strong>Colorway:</strong> <span id="modalColorway"></span></p>
+        <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+        <p><strong>Stock:</strong> <span id="modalStock"></span> units</p>
+        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+      </div>
+      <a href="buy.html" class="modal-buy-button">Buy Now</a>
+
+      <div class="related-products">
+        <h3>You might also like:</h3>
+        <div id="relatedProductsGrid" class="related-grid">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle Logic
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        this.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    // Apply saved theme on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️ Light Mode';
+        } else {
+            themeToggleBtn.textContent = '🌙 Dark Mode';
+        }
+    });
+
+    // Sneaker Card Modal Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const sneakerCards = document.querySelectorAll('.sneaker-card');
+        const modal = document.getElementById('sneakerModal');
+        const closeButton = document.querySelector('.close-button');
+        const modalBuyButton = document.querySelector('.modal-buy-button'); // Get the buy button
+
+        // Modal detail elements
+        const modalSneakerName = document.getElementById('modalSneakerName');
+        const modalModel = document.getElementById('modalModel');
+        const modalReleaseDate = document.getElementById('modalReleaseDate');
+        const modalSeries = document.getElementById('modalSeries');
+        const modalNickname = document.getElementById('modalNickname');
+        const modalThickness = document.getElementById('modalThickness');
+        const modalUpperMaterial = document.getElementById('modalUpperMaterial');
+        const modalClosure = document.getElementById('modalClosure');
+        const modalSoleMaterial = document.getElementById('modalSoleMaterial');
+        const modalUpper = document.getElementById('modalUpper');
+        const modalToeType = document.getElementById('modalToeType');
+        const modalOccasion = document.getElementById('modalOccasion');
+        const modalColor = document.getElementById('modalColor');
+        const modalColorway = document.getElementById('modalColorway');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalStock = document.getElementById('modalStock');
+        const modalDescription = document.getElementById('modalDescription');
+        const relatedProductsGrid = document.getElementById('relatedProductsGrid');
+
+        sneakerCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Populate modal details
+                modalSneakerName.textContent = card.querySelector('h4').textContent;
+                modalModel.textContent = card.dataset.model || 'N/A';
+                modalReleaseDate.textContent = card.dataset.releaseDate || 'N/A';
+                modalSeries.textContent = card.dataset.series || 'N/A';
+                modalNickname.textContent = card.dataset.nickname || 'N/A';
+                modalThickness.textContent = card.dataset.thickness || 'N/A';
+                modalUpperMaterial.textContent = card.dataset.upperMaterial || 'N/A';
+                modalClosure.textContent = card.dataset.closure || 'N/A';
+                modalSoleMaterial.textContent = card.dataset.soleMaterial || 'N/A';
+                modalUpper.textContent = card.dataset.upper || 'N/A';
+                modalToeType.textContent = card.dataset.toeType || 'N/A';
+                modalOccasion.textContent = card.dataset.occasion || 'N/A';
+                modalColor.textContent = card.dataset.color || 'N/A';
+                modalColorway.textContent = card.dataset.colorway || 'N/A';
+                modalPrice.textContent = parseFloat(card.dataset.price).toFixed(2) || 'N/A';
+                modalStock.textContent = card.dataset.stock || 'N/A';
+                modalDescription.textContent = card.dataset.description || 'N/A';
+
+                // Handle Related Products
+                relatedProductsGrid.innerHTML = ''; // Clear previous related products
+                if (card.dataset.relatedProducts) {
+                    try {
+                        const relatedProducts = JSON.parse(card.dataset.relatedProducts);
+                        if (relatedProducts.length > 0) {
+                            relatedProducts.forEach(product => {
+                                const relatedItemDiv = document.createElement('div');
+                                relatedItemDiv.classList.add('related-item');
+
+                                const img = document.createElement('img');
+                                img.src = product.image;
+                                img.alt = product.name;
+                                img.title = product.name;
+                                relatedItemDiv.appendChild(img);
+
+                                const p = document.createElement('p');
+                                p.textContent = product.name;
+                                relatedItemDiv.appendChild(p);
+
+                                relatedProductsGrid.appendChild(relatedItemDiv);
+                            });
+                        } else {
+                             relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products found for this item.</p>';
+                        }
+                    } catch (e) {
+                        console.error("Error parsing related products JSON:", e);
+                        relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">Error loading related products.</p>';
+                    }
+                } else {
+                    relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products available.</p>';
+                }
+
+
+                modal.style.display = 'block'; // Show the modal
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none'; // Hide the modal when close button is clicked
+        });
+
+        // Hide the modal if clicked outside of the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // The "Buy Now" button now directly links to buy.html
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caitlin Clark Sneakers | WNBA Sneaker Showcase</title>
+  <style>
+    /* General body and typography */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f4f4f4; /* Light mode background */
+      color: #333; /* Light mode text color */
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #eee;
+    }
+
+    /* Header styles */
+    header {
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
+
+    body.dark-mode header {
+      background-color: #222;
+      border-bottom-color: #444;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode header h1 {
+      color: #eee;
+    }
+
+    /* Navigation styles */
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #007bff;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #0056b3;
+    }
+
+    body.dark-mode nav a {
+      color: #88d4ff;
+    }
+
+    body.dark-mode nav a:hover {
+      color: #5bbdff;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 12px;
+      border: none;
+      background-color: #6c757d;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
+    }
+
+    .theme-toggle-button:hover {
+      background-color: #5a6268;
+    }
+
+    /* Section styles */
+    section {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode section {
+      background-color: #2e2e2e;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    section h3 {
+      color: #333;
+    }
+
+    body.dark-mode section h3 {
+      color: #eee;
+    }
+
+    /* Sneaker grid and card styles */
+    .sneaker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .sneaker-card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    body.dark-mode .sneaker-card {
+      background-color: #3a3a3a;
+      border-color: #555;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .sneaker-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .sneaker-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .sneaker-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .sneaker-card h4 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode .sneaker-card h4 {
+      color: #eee;
+    }
+
+    /* Footer styles */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      background-color: #333;
+      color: white;
+      border-top: 1px solid #444;
+    }
+
+    body.dark-mode footer {
+      background-color: #111;
+      border-top-color: #333;
+    }
+
+    /* Styles for the modal */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        max-width: 700px; /* Max width for larger screens */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        animation-name: animatetop;
+        animation-duration: 0.4s;
+        border-radius: 8px;
+        position: relative;
+        text-align: left; /* Align text within modal content */
+        color: #333; /* Default text color for light mode */
+    }
+
+    /* Dark mode specific styles for modal content */
+    body.dark-mode .modal-content {
+        background-color: #333;
+        color: #eee;
+        border-color: #555;
+    }
+
+    .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    body.dark-mode .close-button {
+        color: #eee;
+    }
+
+    body.dark-mode .close-button:hover,
+    body.dark-mode .close-button:focus {
+        color: #fff;
+    }
+
+
+    /* Animation for the modal */
+    @keyframes animatetop {
+        from {top: -300px; opacity: 0}
+        to {top: 0; opacity: 1}
+    }
+
+    .modal-details p {
+        margin-bottom: 5px;
+        line-height: 1.4;
+    }
+
+    .modal-details strong {
+        min-width: 120px; /* Adjust as needed for alignment */
+        display: inline-block;
+    }
+
+    .modal-buy-button {
+        display: block;
+        width: fit-content;
+        margin: 20px auto 0;
+        padding: 12px 25px;
+        background-color: #28a745; /* Green buy button */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+        cursor: pointer;
+        text-decoration: none; /* If it's an anchor tag */
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-buy-button:hover {
+        background-color: #218838;
+    }
+
+    body.dark-mode .modal-buy-button {
+        background-color: #4CAF50; /* Slightly different green for dark mode */
+    }
+
+    body.dark-mode .modal-buy-button:hover {
+        background-color: #45a049;
+    }
+
+    .related-products {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+    }
+
+    body.dark-mode .related-products {
+        border-top-color: #555;
+    }
+
+    .related-products h3 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    body.dark-mode .related-products h3 {
+        color: #eee;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .related-item {
+        text-align: center;
+    }
+
+    .related-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .related-item img:hover {
+        transform: scale(1.05);
+    }
+
+    .related-item p {
+        font-size: 0.9em;
+        margin: 0;
+        color: #555;
+    }
+
+    body.dark-mode .related-item p {
+        color: #bbb;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .modal-content {
+            width: 90%;
+            margin: 10% auto;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .modal-content {
+            width: 95%;
+            margin: 5% auto;
+            padding: 15px;
+        }
+        .modal-details p {
+            font-size: 0.9em;
+        }
+        .close-button {
+            font-size: 24px;
+            top: 5px;
+            right: 10px;
+        }
+        .related-grid {
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Caitlin Clark Sneakers</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="sneakers.html">Sneakers</a>
+      <a href="players.html">Players</a>
+      <a href="rare.html">Rare Drops</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle-button">🌙 Dark Mode</button>
+  </header>
+
+  <section>
+    <h3 style="text-align:center; margin-bottom: 20px;">Caitlin Clark Signature (Nike CC) Collection</h3>
+    <div class="sneaker-grid">
+      <div class="sneaker-card"
+           data-model="CC-CC1-25"
+           data-release-date="2025-05-14"
+           data-series="Nike CC I"
+           data-nickname="The Hawkeye Debut"
+           data-thickness="Responsive Sole"
+           data-upper-material="Performance Knit"
+           data-closure="Lacing"
+           data-sole-material="Nike Zoom Air"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="white"
+           data-colorway="White/Yellow/Black"
+           data-description="Caitlin Clark's highly anticipated debut signature shoe, focusing on quick cuts and deep-range shooting support. Features a lightweight Zoom Air unit."
+           data-price="160.00"
+           data-stock="45"
+           data-related-products='[{"name": "Nike CC II 'Midwest Express'", "image": "assets/images/cc2.jpg"}]'>
+        <img src="assets/images/cc1.jpg" alt="Nike CC I The Hawkeye Debut">
+        <h4>Nike CC I 'The Hawkeye Debut'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC2-25ME"
+           data-release-date="2025-08-01"
+           data-series="Nike CC II"
+           data-nickname="Midwest Express"
+           data-thickness="Responsive Sole"
+           data-upper-material="Engineered Mesh"
+           data-closure="Lacing"
+           data-sole-material="Nike React"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="blue"
+           data-colorway="Royal Blue/Yellow/White"
+           data-description="The second iteration, offering enhanced lateral stability and React cushioning for high-impact point guard play."
+           data-price="165.00"
+           data-stock="35"
+           data-related-products='[{"name": "Nike CC III 'Logo Legend'", "image": "assets/images/cc3.jpg"}]'>
+        <img src="assets/images/cc2.jpg" alt="Nike CC II Midwest Express">
+        <h4>Nike CC II 'Midwest Express'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC3-26LL"
+           data-release-date="2026-03-20"
+           data-series="Nike CC III"
+           data-nickname="Logo Legend"
+           data-thickness="Responsive Sole"
+           data-upper-material="Synthetic/Knit"
+           data-closure="Lacing"
+           data-sole-material="Zoom Air Turbo"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="black"
+           data-colorway="Black/Bright Red/White"
+           data-description="A striking colorway inspired by her personal branding and competitive fire. Features Zoom Air Turbo for quick-twitch movements."
+           data-price="175.00"
+           data-stock="28"
+           data-related-products='[{"name": "Nike CC IV 'The Range'", "image": "assets/images/cc4.jpg"}]'>
+        <img src="assets/images/cc3.jpg" alt="Nike CC III Logo Legend">
+        <h4>Nike CC III 'Logo Legend'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC4-27RANGE"
+           data-release-date="2027-07-07"
+           data-series="Nike CC IV"
+           data-nickname="The Range"
+           data-thickness="Minimalist Sole"
+           data-upper-material="Lightweight Textile"
+           data-closure="Lacing"
+           data-sole-material="Cushlon"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="green"
+           data-colorway="Neon Green/Black/White"
+           data-description="An ultra-lightweight shoe built for maximum court coverage and speed, reflecting her exceptional shooting range."
+           data-price="170.00"
+           data-stock="22"
+           data-related-products='[{"name": "Nike CC V 'The Record Breaker'", "image": "assets/images/cc5.jpg"}]'>
+        <img src="assets/images/cc4.jpg" alt="Nike CC IV The Range">
+        <h4>Nike CC IV 'The Range'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC5-28RECRD"
+           data-release-date="2028-11-20"
+           data-series="Nike CC V"
+           data-nickname="The Record Breaker"
+           data-thickness="Cushioned Sole"
+           data-upper-material="Premium Knit"
+           data-closure="Lacing"
+           data-sole-material="Zoom Air & React"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="gold"
+           data-colorway="Metallic Gold/Black/Crimson"
+           data-description="A celebratory model marking her professional milestones. Features a hybrid cushioning system for explosive energy and soft landings."
+           data-price="190.00"
+           data-stock="15"
+           data-related-products='[{"name": "Nike CC VI 'The Passer'", "image": "assets/images/cc6.jpg"}]'>
+        <img src="assets/images/cc5.jpg" alt="Nike CC V The Record Breaker">
+        <h4>Nike CC V 'The Record Breaker'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC6-29PASS"
+           data-release-date="2029-06-05"
+           data-series="Nike CC VI"
+           data-nickname="The Passer"
+           data-thickness="Responsive Sole"
+           data-upper-material="Durable Textile"
+           data-closure="Lacing"
+           data-sole-material="Zoom Strobel"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="purple"
+           data-colorway="Deep Purple/Yellow/Aqua"
+           data-description="Built for floor generals, featuring a full-length Zoom Strobel for a responsive, low-to-the-ground feel, enhancing court control and vision."
+           data-price="185.00"
+           data-stock="20"
+           data-related-products='[{"name": "Nike CC VII 'The Icon'", "image": "assets/images/cc7.jpg"}]'>
+        <img src="assets/images/cc6.jpg" alt="Nike CC VI The Passer">
+        <h4>Nike CC VI 'The Passer'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC7-30ICON"
+           data-release-date="2030-09-12"
+           data-series="Nike CC VII"
+           data-nickname="The Icon"
+           data-thickness="Cushioned Sole"
+           data-upper-material="Premium Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Boost Foam (PE Only)"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="lifestyle"
+           data-color="red"
+           data-colorway="Crimson Red/White/Black"
+           data-description="A high-end, lifestyle edition of her signature line, focusing on off-court style and comfort. *Note: Uses Boost foam in a PE version due to Nike partnership flexibility.*"
+           data-price="200.00"
+           data-stock="18"
+           data-related-products='[{"name": "Nike CC VIII 'Elite Guard'", "image": "assets/images/cc8.jpg"}]'>
+        <img src="assets/images/cc7.jpg" alt="Nike CC VII The Icon">
+        <h4>Nike CC VII 'The Icon'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC8-31EG"
+           data-release-date="2031-04-10"
+           data-series="Nike CC VIII"
+           data-nickname="Elite Guard"
+           data-thickness="Responsive Sole"
+           data-upper-material="Woven Textile"
+           data-closure="Lacing"
+           data-sole-material="Nike Zoom Air"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="black"
+           data-colorway="Black/Silver/Neon Pink"
+           data-description="A sleek, performance-focused low-top designed for the quick, multi-skilled guard. Excellent traction and lockdown."
+           data-price="175.00"
+           data-stock="24"
+           data-related-products='[{"name": "Nike CC IX 'Finals Edition'", "image": "assets/images/cc9.jpg"}]'>
+        <img src="assets/images/cc8.jpg" alt="Nike CC VIII Elite Guard">
+        <h4>Nike CC VIII 'Elite Guard'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC9-32FIN"
+           data-release-date="2032-10-01"
+           data-series="Nike CC IX"
+           data-nickname="Finals Edition"
+           data-thickness="Responsive Sole"
+           data-upper-material="Reinforced Knit"
+           data-closure="Lacing/Strap"
+           data-sole-material="Zoom Strobel & Carbon Fiber Plate"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="white"
+           data-colorway="White/Gold/Ice Blue"
+           data-description="The ultimate championship model. Features a carbon fiber plate for stability and propulsion, encased in a full Zoom Strobel."
+           data-price="210.00"
+           data-stock="13"
+           data-related-products='[{"name": "Nike CC X 'The Veteran'", "image": "assets/images/cc10.jpg"}]'>
+        <img src="assets/images/cc9.jpg" alt="Nike CC IX Finals Edition">
+        <h4>Nike CC IX 'Finals Edition'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC10-33VET"
+           data-release-date="2033-05-18"
+           data-series="Nike CC X"
+           data-nickname="The Veteran"
+           data-thickness="Cushioned Sole"
+           data-upper-material="Premium Leather/Knit"
+           data-closure="Lacing"
+           data-sole-material="React Foam"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="lifestyle"
+           data-color="grey"
+           data-colorway="Cool Grey/Gum/White"
+           data-description="A mature, comfortable silhouette designed for everyday wear, reflecting her long-term influence on and off the court."
+           data-price="175.00"
+           data-stock="30"
+           data-related-products='[{"name": "Nike CC XI 'Future Classic'", "image": "assets/images/cc11.jpg"}]'>
+        <img src="assets/images/cc10.jpg" alt="Nike CC X The Veteran">
+        <h4>Nike CC X 'The Veteran'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC11-34FC"
+           data-release-date="2034-06-25"
+           data-series="Nike CC XI"
+           data-nickname="Future Classic"
+           data-thickness="Responsive Sole"
+           data-upper-material="Performance Textile"
+           data-closure="Lacing"
+           data-sole-material="Nike Zoom Air"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="white"
+           data-colorway="White/Light Blue/Volt"
+           data-description="A timeless performance model that combines the best features of her previous signature shoes into a single, reliable design."
+           data-price="180.00"
+           data-stock="27"
+           data-related-products='[{"name": "Nike CC XII 'The Creator'", "image": "assets/images/cc12.jpg"}]'>
+        <img src="assets/images/cc11.jpg" alt="Nike CC XI Future Classic">
+        <h4>Nike CC XI 'Future Classic'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC12-35CRE"
+           data-release-date="2035-09-01"
+           data-series="Nike CC XII"
+           data-nickname="The Creator"
+           data-thickness="Responsive Sole"
+           data-upper-material="Minimalist Knit"
+           data-closure="Lacing"
+           data-sole-material="Zoom Strobel"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="teal"
+           data-colorway="Teal/Black/Orange"
+           data-description="Emphasizes court vision and playmaking, with a thin, highly responsive sole for maximum feel and control."
+           data-price="185.00"
+           data-stock="19"
+           data-related-products='[{"name": "Nike CC XIII 'The Legacy'", "image": "assets/images/cc13.jpg"}]'>
+        <img src="assets/images/cc12.jpg" alt="Nike CC XII The Creator">
+        <h4>Nike CC XII 'The Creator'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC13-36LEG"
+           data-release-date="2036-11-15"
+           data-series="Nike CC XIII"
+           data-nickname="The Legacy"
+           data-thickness="Cushioned Sole"
+           data-upper-material="Luxury Suede"
+           data-closure="Lacing"
+           data-sole-material="React"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="lifestyle"
+           data-color="brown"
+           data-colorway="Dark Brown/Tan/Gum"
+           data-description="A premium, lifestyle-focused release celebrating her established legacy as one of the game's greats."
+           data-price="195.00"
+           data-stock="16"
+           data-related-products='[{"name": "Nike CC I 'The Hawkeye Debut'", "image": "assets/images/cc1.jpg"}]'>
+        <img src="assets/images/cc13.jpg" alt="Nike CC XIII The Legacy">
+        <h4>Nike CC XIII 'The Legacy'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-PE24-RECRD"
+           data-release-date="2024-03-03"
+           data-series="Nike PE"
+           data-nickname="College Record Breaker"
+           data-thickness="Responsive Sole"
+           data-upper-material="Synthetic/Knit"
+           data-closure="Lacing"
+           data-sole-material="Zoom Air"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="yellow"
+           data-colorway="Iowa Gold/White/Black"
+           data-description="A Player Exclusive colorway of a non-signature Nike model, worn when she broke the all-time scoring record in college basketball."
+           data-price="220.00"
+           data-stock="17"
+           data-related-products='[{"name": "Nike CC I 'The Hawkeye Debut'", "image": "assets/images/cc1.jpg"}]'>
+        <img src="assets/images/cc14.jpg" alt="Nike CC PE College Record Breaker">
+        <h4>Nike CC PE 'College Record Breaker'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="CC-CC15-38GOAT"
+           data-release-date="2038-10-02"
+           data-series="Nike CC XV"
+           data-nickname="The GOAT Era"
+           data-thickness="Ultimate Sole"
+           data-upper-material="Advanced Polymer"
+           data-closure="Lacing/Magnetic Strap"
+           data-sole-material="ZoomX & Carbon Plate"
+           data-upper="High Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="silver"
+           data-colorway="Chrome Silver/Black/White"
+           data-description="The ultimate signature model, a technological marvel built to celebrate her status as the Greatest of All Time, featuring maximum tech and support."
+           data-price="250.00"
+           data-stock="10"
+           data-related-products='[{"name": "Nike CC IX 'Finals Edition'", "image": "assets/images/cc9.jpg"}]'>
+        <img src="assets/images/cc15.jpg" alt="Nike CC XV The GOAT Era">
+        <h4>Nike CC XV 'The GOAT Era'</h4>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 WNBA Sneaker Showcase. All rights reserved.</p>
+  </footer>
+
+  <div id="sneakerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modalSneakerName"></h2>
+      <div class="modal-details">
+        <p><strong>Model:</strong> <span id="modalModel"></span></p>
+        <p><strong>Release Date:</strong> <span id="modalReleaseDate"></span></p>
+        <p><strong>Series:</strong> <span id="modalSeries"></span></p>
+        <p><strong>Nickname:</strong> <span id="modalNickname"></span></p>
+        <p><strong>Thickness:</strong> <span id="modalThickness"></span></p>
+        <p><strong>Upper Material:</strong> <span id="modalUpperMaterial"></span></p>
+        <p><strong>Closure:</strong> <span id="modalClosure"></span></p>
+        <p><strong>Sole Material:</strong> <span id="modalSoleMaterial"></span></p>
+        <p><strong>Upper:</strong> <span id="modalUpper"></span></p>
+        <p><strong>Toe Type:</strong> <span id="modalToeType"></span></p>
+        <p><strong>Occasion:</strong> <span id="modalOccasion"></span></p>
+        <p><strong>Color:</strong> <span id="modalColor"></span></p>
+        <p><strong>Colorway:</strong> <span id="modalColorway"></span></p>
+        <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+        <p><strong>Stock:</strong> <span id="modalStock"></span> units</p>
+        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+      </div>
+      <a href="buy.html" class="modal-buy-button">Buy Now</a>
+
+      <div class="related-products">
+        <h3>You might also like:</h3>
+        <div id="relatedProductsGrid" class="related-grid">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle Logic
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        this.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    // Apply saved theme on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️ Light Mode';
+        } else {
+            themeToggleBtn.textContent = '🌙 Dark Mode';
+        }
+    });
+
+    // Sneaker Card Modal Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const sneakerCards = document.querySelectorAll('.sneaker-card');
+        const modal = document.getElementById('sneakerModal');
+        const closeButton = document.querySelector('.close-button');
+
+        // Modal detail elements
+        const modalSneakerName = document.getElementById('modalSneakerName');
+        const modalModel = document.getElementById('modalModel');
+        const modalReleaseDate = document.getElementById('modalReleaseDate');
+        const modalSeries = document.getElementById('modalSeries');
+        const modalNickname = document.getElementById('modalNickname');
+        const modalThickness = document.getElementById('modalThickness');
+        const modalUpperMaterial = document.getElementById('modalUpperMaterial');
+        const modalClosure = document.getElementById('modalClosure');
+        const modalSoleMaterial = document.getElementById('modalSoleMaterial');
+        const modalUpper = document.getElementById('modalUpper');
+        const modalToeType = document.getElementById('modalToeType');
+        const modalOccasion = document.getElementById('modalOccasion');
+        const modalColor = document.getElementById('modalColor');
+        const modalColorway = document.getElementById('modalColorway');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalStock = document.getElementById('modalStock');
+        const modalDescription = document.getElementById('modalDescription');
+        const relatedProductsGrid = document.getElementById('relatedProductsGrid');
+
+        sneakerCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Populate modal details
+                modalSneakerName.textContent = card.querySelector('h4').textContent;
+                modalModel.textContent = card.dataset.model || 'N/A';
+                modalReleaseDate.textContent = card.dataset.releaseDate || 'N/A';
+                modalSeries.textContent = card.dataset.series || 'N/A';
+                modalNickname.textContent = card.dataset.nickname || 'N/A';
+                modalThickness.textContent = card.dataset.thickness || 'N/A';
+                modalUpperMaterial.textContent = card.dataset.upperMaterial || 'N/A';
+                modalClosure.textContent = card.dataset.closure || 'N/A';
+                modalSoleMaterial.textContent = card.dataset.soleMaterial || 'N/A';
+                modalUpper.textContent = card.dataset.upper || 'N/A';
+                modalToeType.textContent = card.dataset.toeType || 'N/A';
+                modalOccasion.textContent = card.dataset.occasion || 'N/A';
+                modalColor.textContent = card.dataset.color || 'N/A';
+                modalColorway.textContent = card.dataset.colorway || 'N/A';
+                modalPrice.textContent = parseFloat(card.dataset.price).toFixed(2) || 'N/A';
+                modalStock.textContent = card.dataset.stock || 'N/A';
+                modalDescription.textContent = card.dataset.description || 'N/A';
+
+                // Handle Related Products
+                relatedProductsGrid.innerHTML = ''; // Clear previous related products
+                if (card.dataset.relatedProducts) {
+                    try {
+                        const relatedProducts = JSON.parse(card.dataset.relatedProducts);
+                        if (relatedProducts.length > 0) {
+                            relatedProducts.forEach(product => {
+                                const relatedItemDiv = document.createElement('div');
+                                relatedItemDiv.classList.add('related-item');
+
+                                const img = document.createElement('img');
+                                img.src = product.image;
+                                img.alt = product.name;
+                                img.title = product.name;
+                                relatedItemDiv.appendChild(img);
+
+                                const p = document.createElement('p');
+                                p.textContent = product.name;
+                                relatedItemDiv.appendChild(p);
+
+                                relatedProductsGrid.appendChild(relatedItemDiv);
+                            });
+                        } else {
+                             relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products found for this item.</p>';
+                        }
+                    } catch (e) {
+                        console.error("Error parsing related products JSON:", e);
+                        relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">Error loading related products.</p>';
+                    }
+                } else {
+                    relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products available.</p>';
+                }
+
+
+                modal.style.display = 'block'; // Show the modal
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none'; // Hide the modal when close button is clicked
+        });
+
+        // Hide the modal if clicked outside of the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+  </script>
+</body>
+</html>

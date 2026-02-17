@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A'ja Wilson Sneakers | WNBA Sneaker Showcase</title>
+  <style>
+    /* General body and typography */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f4f4f4; /* Light mode background */
+      color: #333; /* Light mode text color */
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #eee;
+    }
+
+    /* Header styles */
+    header {
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
+
+    body.dark-mode header {
+      background-color: #222;
+      border-bottom-color: #444;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode header h1 {
+      color: #eee;
+    }
+
+    /* Navigation styles */
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #007bff;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #0056b3;
+    }
+
+    body.dark-mode nav a {
+      color: #88d4ff;
+    }
+
+    body.dark-mode nav a:hover {
+      color: #5bbdff;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 12px;
+      border: none;
+      background-color: #6c757d;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
+    }
+
+    .theme-toggle-button:hover {
+      background-color: #5a6268;
+    }
+
+    /* Section styles */
+    section {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode section {
+      background-color: #2e2e2e;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    section h3 {
+      color: #333;
+    }
+
+    body.dark-mode section h3 {
+      color: #eee;
+    }
+
+    /* Sneaker grid and card styles */
+    .sneaker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .sneaker-card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    body.dark-mode .sneaker-card {
+      background-color: #3a3a3a;
+      border-color: #555;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .sneaker-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .sneaker-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .sneaker-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .sneaker-card h4 {
+      margin: 0;
+      color: #333;
+    }
+
+    body.dark-mode .sneaker-card h4 {
+      color: #eee;
+    }
+
+    /* Footer styles */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      background-color: #333;
+      color: white;
+      border-top: 1px solid #444;
+    }
+
+    body.dark-mode footer {
+      background-color: #111;
+      border-top-color: #333;
+    }
+
+    /* Styles for the modal */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        max-width: 700px; /* Max width for larger screens */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        animation-name: animatetop;
+        animation-duration: 0.4s;
+        border-radius: 8px;
+        position: relative;
+        text-align: left; /* Align text within modal content */
+        color: #333; /* Default text color for light mode */
+    }
+
+    /* Dark mode specific styles for modal content */
+    body.dark-mode .modal-content {
+        background-color: #333;
+        color: #eee;
+        border-color: #555;
+    }
+
+    .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    body.dark-mode .close-button {
+        color: #eee;
+    }
+
+    body.dark-mode .close-button:hover,
+    body.dark-mode .close-button:focus {
+        color: #fff;
+    }
+
+
+    /* Animation for the modal */
+    @keyframes animatetop {
+        from {top: -300px; opacity: 0}
+        to {top: 0; opacity: 1}
+    }
+
+    .modal-details p {
+        margin-bottom: 5px;
+        line-height: 1.4;
+    }
+
+    .modal-details strong {
+        min-width: 120px; /* Adjust as needed for alignment */
+        display: inline-block;
+    }
+
+    .modal-buy-button {
+        display: block;
+        width: fit-content;
+        margin: 20px auto 0;
+        padding: 12px 25px;
+        background-color: #28a745; /* Green buy button */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+        cursor: pointer;
+        text-decoration: none; /* If it's an anchor tag */
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-buy-button:hover {
+        background-color: #218838;
+    }
+
+    body.dark-mode .modal-buy-button {
+        background-color: #4CAF50; /* Slightly different green for dark mode */
+    }
+
+    body.dark-mode .modal-buy-button:hover {
+        background-color: #45a049;
+    }
+
+    .related-products {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+    }
+
+    body.dark-mode .related-products {
+        border-top-color: #555;
+    }
+
+    .related-products h3 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    body.dark-mode .related-products h3 {
+        color: #eee;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .related-item {
+        text-align: center;
+    }
+
+    .related-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .related-item img:hover {
+        transform: scale(1.05);
+    }
+
+    .related-item p {
+        font-size: 0.9em;
+        margin: 0;
+        color: #555;
+    }
+
+    body.dark-mode .related-item p {
+        color: #bbb;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .modal-content {
+            width: 90%;
+            margin: 10% auto;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .modal-content {
+            width: 95%;
+            margin: 5% auto;
+            padding: 15px;
+        }
+        .modal-details p {
+            font-size: 0.9em;
+        }
+        .close-button {
+            font-size: 24px;
+            top: 5px;
+            right: 10px;
+        }
+        .related-grid {
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>A'ja Wilson Sneakers</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="sneakers.html">Sneakers</a>
+      <a href="players.html">Players</a>
+      <a href="rare.html">Rare Drops</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle-button">🌙 Dark Mode</button>
+  </header>
+
+  <section>
+    <h3 style="text-align:center; margin-bottom: 20px;">A'ja Wilson Collection</h3>
+    <div class="sneaker-grid">
+      <div class="sneaker-card"
+           data-model="AW-AONE-100"
+           data-release-date="2025-10-11"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Day One"
+           data-thickness="Responsive Sole"
+           data-upper-material="Performance Mesh"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="black"
+           data-colorway="Black/Metallic Silver/Aces Red"
+           data-description="The debut signature shoe for A'ja Wilson. The A'ONE 'Day One' colorway pays homage to the Las Vegas Aces with its iconic black, silver, and red design, built for elite performance."
+           data-price="170.00"
+           data-stock="22"
+           data-related-products='[{"name": "A'ja Wilson A'ONE 'MVP'", "image": "assets/images/kobe2.jpg"}]'>
+        <img src="assets/images/aja1.jpg" alt="A'ja Wilson A'ONE Day One">
+        <h4>A'ja Wilson A'ONE 'Day One'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-700"
+           data-release-date="2025-11-20"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="MVP"
+           data-thickness="Responsive Sole"
+           data-upper-material="Premium Synthetic Leather"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="gold"
+           data-colorway="Metallic Gold/Black/White"
+           data-description="Celebrating A'ja's multiple MVP awards, this A'ONE 'MVP' edition features a stunning metallic gold upper with premium detailing, fit for a champion."
+           data-price="180.00"
+           data-stock="12"
+           data-related-products='[{"name": "A'ja Wilson A'ONE \'Day One\'", "image": "assets/images/kobe1.jpg"}]'>
+        <img src="assets/images/aja2.jpg" alt="A'ja Wilson A'ONE MVP">
+        <h4>A'ja Wilson A'ONE 'MVP'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-600"
+           data-release-date="2026-02-01"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Hattie's Spirit"
+           data-thickness="Cushioned Sole"
+           data-upper-material="Knit/Suede"
+           data-closure="Lacing"
+           data-sole-material="Gum Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="lifestyle"
+           data-color="pink"
+           data-colorway="Pearl Pink/Sail/Light Bone"
+           data-description="A heartfelt tribute to her late grandmother, Hattie, this colorway features soft, elegant tones and details inspired by her memory. A shoe with a story."
+           data-price="175.00"
+           data-stock="18"
+           data-related-products='[]'>
+        <img src="assets/images/aja3.jpg" alt="A'ja Wilson A'ONE Hattie's Spirit">
+        <h4>A'ja Wilson A'ONE 'Hattie's Spirit'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-400"
+           data-release-date="2026-05-15"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="South Carolina"
+           data-thickness="Responsive Sole"
+           data-upper-material="Performance Mesh"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="garnet"
+           data-colorway="Garnet/Black"
+           data-description="A nod to her collegiate roots, the 'South Carolina' colorway is decked out in the iconic garnet and black of the Gamecocks, celebrating where the journey began."
+           data-price="170.00"
+           data-stock="20"
+           data-related-products='[]'>
+        <img src="assets/images/aja4.jpg" alt="A'ja Wilson A'ONE South Carolina">
+        <h4>A'ja Wilson A'ONE 'South Carolina'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-101"
+           data-release-date="2026-07-22"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Back 2 Back"
+           data-thickness="Responsive Sole"
+           data-upper-material="Patent Leather/Mesh"
+           data-closure="Lacing"
+           data-sole-material="Translucent Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="white"
+           data-colorway="White/Metallic Gold/Black"
+           data-description="Commemorating the Las Vegas Aces' back-to-back championships, this clean design features gold accents and the years of victory detailed on the heel."
+           data-price="185.00"
+           data-stock="10"
+           data-related-products='[{"name": "A'ja Wilson A'ONE \'MVP\'", "image": "assets/images/kobe2.jpg"}]'>
+        <img src="assets/images/aja5.jpg" alt="A'ja Wilson A'ONE Back 2 Back">
+        <h4>A'ja Wilson A'ONE 'Back 2 Back'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-500"
+           data-release-date="2026-10-31"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Of The Block"
+           data-thickness="Responsive Sole"
+           data-upper-material="Ballistic Mesh"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="High Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="grey"
+           data-colorway="Cool Grey/Black/Volt"
+           data-description="Inspired by A'ja's dominant defensive presence and her foundation, this rugged 'Of The Block' colorway features durable materials and subtle volt accents."
+           data-price="170.00"
+           data-stock="15"
+           data-related-products='[]'>
+        <img src="assets/images/aja6.jpg" alt="A'ja Wilson A'ONE Of The Block">
+        <h4>A'ja Wilson A'ONE 'Of The Block'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-800"
+           data-release-date="2026-12-05"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Vegas Nights"
+           data-thickness="Cushioned Sole"
+           data-upper-material="Reflective Synthetic"
+           data-closure="Lacing"
+           data-sole-material="Glow-in-the-dark Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="lifestyle"
+           data-color="black"
+           data-colorway="Black/Hyper Pink/Cyber Teal"
+           data-description="Capturing the electric energy of Las Vegas after dark, this colorway features a reflective upper and a glow-in-the-dark outsole that stands out day or night."
+           data-price="180.00"
+           data-stock="14"
+           data-related-products='[]'>
+        <img src="assets/images/aja7.jpg" alt="A'ja Wilson A'ONE Vegas Nights">
+        <h4>A'ja Wilson A'ONE 'Vegas Nights'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-002"
+           data-release-date="2027-01-20"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Alpha"
+           data-thickness="Responsive Sole"
+           data-upper-material="Flyknit"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="grey"
+           data-colorway="Wolf Grey/University Red/Black"
+           data-description="For the leader of the pack. The 'Alpha' edition embodies A'ja's leadership and fierce competitive nature with a bold, aggressive color scheme."
+           data-price="175.00"
+           data-stock="16"
+           data-related-products='[{"name": "A'ja Wilson A\'ONE \'Of The Block\'", "image": "assets/images/kobe6.jpg"}]'>
+        <img src="assets/images/aja8.jpg" alt="A'ja Wilson A'ONE Alpha">
+        <h4>A'ja Wilson A'ONE 'Alpha'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-102"
+           data-release-date="2027-03-15"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Unrivaled"
+           data-thickness="Responsive Sole"
+           data-upper-material="Premium Leather"
+           data-closure="Lacing"
+           data-sole-material="Icy Blue Translucent Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="lifestyle"
+           data-color="white"
+           data-colorway="Triple White/Pure Platinum"
+           data-description="A clean, sophisticated design celebrating A'ja's status as an unparalleled force in the game. Premium materials make this a must-have off-court sneaker."
+           data-price="190.00"
+           data-stock="9"
+           data-related-products='[{"name": "A'ja Wilson A\'ONE \'Hattie\\s Spirit\'", "image": "assets/images/kobe3.jpg"}]'>
+        <img src="assets/images/aja9.jpg" alt="A'ja Wilson A'ONE Unrivaled">
+        <h4>A'ja Wilson A'ONE 'Unrivaled'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-103"
+           data-release-date="2027-06-10"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Champion's Legacy"
+           data-thickness="Responsive Sole"
+           data-upper-material="Engineered Mesh"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="white"
+           data-colorway="White/Metallic Gold/Court Purple"
+           data-description="A tribute to building a dynasty. The 'Champion's Legacy' combines classic championship colors, honoring both team success and individual accolades."
+           data-price="185.00"
+           data-stock="11"
+           data-related-products='[{"name": "A'ja Wilson A\'ONE \'MVP\'", "image": "assets/images/kobe2.jpg"}]'>
+        <img src="assets/images/aja10.jpg" alt="A'ja Wilson A'ONE Champion's Legacy">
+        <h4>A'ja Wilson A'ONE 'Champion's Legacy'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-003"
+           data-release-date="2027-08-01"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Gameday Focus"
+           data-thickness="Responsive Sole"
+           data-upper-material="Performance Textile"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="black"
+           data-colorway="Black/White/Cool Grey"
+           data-description="Stripped down to the essentials for peak performance. The 'Gameday Focus' features a minimalist design to eliminate distractions when it matters most."
+           data-price="165.00"
+           data-stock="25"
+           data-related-products='[]'>
+        <img src="assets/images/aja11.jpg" alt="A'ja Wilson A'ONE Gameday Focus">
+        <h4>A'ja Wilson A'ONE 'Gameday Focus'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-601"
+           data-release-date="2027-09-18"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="The Ace"
+           data-thickness="Responsive Sole"
+           data-upper-material="Synthetic Leather"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Mid Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="red"
+           data-colorway="University Red/Black/Metallic Silver"
+           data-description="The ultimate team shoe. This bold 'The Ace' colorway is a direct tribute to the Las Vegas Aces team colors, perfect for players and fans alike."
+           data-price="170.00"
+           data-stock="19"
+           data-related-products='[{"name": "A'ja Wilson A\'ONE \'Day One\'", "image": "assets/images/kobe1.jpg"}]'>
+        <img src="assets/images/aja112.jpg" alt="A'ja Wilson A'ONE The Ace">
+        <h4>A'ja Wilson A'ONE 'The Ace'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-300"
+           data-release-date="2028-02-22"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Hopkins Hometown"
+           data-thickness="Cushioned Sole"
+           data-upper-material="Suede/Canvas"
+           data-closure="Lacing"
+           data-sole-material="Gum Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="lifestyle"
+           data-color="blue"
+           data-colorway="Coastal Blue/Pine Green/Sail"
+           data-description="Inspired by the landscape of her hometown of Hopkins, South Carolina. This casual design features earthy tones and premium off-court materials."
+           data-price="175.00"
+           data-stock="13"
+           data-related-products='[{"name": "A'ja Wilson A\'ONE \'South Carolina\'", "image": "assets/images/kobe4.jpg"}]'>
+        <img src="assets/images/aja13.jpg" alt="A'ja Wilson A'ONE Hopkins Hometown">
+        <h4>A'ja Wilson A'ONE 'Hopkins Hometown'</h4>
+      </div>
+      <div class="sneaker-card"
+           data-model="AW-AONE-850"
+           data-release-date="2028-07-07"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="Summer League Heat"
+           data-thickness="Responsive Sole"
+           data-upper-material="Lightweight Mesh"
+           data-closure="Lacing"
+           data-sole-material="Rubber Sole"
+           data-upper="Low Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="orange"
+           data-colorway="Bright Mango/Total Orange/White"
+           data-description="Bringing the heat to the desert. This vibrant colorway is inspired by the energy of the Las Vegas Summer League, designed for breathability and flash."
+           data-price="170.00"
+           data-stock="17"
+           data-related-products='[{"name": "A'ja Wilson A\'ONE \'Vegas Nights\'", "image": "assets/images/kobe7.jpg"}]'>
+        <img src="assets/images/aja14.jpg" alt="A'ja Wilson A'ONE Summer League Heat">
+        <h4>A'ja Wilson A'ONE 'Summer League Heat'</h4>
+      </div>
+       <div class="sneaker-card"
+           data-model="AW-AONE-004"
+           data-release-date="2028-10-02"
+           data-series="Nike A'ja Wilson A'ONE"
+           data-nickname="DPOY"
+           data-thickness="Responsive Sole"
+           data-upper-material="Reinforced Mesh"
+           data-closure="Lacing/Strap"
+           data-sole-material="Rubber Sole"
+           data-upper="High Top"
+           data-toe-type="Round Toe"
+           data-occasion="basketball"
+           data-color="black"
+           data-colorway="Black/Metallic Silver/Stadium Green"
+           data-description="Defense wins championships. The 'DPOY' (Defensive Player of the Year) edition features a lockdown strap and reinforced materials for ultimate support."
+           data-price="180.00"
+           data-stock="10"
+           data-related-products='[{"name": "A'ja Wilson A\'ONE \'Of The Block\'", "image": "assets/images/kobe6.jpg"}]'>
+        <img src="assets/images/aja15.jpg" alt="A'ja Wilson A'ONE DPOY">
+        <h4>A'ja Wilson A'ONE 'DPOY'</h4>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 WNBA Sneaker Showcase. All rights reserved.</p>
+  </footer>
+
+  <div id="sneakerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modalSneakerName"></h2>
+      <div class="modal-details">
+        <p><strong>Model:</strong> <span id="modalModel"></span></p>
+        <p><strong>Release Date:</strong> <span id="modalReleaseDate"></span></p>
+        <p><strong>Series:</strong> <span id="modalSeries"></span></p>
+        <p><strong>Nickname:</strong> <span id="modalNickname"></span></p>
+        <p><strong>Thickness:</strong> <span id="modalThickness"></span></p>
+        <p><strong>Upper Material:</strong> <span id="modalUpperMaterial"></span></p>
+        <p><strong>Closure:</strong> <span id="modalClosure"></span></p>
+        <p><strong>Sole Material:</strong> <span id="modalSoleMaterial"></span></p>
+        <p><strong>Upper:</strong> <span id="modalUpper"></span></p>
+        <p><strong>Toe Type:</strong> <span id="modalToeType"></span></p>
+        <p><strong>Occasion:</strong> <span id="modalOccasion"></span></p>
+        <p><strong>Color:</strong> <span id="modalColor"></span></p>
+        <p><strong>Colorway:</strong> <span id="modalColorway"></span></p>
+        <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+        <p><strong>Stock:</strong> <span id="modalStock"></span> units</p>
+        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+      </div>
+      <button class="modal-buy-button">Buy Now</button>
+
+      <div class="related-products">
+        <h3>You might also like:</h3>
+        <div id="relatedProductsGrid" class="related-grid">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle Logic
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        this.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    // Apply saved theme on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️ Light Mode';
+        } else {
+            themeToggleBtn.textContent = '🌙 Dark Mode';
+        }
+    });
+
+    // Sneaker Card Modal Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const sneakerCards = document.querySelectorAll('.sneaker-card');
+        const modal = document.getElementById('sneakerModal');
+        const closeButton = document.querySelector('.close-button');
+
+        // Modal detail elements
+        const modalSneakerName = document.getElementById('modalSneakerName');
+        const modalModel = document.getElementById('modalModel');
+        const modalReleaseDate = document.getElementById('modalReleaseDate');
+        const modalSeries = document.getElementById('modalSeries');
+        const modalNickname = document.getElementById('modalNickname');
+        const modalThickness = document.getElementById('modalThickness');
+        const modalUpperMaterial = document.getElementById('modalUpperMaterial');
+        const modalClosure = document.getElementById('modalClosure');
+        const modalSoleMaterial = document.getElementById('modalSoleMaterial');
+        const modalUpper = document.getElementById('modalUpper');
+        const modalToeType = document.getElementById('modalToeType');
+        const modalOccasion = document.getElementById('modalOccasion');
+        const modalColor = document.getElementById('modalColor');
+        const modalColorway = document.getElementById('modalColorway');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalStock = document.getElementById('modalStock');
+        const modalDescription = document.getElementById('modalDescription');
+        const relatedProductsGrid = document.getElementById('relatedProductsGrid');
+
+        sneakerCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Populate modal details
+                modalSneakerName.textContent = card.querySelector('h4').textContent;
+                modalModel.textContent = card.dataset.model || 'N/A';
+                modalReleaseDate.textContent = card.dataset.releaseDate || 'N/A';
+                modalSeries.textContent = card.dataset.series || 'N/A';
+                modalNickname.textContent = card.dataset.nickname || 'N/A';
+                modalThickness.textContent = card.dataset.thickness || 'N/A';
+                modalUpperMaterial.textContent = card.dataset.upperMaterial || 'N/A';
+                modalClosure.textContent = card.dataset.closure || 'N/A';
+                modalSoleMaterial.textContent = card.dataset.soleMaterial || 'N/A';
+                modalUpper.textContent = card.dataset.upper || 'N/A';
+                modalToeType.textContent = card.dataset.toeType || 'N/A';
+                modalOccasion.textContent = card.dataset.occasion || 'N/A';
+                modalColor.textContent = card.dataset.color || 'N/A';
+                modalColorway.textContent = card.dataset.colorway || 'N/A';
+                modalPrice.textContent = parseFloat(card.dataset.price).toFixed(2) || 'N/A';
+                modalStock.textContent = card.dataset.stock || 'N/A';
+                modalDescription.textContent = card.dataset.description || 'N/A';
+
+                // Handle Related Products
+                relatedProductsGrid.innerHTML = ''; // Clear previous related products
+                if (card.dataset.relatedProducts) {
+                    try {
+                        const relatedProducts = JSON.parse(card.dataset.relatedProducts);
+                        if (relatedProducts.length > 0) {
+                            relatedProducts.forEach(product => {
+                                const relatedItemDiv = document.createElement('div');
+                                relatedItemDiv.classList.add('related-item');
+
+                                const img = document.createElement('img');
+                                img.src = product.image;
+                                img.alt = product.name;
+                                img.title = product.name;
+                                relatedItemDiv.appendChild(img);
+
+                                const p = document.createElement('p');
+                                p.textContent = product.name;
+                                relatedItemDiv.appendChild(p);
+
+                                relatedProductsGrid.appendChild(relatedItemDiv);
+                            });
+                        } else {
+                             relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products found for this item.</p>';
+                        }
+                    } catch (e) {
+                        console.error("Error parsing related products JSON:", e);
+                        relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">Error loading related products.</p>';
+                    }
+                } else {
+                    relatedProductsGrid.innerHTML = '<p style="text-align: center; color: #777;">No related products available.</p>';
+                }
+
+
+                modal.style.display = 'block'; // Show the modal
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none'; // Hide the modal when close button is clicked
+        });
+
+        // Hide the modal if clicked outside of the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Basic Buy Now button functionality
+        document.querySelector('.modal-buy-button').addEventListener('click', () => {
+            const sneakerName = modalSneakerName.textContent;
+            const price = modalPrice.textContent;
+            alert(`You clicked "Buy Now" for ${sneakerName} ($${price}). This would typically lead to a checkout page!`);
+        });
+    });
+  </script>
+</body>
+</html>

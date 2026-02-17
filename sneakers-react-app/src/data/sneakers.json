@@ -1,0 +1,65 @@
+[
+    {
+        "id": "1",
+        "name": "Air Jordan 1 High OG",
+        "brand": "Nike",
+        "price": 170,
+        "sizes": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+        ],
+        "description": "The Air Jordan 1 High OG brings back the classic look.",
+        "releaseDate": "1985-04-01",
+        "image": "https://placehold.co/600x400/png?text=AJ1",
+        "colors": [
+            "Red",
+            "White",
+            "Black"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "2",
+        "name": "Dunk Low Retro",
+        "brand": "Nike",
+        "price": 110,
+        "sizes": [
+            5,
+            6,
+            7,
+            8,
+            9
+        ],
+        "description": "Created for the hardwood but taken to the streets, the '80s b-ball icon returns with perfectly sheened overlays.",
+        "releaseDate": "2021-01-14",
+        "image": "https://placehold.co/600x400/png?text=Dunk+Low",
+        "colors": [
+            "White",
+            "Black"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "3",
+        "name": "Off-White x Nike Air Jordan 1",
+        "brand": "Nike",
+        "price": 190,
+        "sizes": [
+            9,
+            10
+        ],
+        "description": "Part of 'The Ten' collection, Virgil Abloh's take on the AJ1 deconstructs the icon.",
+        "releaseDate": "2017-09-09",
+        "image": "https://placehold.co/600x400/png?text=Off-White+AJ1",
+        "colors": [
+            "Red",
+            "White",
+            "Black"
+        ],
+        "isRare": true
+    }
+]

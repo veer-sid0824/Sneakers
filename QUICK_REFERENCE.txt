@@ -1,0 +1,121 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                   🏀 SNEAKER IMAGES - QUICK REFERENCE                ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+📂 SAVE LOCATION:
+   d:\lil jwrld\Sneakers\sneakers-react-app\public\assets\images\sneakers\
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  ANTHONY EDWARDS (anthony-edwards/)
+    ├─ ae-1-with-love.jpg
+    ├─ ae-1-velocity-blue.jpg
+    ├─ ae-1-new-wave.jpg
+    ├─ ae-1-best-of-adi.jpg
+    ├─ ae-1-georgia-red-clay.jpg
+    ├─ ae-1-ascent.jpg
+    ├─ ae-1-mural.jpg
+    ├─ ae-1-pre-loved-purple.jpg
+    ├─ ae-1-stormtrooper.jpg
+    └─ ae-1-all-star.jpg
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2️⃣  STEPHEN CURRY (stephen-curry/)
+    ├─ curry-11-future.jpg
+    ├─ curry-10-iron.jpg
+    ├─ curry-11-dub-nation.jpg
+    ├─ curry-9-elmo.jpg
+    ├─ curry-4-flotro.jpg
+    ├─ curry-10-northern-lights.jpg
+    ├─ curry-1-mvp.jpg
+    ├─ curry-11-bruce-lee.jpg
+    ├─ curry-10-unicorn.jpg
+    └─ curry-11-mouthguard.jpg
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3️⃣  GIANNIS ANTETOKOUNMPO (giannis-antetokounmpo/)
+    ├─ freak-5-greece.jpg
+    ├─ freak-4-knowledge.jpg
+    ├─ freak-3-dutch-blue.jpg
+    ├─ freak-2-bamo.jpg
+    ├─ freak-1-america.jpg
+    ├─ freak-5-sepolia.jpg
+    ├─ freak-4-unbelievable.jpg
+    ├─ freak-3-cherry.jpg
+    ├─ freak-5-oreo.jpg
+    └─ freak-6-roses.jpg
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4️⃣  JAMES HARDEN (james-harden/)
+    ├─ harden-7-black.jpg
+    ├─ harden-8-white.jpg
+    ├─ harden-6-lucky.jpg
+    ├─ harden-5-natural.jpg
+    ├─ harden-4-lemonade.jpg
+    ├─ harden-7-cyan.jpg
+    ├─ harden-8-flamingo.jpg
+    ├─ harden-3-mission.jpg
+    ├─ harden-1-pioneer.jpg
+    └─ harden-7-yellow.jpg
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5️⃣  KYRIE IRVING (kyrie-irving/)
+    ├─ kyrie-8-infinity.jpg
+    ├─ kyrie-7-soundwave.jpg
+    ├─ kyrie-6-preheat.jpg
+    ├─ kyrie-5-spongebob.jpg
+    ├─ kyrie-4-confetti.jpg
+    ├─ kyrie-low-5-community.jpg
+    ├─ kyrie-7-daybreak.jpg
+    ├─ kyrie-3-mamba.jpg
+    ├─ kyrie-2-whatthe.jpg
+    └─ kyrie-1-red.jpg
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📌 IMPORTANT NOTES:
+
+   ✓ Filenames are CASE-SENSITIVE (use lowercase)
+   ✓ Use hyphens (-) not underscores (_)
+   ✓ File extension must be .jpg (not .jpeg or .png)
+   ✓ Minimum size: 800×800 pixels
+   ✓ White or clean background preferred
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔍 BEST IMAGE SOURCES:
+
+   1. StockX.com - Best product photos
+   2. GOAT.com - Clean backgrounds
+   3. Nike.com / Adidas.com / UnderArmour.com - Official
+   4. Foot Locker / Finish Line - Retail photos
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 PROGRESS TRACKER:
+
+   [ ] Anthony Edwards    (0/10)
+   [ ] Stephen Curry      (0/10)
+   [ ] Giannis           (0/10)
+   [ ] James Harden      (0/10)
+   [ ] Kyrie Irving      (0/10)
+   ─────────────────────────────
+   Total: 0/50 images
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚡ AFTER DOWNLOADING:
+
+   1. Restart dev server: npm run dev
+   2. Visit: http://localhost:5173/nba
+   3. Click any player to verify images load
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 Full guide: d:\lil jwrld\Sneakers\MANUAL_DOWNLOAD_GUIDE.md
+
+╚══════════════════════════════════════════════════════════════════════╝
