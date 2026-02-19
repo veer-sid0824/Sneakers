@@ -88,14 +88,14 @@ const NBAPlayersPage: React.FC = () => {
                                 variants={containerVariants}
                                 initial="hidden"
                                 animate="visible"
-                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12"
+                                className="flex lg:grid lg:grid-cols-3 gap-8 md:gap-12 overflow-x-auto pb-12 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide snap-x snap-mandatory"
                             >
                                 {PLAYERS.map((player) => (
                                     <motion.div
                                         key={player.id}
                                         variants={itemVariants}
                                         whileHover={{ y: -12 }}
-                                        className="bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-100/50 dark:shadow-none border border-slate-100 dark:border-slate-800 group transition-all duration-500 hover:shadow-indigo-200/50 dark:hover:border-indigo-500/30"
+                                        className="bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-100/50 dark:shadow-none border border-slate-100 dark:border-slate-800 group transition-all duration-500 hover:shadow-indigo-200/50 dark:hover:border-indigo-500/30 w-[85vw] md:w-[45vw] lg:w-auto flex-shrink-0 snap-center"
                                     >
                                         {/* Profile Image Container */}
                                         <div className="relative h-96 overflow-hidden">

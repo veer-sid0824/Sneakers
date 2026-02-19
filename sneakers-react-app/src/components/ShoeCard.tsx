@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import type { Shoe } from '../types';
 import { useCart } from '../contexts/CartContext';
@@ -24,7 +24,24 @@ const ShoeCard: React.FC<ShoeCardProps> = ({ shoe, playerId }) => {
 
     const isWNBA = location.pathname.startsWith('/wnba');
     const routePrefix = isWNBA ? '/wnba' : '/nba';
-    const accentColor = isWNBA ? 'orange' : 'indigo';
+
+    // 3D Tilt Values
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+    const rotateX = useTransform(y, [-100, 100], [7, -7]);
+    const rotateY = useTransform(x, [-100, 100], [-7, 7]);
+
+    const handleMouseMove = (event: React.MouseEvent) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        const centerPoint = { x: rect.width / 2, y: rect.height / 2 };
+        x.set(event.clientX - rect.left - centerPoint.x);
+        y.set(event.clientY - rect.top - centerPoint.y);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
 
     const handleAddToCart = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -54,80 +71,82 @@ const ShoeCard: React.FC<ShoeCardProps> = ({ shoe, playerId }) => {
     };
 
     return (
-        <Link to={`${routePrefix}/${playerId}/${shoe.id}`} className="block h-full group">
+        <Link to={`${routePrefix}/${playerId}/${shoe.id}`} className="block h-full group perspective-1000">
             <motion.div
-                whileHover={{
-                    scale: 1.01,
-                    y: -8,
-                    boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.15)"
-                }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 flex flex-col h-full transition-colors relative"
+                style={{ rotateX, rotateY }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                className="bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 flex flex-col h-full transition-all duration-500 relative hover:shadow-2xl dark:hover:border-indigo-500/30 will-change-transform"
             >
                 {/* Wishlist Button */}
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={handleWishlist}
-                    className={`absolute top-6 left-6 z-20 p-2.5 rounded-full backdrop-blur-md transition-all duration-300 ${isLiked
+                    className={`absolute top-6 left-6 z-20 p-3 rounded-2xl backdrop-blur-md transition-all duration-300 ${isLiked
                         ? 'bg-rose-500 text-white shadow-lg shadow-rose-200 dark:shadow-none translate-x-0 opacity-100'
-                        : 'bg-white/80 dark:bg-slate-800/80 text-gray-400 hover:text-rose-500 translate-x-[-10px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100'}`}
+                        : 'bg-white/90 dark:bg-slate-800/90 text-gray-400 hover:text-rose-500 translate-x-[-10px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 shadow-sm'}`}
                 >
                     <HeartIcon filled={isLiked} />
-                </button>
+                </motion.button>
 
                 {/* Quick Add Button */}
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={handleAddToCart}
-                    className={`absolute bottom-[100px] right-6 z-20 w-12 h-12 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 active:scale-95 hover:bg-${accentColor}-600 hover:text-white dark:hover:bg-${accentColor}-500`}
+                    className={`absolute bottom-[110px] right-6 z-20 w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 shadow-xl border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900`}
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
-                </button>
+                </motion.button>
 
                 {/* Image Container */}
-                <div className="relative aspect-square overflow-hidden bg-slate-50 dark:bg-slate-950 p-6 transition-colors">
-                    <img
+                <div className="relative aspect-square overflow-hidden bg-slate-50 dark:bg-slate-950 p-10 transition-colors shadow-inner">
+                    <motion.img
                         src={shoe.image}
                         alt={shoe.name}
-                        className="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal transition-transform duration-700 group-hover:scale-110 group-hover:-rotate-3"
+                        loading="lazy"
+                        whileHover={{ scale: 1.15, rotate: -5, y: -10 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        className="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal drop-shadow-2xl"
                     />
-                    <div className="absolute top-4 left-4">
-                        <span className="text-[10px] font-black bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-3 py-1.5 rounded-full uppercase tracking-tighter transition-colors invisible group-hover:invisible">
-                            {/* Brand label moved or hidden when hover buttons are active */}
-                        </span>
-                    </div>
-                    <div className="absolute top-4 right-4 group-hover:opacity-0 transition-opacity">
-                        <span className="text-lg font-black text-slate-900 dark:text-white tabular-nums transition-colors">
+                    <div className="absolute top-4 right-6 group-hover:opacity-0 transition-opacity">
+                        <span className="text-xl font-black text-slate-900 dark:text-white tabular-nums tracking-tighter italic">
                             ${shoe.price}
                         </span>
                     </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-6 flex flex-col flex-grow">
+                <div className="p-8 flex flex-col flex-grow">
                     <div className="mb-4">
-                        <div className="flex justify-between items-start mb-1">
-                            <p className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">
+                        <div className="flex justify-between items-center mb-2">
+                            <p className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.2em]">
                                 {shoe.modelNumber}
                             </p>
-                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 transition-colors">
+                            <span className="text-[10px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-widest">
                                 {shoe.releaseYear}
                             </span>
                         </div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                        <h3 className="text-2xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tighter lowercase">
                             {shoe.name}
                         </h3>
                     </div>
 
-                    <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2 transition-colors">
+                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed mb-8 line-clamp-2 transition-colors">
                         {shoe.description}
                     </p>
 
-                    <div className="mt-auto pt-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 transition-colors">
-                        <span>{shoe.colorway}</span>
-                        <span className="text-indigo-500 group-hover:translate-x-1 transition-transform">
-                            View Details &rarr;
-                        </span>
+                    <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{shoe.colorway}</span>
+                        <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">
+                            EXPLORE
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </motion.div>

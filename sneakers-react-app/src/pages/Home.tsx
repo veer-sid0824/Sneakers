@@ -4,6 +4,7 @@ import type { Variants } from 'framer-motion';
 import { useTitle } from '../hooks/useTitle';
 import PageTransition from '../components/PageTransition';
 import Hero from '../components/Hero';
+import LimitedReleaseSection from '../components/LimitedReleaseSection';
 
 const Home = () => {
     useTitle('Home');
@@ -31,6 +32,7 @@ const Home = () => {
         <PageTransition>
             <div className="dark:bg-slate-950 transition-colors duration-500">
                 <Hero />
+                <LimitedReleaseSection />
 
                 <div className="flex flex-col items-center justify-center py-20 text-center px-4">
                     <motion.div
@@ -51,12 +53,12 @@ const Home = () => {
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.2 }}
-                        className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl"
+                        className="flex lg:grid lg:grid-cols-3 gap-8 w-full max-w-6xl overflow-x-auto pb-12 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide snap-x snap-mandatory"
                     >
                         <motion.div
                             variants={fadeInUp}
                             whileHover={{ y: -10 }}
-                            className="group relative bg-white dark:bg-slate-900 p-10 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-800 cursor-pointer overflow-hidden transition-all duration-300"
+                            className="group relative bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-xl border border-gray-100 dark:border-slate-800 cursor-pointer overflow-hidden transition-all duration-300 w-[85vw] md:w-[45vw] lg:w-full flex-shrink-0 snap-center"
                         >
                             <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-white dark:from-slate-800 dark:to-slate-900 opacity-0 group-hover:opacity-100 transition-opacity" />
                             <div className="relative z-10">
@@ -72,7 +74,7 @@ const Home = () => {
                         <motion.div
                             variants={fadeInUp}
                             whileHover={{ y: -10 }}
-                            className="group relative bg-white dark:bg-slate-900 p-10 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-800 cursor-pointer overflow-hidden transition-all duration-300"
+                            className="group relative bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-xl border border-gray-100 dark:border-slate-800 cursor-pointer overflow-hidden transition-all duration-300 w-[85vw] md:w-[45vw] lg:w-full flex-shrink-0 snap-center"
                         >
                             <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-white dark:from-slate-800 dark:to-slate-900 opacity-0 group-hover:opacity-100 transition-opacity" />
                             <div className="relative z-10">
@@ -88,7 +90,7 @@ const Home = () => {
                         <motion.div
                             variants={fadeInUp}
                             whileHover={{ y: -10 }}
-                            className="group relative bg-white dark:bg-slate-900 p-10 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-800 cursor-pointer overflow-hidden transition-all duration-300"
+                            className="group relative bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-xl border border-gray-100 dark:border-slate-800 cursor-pointer overflow-hidden transition-all duration-300 w-[85vw] md:w-[45vw] lg:w-full flex-shrink-0 snap-center"
                         >
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-white dark:from-slate-800 dark:to-slate-900 opacity-0 group-hover:opacity-100 transition-opacity" />
                             <div className="relative z-10">

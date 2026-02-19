@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
-import type { Variants } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Button from './Button';
 
 const Hero = () => {
     const container: Variants = {
         hidden: { opacity: 0 },
         visible: (i = 1) => ({
             opacity: 1,
-            transition: { staggerChildren: 0.12, delayChildren: 0.04 * i },
+            transition: { staggerChildren: 0.08, delayChildren: 0.1 * i },
         }),
     };
 
@@ -17,48 +17,55 @@ const Hero = () => {
             y: 0,
             transition: {
                 type: "spring",
-                damping: 12,
-                stiffness: 100,
+                damping: 15,
+                stiffness: 150,
             },
         },
         hidden: {
             opacity: 0,
-            y: 20,
+            y: 40,
             transition: {
                 type: "spring",
-                damping: 12,
-                stiffness: 100,
+                damping: 15,
+                stiffness: 150,
             },
         },
     };
 
     return (
-        <div className="relative h-screen w-full overflow-hidden">
-            {/* Background Video */}
-            <video
+        <div className="relative h-screen w-full overflow-hidden bg-slate-950">
+            {/* Background Video with subtle zoom effect */}
+            <motion.video
+                initial={{ scale: 1.1 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                poster="https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=2090&auto=format&fit=crop"
+                className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-60"
             >
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-basketball-player-practicing-at-night-40263-large.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
-            </video>
+            </motion.video>
 
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/50 z-10 flex flex-col items-center justify-center text-center px-4">
+            {/* Overlay Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/20 z-10" />
+
+            {/* Content */}
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
                 <motion.div
                     variants={container}
                     initial="hidden"
                     animate="visible"
-                    className="flex flex-wrap justify-center overflow-hidden"
+                    className="flex flex-wrap justify-center overflow-hidden mb-4"
                 >
                     {"LEGENDS START HERE".split("").map((char, index) => (
                         <motion.span
                             variants={child}
                             key={index}
-                            className={`text-5xl md:text-9xl font-black text-white ${char === " " ? "mr-4" : ""} tracking-tighter inline-block`}
+                            className={`text-6xl md:text-[10rem] font-black text-white ${char === " " ? "mr-10" : ""} tracking-tighter inline-block italic hover:text-indigo-400 transition-colors duration-300 drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)]`}
                         >
                             {char}
                         </motion.span>
@@ -66,26 +73,29 @@ const Hero = () => {
                 </motion.div>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 0.8 }}
-                    className="text-xl md:text-2xl text-gray-200 mt-6 max-w-2xl font-light"
+                    transition={{ delay: 1.2, duration: 1, type: "spring", damping: 20 }}
+                    className="text-xl md:text-3xl text-slate-200 mt-8 max-w-3xl font-medium tracking-tight"
                 >
-                    Experience the fusion of performance and culture. From the court to the streets.
+                    Experience the fusion of <span className="text-indigo-400 font-black italic">performance</span> and <span className="text-white font-black italic">culture</span>.
                 </motion.p>
 
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.2, duration: 0.5 }}
-                    className="mt-10"
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.5, duration: 0.8 }}
+                    className="mt-12 flex gap-6"
                 >
-                    <Link
-                        to="/sneakers"
-                        className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-indigo-600 font-pj rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-700 overflow-hidden"
-                    >
-                        <span className="relative z-10">Shop Now</span>
-                        <div className="absolute inset-0 h-full w-full scale-0 rounded-full bg-white/20 transition-all duration-300 group-hover:scale-100" />
+                    <Link to="/sneakers">
+                        <Button size="xl" variant="primary" className="px-12 tracking-[0.3em] font-black uppercase italic">
+                            SHOP COLLECTION
+                        </Button>
+                    </Link>
+                    <Link to="/drops">
+                        <Button size="xl" variant="outline" className="px-12 tracking-[0.3em] font-black uppercase italic border-white text-white hover:bg-white hover:text-slate-950">
+                            VIEW DROPS
+                        </Button>
                     </Link>
                 </motion.div>
 

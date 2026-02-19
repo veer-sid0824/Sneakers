@@ -97,46 +97,61 @@ const AdvancedFilter = ({
                 {/* Search Bar */}
                 <div className="relative w-full md:max-w-md group">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        <svg className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
                     <input
                         type="text"
-                        placeholder="Search sneakers..."
+                        placeholder="Search the archive..."
                         value={filters.search}
                         onChange={handleSearchChange}
-                        className="block w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300 shadow-sm"
+                        className="block w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 font-bold focus:outline-none focus:border-indigo-500 focus:ring-8 focus:ring-indigo-500/5 transition-all duration-500 shadow-sm text-sm"
                     />
                 </div>
 
                 <div className="flex items-center gap-3 w-full md:w-auto">
-                    <button
+                    <motion.button
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => setIsOpen(!isOpen)}
-                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold transition-all duration-300 border-2 ${isOpen
-                                ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-200 dark:shadow-none'
-                                : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500'
+                        className={`flex-1 md:flex-none flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-black text-[10px] tracking-[0.2em] transition-all duration-500 border-2 shadow-xl ${isOpen
+                            ? 'bg-indigo-600 border-indigo-600 text-white shadow-indigo-200 dark:shadow-none'
+                            : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 decoration shadow-slate-100 dark:shadow-none'
                             }`}
                     >
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                        <svg className={`w-4 h-4 transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
                         FILTERS
-                        {activeFilterCount > 0 && (
-                            <span className="ml-2 flex items-center justify-center w-5 h-5 bg-white text-indigo-600 rounded-full text-[10px] font-black">
-                                {activeFilterCount}
-                            </span>
-                        )}
-                    </button>
+                        <AnimatePresence>
+                            {activeFilterCount > 0 && (
+                                <motion.span
+                                    initial={{ scale: 0, rotate: -45 }}
+                                    animate={{ scale: 1, rotate: 0 }}
+                                    exit={{ scale: 0 }}
+                                    className={`ml-2 flex items-center justify-center w-5 h-5 rounded-lg text-[9px] font-black ${isOpen ? 'bg-white text-indigo-600' : 'bg-indigo-600 text-white'}`}
+                                >
+                                    {activeFilterCount}
+                                </motion.span>
+                            )}
+                        </AnimatePresence>
+                    </motion.button>
 
-                    {activeFilterCount > 0 && (
-                        <button
-                            onClick={resetFilters}
-                            className="px-6 py-4 rounded-2xl font-bold text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-all duration-300"
-                        >
-                            RESET
-                        </button>
-                    )}
+                    <AnimatePresence>
+                        {activeFilterCount > 0 && (
+                            <motion.button
+                                initial={{ x: 20, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                exit={{ x: 20, opacity: 0 }}
+                                whileHover={{ scale: 1.05 }}
+                                onClick={resetFilters}
+                                className="px-6 py-4 rounded-2xl font-black text-[10px] tracking-[0.2em] text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-all duration-500 uppercase italic"
+                            >
+                                RESET
+                            </motion.button>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
 
@@ -159,8 +174,8 @@ const AdvancedFilter = ({
                                             key={brand}
                                             onClick={() => toggleBrand(brand)}
                                             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 border-2 ${filters.brands.includes(brand)
-                                                    ? 'bg-indigo-600 border-indigo-600 text-white'
-                                                    : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-indigo-200'
+                                                ? 'bg-indigo-600 border-indigo-600 text-white'
+                                                : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-indigo-200'
                                                 }`}
                                         >
                                             {brand.toUpperCase()}
@@ -222,8 +237,8 @@ const AdvancedFilter = ({
                                             key={size}
                                             onClick={() => toggleSize(size)}
                                             className={`h-10 rounded-xl text-xs font-bold transition-all duration-300 border-2 ${filters.sizes.includes(size)
-                                                    ? 'bg-indigo-600 border-indigo-600 text-white'
-                                                    : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-indigo-200'
+                                                ? 'bg-indigo-600 border-indigo-600 text-white'
+                                                : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-indigo-200'
                                                 }`}
                                         >
                                             {size}
@@ -241,8 +256,8 @@ const AdvancedFilter = ({
                                             key={year}
                                             onClick={() => toggleYear(year)}
                                             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 border-2 ${filters.years.includes(year)
-                                                    ? 'bg-indigo-600 border-indigo-600 text-white'
-                                                    : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-indigo-200'
+                                                ? 'bg-indigo-600 border-indigo-600 text-white'
+                                                : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-indigo-200'
                                                 }`}
                                         >
                                             {year}

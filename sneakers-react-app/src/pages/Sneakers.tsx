@@ -1,13 +1,15 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTitle } from '../hooks/useTitle';
 import SneakerCard from '../components/SneakerCard';
 import { SNEAKERS } from '../data';
 import PageTransition from '../components/PageTransition';
 import AdvancedFilter from '../components/AdvancedFilter';
+import { ShoeCardSkeleton } from '../components/Skeleton';
 
 const Sneakers = () => {
     useTitle('Sneaker Gallery');
+    const [isLoading, setIsLoading] = useState(true);
     const [activeFilters, setActiveFilters] = useState({
         search: '',
         brands: [] as string[],
@@ -16,6 +18,12 @@ const Sneakers = () => {
         sizes: [] as number[],
         years: [] as number[]
     });
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1000);
+        return () => clearTimeout(timer);
+    }, []);
+
     const [sortOrder, setSortOrder] = useState<string>('featured');
 
     // Extract dynamic data for filters
@@ -124,40 +132,55 @@ const Sneakers = () => {
                         </div>
                     </div>
 
-                    <AnimatePresence mode="popLayout">
-                        <motion.div
-                            layout
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-                        >
-                            {filteredAndSortedSneakers.length > 0 ? (
-                                filteredAndSortedSneakers.map((sneaker) => (
+                    <AnimatePresence mode="wait">
+                        {isLoading ? (
+                            <motion.div
+                                key="skeleton-grid"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                            >
+                                {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                                    <ShoeCardSkeleton key={n} />
+                                ))}
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="sneakers-grid"
+                                layout
+                                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                            >
+                                {filteredAndSortedSneakers.length > 0 ? (
+                                    filteredAndSortedSneakers.map((sneaker) => (
+                                        <motion.div
+                                            layout
+                                            key={sneaker.id}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, scale: 0.9 }}
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            <SneakerCard sneaker={sneaker} />
+                                        </motion.div>
+                                    ))
+                                ) : (
                                     <motion.div
-                                        layout
-                                        key={sneaker.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, scale: 0.9 }}
-                                        transition={{ duration: 0.3 }}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        className="col-span-full text-center py-32 bg-slate-50 dark:bg-slate-900/30 rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800"
                                     >
-                                        <SneakerCard sneaker={sneaker} />
+                                        <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                                            <svg className="w-10 h-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 tracking-tight">NO MATCHES FOUND</h3>
+                                        <p className="text-gray-500 dark:text-gray-400 font-medium">Try broadening your search or resetting filters.</p>
                                     </motion.div>
-                                ))
-                            ) : (
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    className="col-span-full text-center py-32 bg-slate-50 dark:bg-slate-900/30 rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800"
-                                >
-                                    <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
-                                        <svg className="w-10 h-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 tracking-tight">NO MATCHES FOUND</h3>
-                                    <p className="text-gray-500 dark:text-gray-400 font-medium">Try broadening your search or resetting filters.</p>
-                                </motion.div>
-                            )}
-                        </motion.div>
+                                )}
+                            </motion.div>
+                        )}
                     </AnimatePresence>
                 </div>
             </div>

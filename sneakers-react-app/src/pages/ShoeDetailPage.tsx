@@ -260,6 +260,46 @@ const ShoeDetailPage: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Mobile Sticky Add to Cart Bar */}
+            <AnimatePresence>
+                {selectedSize ? (
+                    <motion.div
+                        initial={{ y: 100 }}
+                        animate={{ y: 0 }}
+                        exit={{ y: 100 }}
+                        className="fixed bottom-0 left-0 right-0 z-50 p-4 block md:hidden"
+                    >
+                        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-2xl flex items-center justify-between gap-4">
+                            <div className="flex flex-col">
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">SIZE {selectedSize}</span>
+                                <span className="text-xl font-black text-slate-900 dark:text-white italic">${shoe.price}</span>
+                            </div>
+                            <button
+                                onClick={handleAddToBag}
+                                disabled={isAdding}
+                                className={`flex-1 rounded-2xl py-4 px-6 font-black text-xs tracking-[0.2em] transition-all duration-500 flex items-center justify-center gap-2 shadow-xl ${showSuccess
+                                    ? 'bg-emerald-500 text-white shadow-emerald-200'
+                                    : `bg-slate-900 dark:bg-white text-white dark:text-slate-900 active:scale-95`
+                                    }`}
+                            >
+                                {isAdding ? 'SECURING...' : showSuccess ? 'ADDED' : 'ADD TO BAG'}
+                            </button>
+                        </div>
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        initial={{ y: 100 }}
+                        animate={{ y: 0 }}
+                        exit={{ y: 100 }}
+                        className="fixed bottom-0 left-0 right-0 z-50 p-4 block md:hidden pointer-events-none"
+                    >
+                        <div className="bg-indigo-600 rounded-2xl p-4 text-center shadow-2xl">
+                            <p className="text-white font-black text-xs tracking-widest">SELECT A SIZE TO SECURE YOUR PAIR</p>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </PageTransition>
     );
 };

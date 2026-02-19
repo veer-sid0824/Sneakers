@@ -49,7 +49,7 @@ const WNBAPlayersPage: React.FC = () => {
                             className="inline-block px-4 py-1.5 mb-6 rounded-full bg-orange-50 dark:bg-orange-900/30 border border-orange-100 dark:border-orange-500/20"
                         >
                             <span className="text-xs font-black tracking-widest text-orange-600 dark:text-orange-400 uppercase">
-                                Signature Collections
+                                WNBA Signature Series
                             </span>
                         </motion.div>
                         <motion.h1
@@ -65,7 +65,7 @@ const WNBAPlayersPage: React.FC = () => {
                             transition={{ delay: 0.1 }}
                             className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium"
                         >
-                            Celebrate the legends of women's basketball. Explore signature shoes designed for the game's elite.
+                            Empowering the future of the game. Explore the unique styles and collections from the world's most talented athletes.
                         </motion.p>
                     </div>
 
@@ -78,7 +78,7 @@ const WNBAPlayersPage: React.FC = () => {
                                 exit={{ opacity: 0 }}
                                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12"
                             >
-                                {[1, 2, 3, 4, 5].map((n) => (
+                                {[1, 2, 3].map((n) => (
                                     <PlayerCardSkeleton key={n} />
                                 ))}
                             </motion.div>
@@ -88,14 +88,14 @@ const WNBAPlayersPage: React.FC = () => {
                                 variants={containerVariants}
                                 initial="hidden"
                                 animate="visible"
-                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12"
+                                className="flex lg:grid lg:grid-cols-3 gap-8 md:gap-12 overflow-x-auto pb-12 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide snap-x snap-mandatory"
                             >
                                 {WNBA_PLAYERS.map((player) => (
                                     <motion.div
                                         key={player.id}
                                         variants={itemVariants}
                                         whileHover={{ y: -12 }}
-                                        className="bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-orange-100/50 dark:shadow-none border border-slate-100 dark:border-slate-800 group transition-all duration-500 hover:shadow-orange-200/50 dark:hover:border-orange-500/30"
+                                        className="bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-orange-100/50 dark:shadow-none border border-slate-100 dark:border-slate-800 group transition-all duration-500 hover:shadow-orange-200/50 dark:hover:border-orange-500/30 w-[85vw] md:w-[45vw] lg:w-auto flex-shrink-0 snap-center"
                                     >
                                         {/* Profile Image Container */}
                                         <div className="relative h-96 overflow-hidden">
