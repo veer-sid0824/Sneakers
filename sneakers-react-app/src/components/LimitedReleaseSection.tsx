@@ -26,7 +26,7 @@ const LIMITED_DROPS: LimitedSneaker[] = [
         name: 'Jordan 1 Retro High OG "Chicago"',
         brand: 'Jordan',
         price: 180,
-        image: 'https://placehold.co/600x400/000000/FFFFFF/png?text=Jordan+1+Chicago',
+        image: '/assets/images/rare-drops/og.png',
         releaseDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 60 * 60 * 5).toISOString(), // 2 days 5 hours from now
         badge: 'HOT',
         accentColor: '#ef4444'
@@ -36,7 +36,7 @@ const LIMITED_DROPS: LimitedSneaker[] = [
         name: 'Adidas Yeezy Boost 350 V2',
         brand: 'Adidas',
         price: 220,
-        image: 'https://placehold.co/600x400/000000/FFFFFF/png?text=Yeezy+350',
+        image: '/assets/images/rare-drops/ezy.png',
         releaseDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5 + 1000 * 60 * 60 * 12).toISOString(), // 5 days 12 hours from now
         badge: 'LIMITED',
         accentColor: '#8b5cf6'
@@ -46,7 +46,7 @@ const LIMITED_DROPS: LimitedSneaker[] = [
         name: 'Nike Dunk Low "Panda"',
         brand: 'Nike',
         price: 110,
-        image: 'https://placehold.co/600x400/000000/FFFFFF/png?text=Dunk+Low+Panda',
+        image: '/assets/images/rare-drops/panda.png',
         releaseDate: new Date(Date.now() + 1000 * 60 * 60 * 8).toISOString(), // 8 hours from now
         badge: 'NEW',
         accentColor: '#10b981'

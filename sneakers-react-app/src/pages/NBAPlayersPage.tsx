@@ -95,15 +95,17 @@ const NBAPlayersPage: React.FC = () => {
                                         key={player.id}
                                         variants={itemVariants}
                                         whileHover={{ y: -12 }}
-                                        className="bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-100/50 dark:shadow-none border border-slate-100 dark:border-slate-800 group transition-all duration-500 hover:shadow-indigo-200/50 dark:hover:border-indigo-500/30 w-[85vw] md:w-[45vw] lg:w-auto flex-shrink-0 snap-center"
+                                        className="bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-100/50 dark:shadow-none border border-slate-100 dark:border-slate-800 group transition-all duration-500 hover:shadow-indigo-200/50 dark:hover:border-indigo-500/30 w-[85vw] md:w-[45vw] lg:w-80 flex-shrink-0 snap-center"
                                     >
-                                        {/* Profile Image Container */}
-                                        <div className="relative h-96 overflow-hidden">
+                                        {/* Profile Image Container - Fixed Aspect Ratio */}
+                                        <div className="relative w-full aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
                                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-10 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
                                             <img
                                                 src={player.profileImage}
                                                 alt={player.name}
-                                                className="w-full h-full object-cover transform scale-105 group-hover:scale-110 transition-transform duration-1000 ease-out"
+                                                className="w-full h-full object-cover"
+                                                loading="lazy"
+                                                decoding="async"
                                             />
                                             <div className="absolute top-6 right-6 z-20">
                                                 <span className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-slate-900 dark:text-white text-[10px] font-black px-5 py-2.5 rounded-full shadow-xl border border-white/20 dark:border-slate-700/50 uppercase tracking-widest">
