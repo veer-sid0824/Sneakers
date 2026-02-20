@@ -18,7 +18,7 @@ const DROPS = [
         date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3).toISOString(),
         status: 'UPCOMING',
         description: 'The final collaboration from the late Virgil Abloh.',
-        image: 'https://placehold.co/800x600/000000/FFFFFF/png?text=Off-White+Nike',
+        image: '/assets/images/rare-drops/off-white-x-nike.png',
         price: '$190'
     },
     {
@@ -27,7 +27,7 @@ const DROPS = [
         date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString(),
         status: 'RAFFLE OPEN',
         description: 'The iconic Cactus Jack aesthetic on a classic silhouette.',
-        image: 'https://placehold.co/800x600/000000/FFFFFF/png?text=Travis+Scott',
+        image: '/assets/images/rare-drops/travis-scott-x-jordan.png',
         price: '$170'
     },
     {
@@ -36,7 +36,7 @@ const DROPS = [
         date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14).toISOString(),
         status: 'WAITLIST',
         description: 'Organic textures meet unconventional footwear design.',
-        image: 'https://placehold.co/800x600/000000/FFFFFF/png?text=Salehe+Crocs',
+        image: '/assets/images/rare-drops/salehe-bembury-x-crocs.png',
         price: '$85'
     }
 ];

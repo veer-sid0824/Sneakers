@@ -14,7 +14,7 @@
         ],
         "description": "The Air Jordan 1 High OG brings back the classic look.",
         "releaseDate": "1985-04-01",
-        "image": "https://placehold.co/600x400/png?text=AJ1",
+        "image": "/assets/images/sneakers/air-jordan-1-og/shoe.png",
         "colors": [
             "Red",
             "White",
@@ -36,7 +36,7 @@
         ],
         "description": "Created for the hardwood but taken to the streets, the '80s b-ball icon returns with perfectly sheened overlays.",
         "releaseDate": "2021-01-14",
-        "image": "https://placehold.co/600x400/png?text=Dunk+Low",
+        "image": "/assets/images/sneakers/dunk-low-retro/shoe.png",
         "colors": [
             "White",
             "Black"
@@ -54,12 +54,342 @@
         ],
         "description": "Part of 'The Ten' collection, Virgil Abloh's take on the AJ1 deconstructs the icon.",
         "releaseDate": "2017-09-09",
-        "image": "https://placehold.co/600x400/png?text=Off-White+AJ1",
+        "image": "/assets/images/sneakers/off-white-aj1/shoe.png",
         "colors": [
             "Red",
             "White",
             "Black"
         ],
         "isRare": true
+    },
+    {
+        "id": "4",
+        "name": "Air Jordan 11 Retro",
+        "brand": "Nike",
+        "price": 220,
+        "sizes": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+        ],
+        "description": "The Air Jordan 11 combines high-performance basketball technology with luxury style.",
+        "releaseDate": "1995-12-02",
+        "image": "/assets/images/sneakers/air-jordan-11/shoe.png",
+        "colors": [
+            "Black",
+            "White",
+            "Red"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "5",
+        "name": "Nike LeBron 18",
+        "brand": "Nike",
+        "price": 200,
+        "sizes": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+        ],
+        "description": "Engineered for high-level game performance with Airposite construction.",
+        "releaseDate": "2020-11-20",
+        "image": "/assets/images/sneakers/nike-lebron-18/shoe.png",
+        "colors": [
+            "Purple",
+            "Gold",
+            "Black"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "6",
+        "name": "Nike Kyrie 7",
+        "brand": "Nike",
+        "price": 140,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "description": "Kyrie's signature shoe designed for explosive plays and quick cuts.",
+        "releaseDate": "2020-11-27",
+        "image": "/assets/images/sneakers/nike-kyrie-7/shoe.png",
+        "colors": [
+            "Black",
+            "White",
+            "Gold"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "7",
+        "name": "Adidas Ultra Boost 21",
+        "brand": "Adidas",
+        "price": 180,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+        ],
+        "description": "The most responsive cushioning combined with premium materials.",
+        "releaseDate": "2021-01-01",
+        "image": "/assets/images/sneakers/adidas-ultra-boost-21/shoe.png",
+        "colors": [
+            "White",
+            "Black",
+            "Metallic"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "8",
+        "name": "Yeezy 350 V2",
+        "brand": "Adidas",
+        "price": 220,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "description": "Kanye West's iconic silhouette with Boost cushioning technology.",
+        "releaseDate": "2016-02-19",
+        "image": "/assets/images/sneakers/yeezy-350-v2/shoe.png",
+        "colors": [
+            "Cream",
+            "Black",
+            "Zebra"
+        ],
+        "isRare": true
+    },
+    {
+        "id": "9",
+        "name": "Nike Air Max 90",
+        "brand": "Nike",
+        "price": 130,
+        "sizes": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "description": "A classic runner with visible Air unit and heritage design.",
+        "releaseDate": "1990-03-11",
+        "image": "/assets/images/sneakers/nike-air-max-90/shoe.png",
+        "colors": [
+            "White",
+            "Red",
+            "Black"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "10",
+        "name": "New Balance 990v5",
+        "brand": "New Balance",
+        "price": 175,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+        ],
+        "description": "The iconic New Balance 990 evolution with premium suede and mesh.",
+        "releaseDate": "2019-11-29",
+        "image": "/assets/images/sneakers/new-balance-990v5/shoe.png",
+        "colors": [
+            "Grey",
+            "White",
+            "Navy"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "11",
+        "name": "Nike Air Max 95",
+        "brand": "Nike",
+        "price": 160,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "description": "The legendary silhouette with visible Neon support structure.",
+        "releaseDate": "1995-03-11",
+        "image": "/assets/images/sneakers/nike-air-max-95/shoe.png",
+        "colors": [
+            "Neon",
+            "White",
+            "Black"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "12",
+        "name": "Adidas Yeezy Foam Runner",
+        "brand": "Adidas",
+        "price": 280,
+        "sizes": [
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "description": "A futuristic slip-on with a unique EVA foam material.",
+        "releaseDate": "2020-06-16",
+        "image": "/assets/images/sneakers/adidas-yeezy-foam-runner/shoe.png",
+        "colors": [
+            "Mineral Blue",
+            "Ochre",
+            "Onyx"
+        ],
+        "isRare": true
+    },
+    {
+        "id": "13",
+        "name": "Converse Chuck Taylor High",
+        "brand": "Converse",
+        "price": 70,
+        "sizes": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+        ],
+        "description": "The timeless all-star basketball sneaker that defined a generation.",
+        "releaseDate": "1923-01-01",
+        "image": "/assets/images/sneakers/converse-chuck-taylor-high/shoe.png",
+        "colors": [
+            "White",
+            "Black",
+            "Red"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "14",
+        "name": "Vans Old Skool",
+        "brand": "Vans",
+        "price": 85,
+        "sizes": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "description": "The classic skate shoe with the iconic side stripe.",
+        "releaseDate": "1977-03-16",
+        "image": "/assets/images/sneakers/vans-old-skool/shoe.png",
+        "colors": [
+            "Black",
+            "White",
+            "Navy"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "15",
+        "name": "Puma RS-X",
+        "brand": "Puma",
+        "price": 120,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "description": "A modern take on the classic RS runner with contemporary design.",
+        "releaseDate": "2019-04-01",
+        "image": "/assets/images/sneakers/puma-rs-x/shoe.png",
+        "colors": [
+            "Grey",
+            "Pink",
+            "Black"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "16",
+        "name": "Reebok Club C 85",
+        "brand": "Reebok",
+        "price": 105,
+        "sizes": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "description": "A vintage tennis-inspired silhouette with timeless appeal.",
+        "releaseDate": "1985-01-01",
+        "image": "/assets/images/sneakers/reebok-club-c-85/shoe.png",
+        "colors": [
+            "White",
+            "Black",
+            "Maroon"
+        ],
+        "isRare": false
+    },
+    {
+        "id": "17",
+        "name": "Nike Air Force 1 Low",
+        "brand": "Nike",
+        "price": 125,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+        ],
+        "description": "The iconic low-cut version of the legendary Air Force 1.",
+        "releaseDate": "1982-02-01",
+        "image": "/assets/images/sneakers/nike-air-force-1-low/shoe.png",
+        "colors": [
+            "White",
+            "Black",
+            "All-White"
+        ],
+        "isRare": false
     }
 ]

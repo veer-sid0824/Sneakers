@@ -33,7 +33,7 @@ const Hero = () => {
     };
 
     return (
-        <div className="relative h-screen w-full overflow-hidden bg-slate-950">
+        <div className="relative min-h-screen w-full overflow-hidden bg-slate-950">
             {/* Background Video with subtle zoom effect */}
             <motion.video
                 initial={{ scale: 1.1 }}
@@ -54,18 +54,18 @@ const Hero = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/20 z-10" />
 
             {/* Content */}
-            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
+            <div className="relative z-20 flex flex-col items-center justify-center min-h-screen text-center px-4 md:px-6">
                 <motion.div
                     variants={container}
                     initial="hidden"
                     animate="visible"
-                    className="flex flex-wrap justify-center overflow-hidden mb-4"
+                    className="flex flex-wrap justify-center items-center gap-1 md:gap-2 max-w-4xl leading-tight"
                 >
                     {"LEGENDS START HERE".split("").map((char, index) => (
                         <motion.span
                             variants={child}
                             key={index}
-                            className={`text-6xl md:text-[10rem] font-black text-white ${char === " " ? "mr-10" : ""} tracking-tighter inline-block italic hover:text-indigo-400 transition-colors duration-300 drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)]`}
+                            className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white ${char === " " ? "basis-full md:basis-auto" : ""} tracking-tight inline-block italic hover:text-indigo-400 transition-colors duration-300 drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)]`}
                         >
                             {char}
                         </motion.span>
@@ -76,7 +76,7 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.2, duration: 1, type: "spring", damping: 20 }}
-                    className="text-xl md:text-3xl text-slate-200 mt-8 max-w-3xl font-medium tracking-tight"
+                    className="text-lg sm:text-xl md:text-2xl text-slate-200 mt-8 md:mt-10 max-w-3xl font-medium tracking-tight px-4 leading-relaxed"
                 >
                     Experience the fusion of <span className="text-indigo-400 font-black italic">performance</span> and <span className="text-white font-black italic">culture</span>.
                 </motion.p>
@@ -85,7 +85,7 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.5, duration: 0.8 }}
-                    className="mt-12 flex gap-6"
+                    className="mt-12 md:mt-14 flex flex-col sm:flex-row gap-4 md:gap-6 justify-center w-full px-4"
                 >
                     <Link to="/sneakers">
                         <Button size="xl" variant="primary" className="px-12 tracking-[0.3em] font-black uppercase italic">
