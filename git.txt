@@ -1,1 +1,1 @@
-a new file.I have added these changes today mor and eve (git.txt)
+a new file.I have added these changes today mor and eve. good to go (git.txt)
