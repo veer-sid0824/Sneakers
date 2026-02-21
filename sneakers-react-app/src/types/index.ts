@@ -14,6 +14,7 @@ export interface Player {
     bio: string;
     profileImage: string;
     bannerImage: string;
+    bannerVideo?: string;
     achievements?: string[];
     shoes: Shoe[];
 }

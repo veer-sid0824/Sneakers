@@ -1,0 +1,53 @@
+// Example: Adding bannerVideo to player data
+// This shows how to update nbaData.json and wnbaData.json
+
+export const PLAYER_WITH_VIDEO_EXAMPLE = {
+    "id": 1,
+    "name": "Anthony Edwards",
+    "team": "Minnesota Timberwolves",
+    "position": "Shooting Guard",
+    "profileImage": "/assets/images/players/anthony-edwards.jpg",
+    "bannerImage": "/assets/images/players/anthony-edwards.jpg",
+    // NEW: Add this line to enable video background
+    "bannerVideo": "/assets/videos/players/anthony-edwards-banner.mp4",
+    "bio": "Known for his explosive athleticism and scoring ability, Edwards is a rising star in the NBA.",
+    "shoes": [
+        {
+            "id": 101,
+            "name": "Adidas AE 1 'With Love'",
+            "modelNumber": "AE 1",
+            "releaseYear": 2023,
+            "price": 120,
+            "brand": "Adidas",
+            "description": "Anthony Edwards' debut signature shoe.",
+            "image": "/assets/images/sneakers/anthony-edwards/ae-1-with-love.jpg",
+            "colorway": "Acid Orange / Core Black",
+            "isFeatured": true
+        }
+    ]
+};
+
+// IMPORTANT NOTES:
+// 1. The 'bannerVideo' field is OPTIONAL
+// 2. If 'bannerVideo' is not provided, the 'bannerImage' is used instead
+// 3. This ensures backward compatibility with existing player data
+
+// VIDEO REQUIREMENTS:
+// - Format: MP4 (H.264 codec)
+// - File size: 2-4 MB recommended (max 8 MB)
+// - Duration: 8-15 seconds (loops)
+// - Resolution: 1920x1080 or 1280x720
+// - No audio (video is muted)
+
+// FILE PLACEMENT:
+// Place video files in: public/assets/videos/players/
+// Example path: public/assets/videos/players/anthony-edwards-banner.mp4
+
+// TO ADD A VIDEO:
+// 1. Create the video file and place it in public/assets/videos/players/
+// 2. Update the JSON: add "bannerVideo": "/assets/videos/players/filename.mp4"
+// 3. No code changes needed - the component handles both video and image
+
+// To generate optimized videos from existing files, see:
+// - BANNER_VIDEO_SETUP.md for FFmpeg compression commands
+// - https://ffmpeg.org/documentation.html

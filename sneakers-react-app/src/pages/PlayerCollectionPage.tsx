@@ -114,19 +114,49 @@ const PlayerCollectionPage: React.FC = () => {
     return (
         <PageTransition>
             <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-500">
-                {/* Banner Section */}
+                {/* Banner Section with Video Background */}
                 <div className="relative h-[40vh] md:h-[60vh] overflow-hidden">
-                    <motion.img
-                        initial={{ scale: 1.1, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                        src={player.bannerImage}
-                        alt={player.name}
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-950 via-white/40 dark:via-slate-950/40 to-transparent" />
+                    {/* Video Background */}
+                    {player.bannerVideo ? (
+                        <motion.video
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            poster={player.bannerImage}
+                            preload="metadata"
+                            className="absolute top-0 left-0 w-full h-full object-cover"
+                        >
+                            <source src={player.bannerVideo} type="video/mp4" />
+                            {/* Fallback image if video fails to load */}
+                            <img 
+                                src={player.bannerImage} 
+                                alt={player.name}
+                                className="w-full h-full object-cover"
+                            />
+                        </motion.video>
+                    ) : (
+                        <motion.img
+                            initial={{ scale: 1.1, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                            src={player.bannerImage}
+                            alt={player.name}
+                            className="w-full h-full object-cover"
+                        />
+                    )}
 
-                    <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
+                    {/* Dark Gradient Overlay for Text Readability */}
+                    <div className="absolute inset-0 bg-black/50 z-5" />
+                    
+                    {/* Additional gradient overlay for smoother transition to content */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-950 via-white/20 dark:via-slate-950/20 to-transparent z-5" />
+
+                    {/* Hero Text - Positioned above overlay */}
+                    <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 z-10 relative">
                         <div className="max-w-7xl mx-auto">
                             <motion.div
                                 initial={{ opacity: 0, y: 40 }}
@@ -136,9 +166,9 @@ const PlayerCollectionPage: React.FC = () => {
                                 <p className={`text-${accentColor}-600 font-black uppercase tracking-[0.3em] text-sm mb-2`}>
                                     Signature Series
                                 </p>
-                                <h1 className="text-5xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-none mb-6">
+                                <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter leading-none mb-6 drop-shadow-lg">
                                     {player.name.split(' ')[0]} <br />
-                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200">
                                         {player.name.split(' ').slice(1).join(' ')}
                                     </span>
                                 </h1>
