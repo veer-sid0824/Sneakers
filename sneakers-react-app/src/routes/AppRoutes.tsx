@@ -18,6 +18,10 @@ const AdminDashboard = lazy(() => import('../pages/AdminDashboard'));
 const Payment = lazy(() => import('../pages/Payment'));
 const OrderConfirmation = lazy(() => import('../pages/OrderConfirmation'));
 const OrderTracking = lazy(() => import('../pages/OrderTracking'));
+const NewArrivals = lazy(() => import('../pages/NewArrivals'));
+const About = lazy(() => import('../pages/About'));
+const Contact = lazy(() => import('../pages/Contact'));
+const Terms = lazy(() => import('../pages/Terms'));
 
 const LoadingFallback = () => (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-8">
@@ -51,6 +55,11 @@ const AppRoutes = () => {
                     <Route path="/wishlist" element={<Wishlist />} />
                     <Route path="/payment" element={<Payment />} />
                     <Route path="/order-confirmation" element={<OrderConfirmation />} />
+
+                    <Route path="/new-arrivals" element={<NewArrivals />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/terms" element={<Terms />} />
 
                     <Route path="*" element={
                         <div className="flex flex-col items-center justify-center h-full py-20 text-center">

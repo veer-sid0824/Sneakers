@@ -92,7 +92,7 @@ const Hero = () => {
                             SHOP COLLECTION
                         </Button>
                     </Link>
-                    <Link to="/drops">
+                    <Link to="/rare-drops">
                         <Button size="xl" variant="outline" className="px-12 tracking-[0.3em] font-black uppercase italic border-white text-white hover:bg-white hover:text-slate-950">
                             VIEW DROPS
                         </Button>
