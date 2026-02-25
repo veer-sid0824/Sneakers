@@ -55,6 +55,7 @@ const AppRoutes = () => {
                     <Route path="/wishlist" element={<Wishlist />} />
                     <Route path="/payment" element={<Payment />} />
                     <Route path="/order-confirmation" element={<OrderConfirmation />} />
+                    <Route path="/order-tracking/:orderId" element={<OrderTracking />} />
 
                     <Route path="/new-arrivals" element={<NewArrivals />} />
                     <Route path="/about" element={<About />} />

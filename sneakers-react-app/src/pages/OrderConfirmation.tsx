@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 import Button from '../components/Button';
-import { Order } from '../types/order';
+import type { Order } from '../types/order';
 
 const OrderConfirmation = () => {
     const [order, setOrder] = useState<Order | null>(null);

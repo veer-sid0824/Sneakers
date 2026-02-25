@@ -160,7 +160,7 @@ const AdminDashboard: React.FC = () => {
                                             paddingAngle={8}
                                             dataKey="value"
                                         >
-                                            {BRAND_DISTRIBUTION.map((entry, index) => (
+                                            {BRAND_DISTRIBUTION.map((_entry, index) => (
                                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                             ))}
                                         </Pie>

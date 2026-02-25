@@ -5,17 +5,19 @@ export interface WishlistItem {
     name: string;
     price: number;
     image: string;
-    brand: string;
+    brand?: string;
     isRare?: boolean;
-    type: 'sneaker' | 'shoe';
+    type: 'sneaker' | 'shoe' | 'player';
     playerId?: string | number;
+    position?: string;
+    team?: string;
 }
 
 interface WishlistContextType {
     wishlist: WishlistItem[];
     addToWishlist: (item: WishlistItem) => void;
-    removeFromWishlist: (id: string | number, type: 'sneaker' | 'shoe') => void;
-    isInWishlist: (id: string | number, type: 'sneaker' | 'shoe') => boolean;
+    removeFromWishlist: (id: string | number, type: 'sneaker' | 'shoe' | 'player') => void;
+    isInWishlist: (id: string | number, type: 'sneaker' | 'shoe' | 'player') => boolean;
     toggleWishlist: (item: WishlistItem) => void;
 }
 
@@ -38,11 +40,11 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         });
     };
 
-    const removeFromWishlist = (id: string | number, type: 'sneaker' | 'shoe') => {
+    const removeFromWishlist = (id: string | number, type: 'sneaker' | 'shoe' | 'player') => {
         setWishlist(prev => prev.filter(item => !(item.id === id && item.type === type)));
     };
 
-    const isInWishlist = (id: string | number, type: 'sneaker' | 'shoe'): boolean => {
+    const isInWishlist = (id: string | number, type: 'sneaker' | 'shoe' | 'player'): boolean => {
         return wishlist.some(item => item.id === id && item.type === type);
     };
 

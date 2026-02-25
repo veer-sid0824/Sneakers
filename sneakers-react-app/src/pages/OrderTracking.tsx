@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import Button from '../components/Button';
-import { Order, ORDER_STATUS_STEPS } from '../types/order';
+import type { Order } from '../types/order';
+import { ORDER_STATUS_STEPS } from '../types/order';
 
 const OrderTracking = () => {
     const { orderId } = useParams<{ orderId: string }>();
