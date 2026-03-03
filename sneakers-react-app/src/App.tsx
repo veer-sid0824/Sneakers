@@ -3,15 +3,18 @@ import AppRoutes from './routes/AppRoutes';
 import { CartProvider } from './contexts/CartContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { WishlistProvider } from './contexts/WishlistContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 const App = () => {
   return (
     <ThemeProvider>
       <WishlistProvider>
         <CartProvider>
-          <Router>
-            <AppRoutes />
-          </Router>
+          <AuthProvider>
+            <Router>
+              <AppRoutes />
+            </Router>
+          </AuthProvider>
         </CartProvider>
       </WishlistProvider>
     </ThemeProvider>

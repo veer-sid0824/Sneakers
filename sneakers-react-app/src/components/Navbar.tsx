@@ -1,19 +1,45 @@
-import { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NAV_LINKS } from '../data/constants';
 import ThemeToggle from './ThemeToggle';
 import { useCart } from '../contexts/CartContext';
 import { useWishlist } from '../contexts/WishlistContext';
+import { useAuth } from '../contexts/AuthContext';
 import CartDrawer from './CartDrawer';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const userMenuRef = useRef<HTMLDivElement>(null);
     const { totalCount, isCartOpen, setIsCartOpen } = useCart();
     const { wishlist } = useWishlist();
+    const { user, logout, isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     const toggleMenu = () => setIsOpen(!isOpen);
     const toggleCart = () => setIsCartOpen(!isCartOpen);
+
+    // Close user menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+                setIsUserMenuOpen(false);
+            }
+        };
+
+        if (isUserMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isUserMenuOpen]);
+
+    const handleLogout = () => {
+        logout();
+        setIsUserMenuOpen(false);
+        navigate('/');
+    };
 
     return (
         <>
@@ -115,6 +141,95 @@ const Navbar = () => {
                                         </motion.span>
                                     )}
                                 </motion.button>
+
+                                {/* Auth Section */}
+                                {isAuthenticated && user ? (
+                                    <div className="relative" ref={userMenuRef}>
+                                        <motion.button
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                                            className="flex items-center gap-2 px-3 py-2 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                        >
+                                            <img
+                                                src={user.avatar}
+                                                alt={user.fullName}
+                                                className="w-8 h-8 rounded-full border-2 border-indigo-600 dark:border-indigo-400"
+                                            />
+                                            <div className="hidden lg:flex flex-col items-start">
+                                                <span className="text-xs font-black text-slate-900 dark:text-white leading-tight">{user.fullName}</span>
+                                                <span className="text-[10px] text-slate-500 dark:text-slate-400">{user.email}</span>
+                                            </div>
+                                        </motion.button>
+
+                                        <AnimatePresence>
+                                            {isUserMenuOpen && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: -10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -10 }}
+                                                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-2xl shadow-xl shadow-slate-200 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden z-50"
+                                                >
+                                                    <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+                                                        <p className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Profile</p>
+                                                    </div>
+                                                    <div className="p-2">
+                                                        <Link
+                                                            to="#"
+                                                            className="flex items-center gap-3 px-4 py-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors text-sm font-medium"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                                            </svg>
+                                                            My Profile
+                                                        </Link>
+                                                        <Link
+                                                            to="#"
+                                                            className="flex items-center gap-3 px-4 py-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors text-sm font-medium"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                                                            </svg>
+                                                            Settings
+                                                        </Link>
+                                                    </div>
+                                                    <div className="border-t border-slate-100 dark:border-slate-800 p-2">
+                                                        <motion.button
+                                                            whileHover={{ scale: 1.02 }}
+                                                            whileTap={{ scale: 0.98 }}
+                                                            onClick={handleLogout}
+                                                            className="w-full flex items-center gap-3 px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors text-sm font-medium"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M17 7h-4v2h4c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2h-4v2h4c2.21 0 4-1.79 4-4V9c0-2.21-1.79-4-4-4zM8 9c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1zm-5-1h4v2H3V8c0-1.1.9-2 2-2zm4 10H5c-1.1 0-2-.9-2-2v-6h2v6h4v-2h2v2c0 1.1-.9 2-2 2z" />
+                                                            </svg>
+                                                            Logout
+                                                        </motion.button>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center gap-2">
+                                        <motion.button
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => navigate('/login')}
+                                            className="px-4 py-2 text-slate-900 dark:text-white font-black hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm uppercase tracking-widest"
+                                        >
+                                            Login
+                                        </motion.button>
+                                        <motion.button
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => navigate('/signup')}
+                                            className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 text-white font-black rounded-xl transition-all text-sm uppercase tracking-widest shadow-lg shadow-indigo-200 dark:shadow-none"
+                                        >
+                                            Sign Up
+                                        </motion.button>
+                                    </div>
+                                )}
                             </div>
                         </div>
 

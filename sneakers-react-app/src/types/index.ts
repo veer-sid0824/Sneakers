@@ -33,3 +33,20 @@ export interface Sneaker {
 }
 
 export type Theme = 'light' | 'dark';
+
+export interface User {
+    id: string;
+    fullName: string;
+    email: string;
+    avatar?: string;
+    createdAt: string;
+}
+
+export interface AuthContextType {
+    user: User | null;
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
+    signup: (fullName: string, email: string, password: string) => Promise<void>;
+    logout: () => void;
+}
