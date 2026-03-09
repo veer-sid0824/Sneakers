@@ -22,6 +22,8 @@ const NewArrivals = lazy(() => import('../pages/NewArrivals'));
 const About = lazy(() => import('../pages/About'));
 const Contact = lazy(() => import('../pages/Contact'));
 const Terms = lazy(() => import('../pages/Terms'));
+const Login = lazy(() => import('../pages/Login'));
+const Signup = lazy(() => import('../pages/Signup'));
 
 const LoadingFallback = () => (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-8">
@@ -35,6 +37,10 @@ const AppRoutes = () => {
     return (
         <Suspense fallback={<LoadingFallback />}>
             <Routes>
+                {/* Auth routes outside MainLayout */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/admin" element={<AdminDashboard />} />
