@@ -654,5 +654,101 @@
                 "isFeatured": false
             }
         ]
+    },
+    {
+        "id": 6,
+        "name": "Kobe Bryant",
+        "team": "Los Angeles Lakers",
+        "position": "Shooting Guard",
+        "profileImage": "/assets/images/players/kobe-bryant.jpg",
+        "bannerImage": "/assets/images/players/kobe-bryant.jpg",
+        "bannerVideo": "/assets/videos/players/kobe-bryant-banner.mp4",
+        "bio": "Kobe Bean Bryant was an American professional basketball player. A shooting guard, he spent his entire 20-year career with the Los Angeles Lakers in the NBA.",
+        "shoes": [
+            {
+                "id": 601,
+                "name": "Nike Kobe 1 'Black'",
+                "modelNumber": "Kobe 1",
+                "releaseYear": 2014,
+                "price": 150,
+                "brand": "Nike",
+                "description": "The inaugural signature shoe for Kobe Bryant, featuring a sleek black design with Kobe's logo on the heel. It provided excellent support for his explosive movements.",
+                "image": "/assets/images/sneakers/kobe-bryant/kobe-1-black.jpg",
+                "colorway": "Black / White",
+                "isFeatured": true
+            },
+            {
+                "id": 602,
+                "name": "Nike Kobe 4 'Grape'",
+                "modelNumber": "Kobe 4",
+                "releaseYear": 2010,
+                "price": 160,
+                "brand": "Nike",
+                "description": "Known for its unique purple grape colorway, this shoe was worn during Kobe's MVP season. The Zoom Air unit provided responsive cushioning.",
+                "image": "/assets/images/sneakers/kobe-bryant/kobe-4-grape.jpg",
+                "colorway": "Grape / Black",
+                "isFeatured": true
+            },
+            {
+                "id": 603,
+                "name": "Nike Kobe 5 'Black'",
+                "modelNumber": "Kobe 5",
+                "releaseYear": 2011,
+                "price": 170,
+                "brand": "Nike",
+                "description": "A minimalist design that focused on performance. The black colorway became iconic and was Kobe's favorite for its simplicity and functionality.",
+                "image": "/assets/images/sneakers/kobe-bryant/kobe-5-black.jpg",
+                "colorway": "Black / Metallic Silver",
+                "isFeatured": false
+            },
+            {
+                "id": 604,
+                "name": "Nike Kobe 8 'System'",
+                "modelNumber": "Kobe 8",
+                "releaseYear": 2013,
+                "price": 180,
+                "brand": "Nike",
+                "description": "Inspired by Kobe's 'System' workout, this shoe featured Flywire technology for lockdown fit and was designed for maximum performance.",
+                "image": "/assets/images/sneakers/kobe-bryant/kobe-8-system.jpg",
+                "colorway": "Black / Metallic Gold",
+                "isFeatured": false
+            },
+            {
+                "id": 605,
+                "name": "Nike Kobe 9 'Elite'",
+                "modelNumber": "Kobe 9",
+                "releaseYear": 2014,
+                "price": 190,
+                "brand": "Nike",
+                "description": "The first Elite version of Kobe's signature line, offering premium materials and enhanced cushioning for elite-level play.",
+                "image": "/assets/images/sneakers/kobe-bryant/kobe-9-elite.jpg",
+                "colorway": "White / Black / Red",
+                "isFeatured": false
+            },
+            {
+                "id": 606,
+                "name": "Nike Kobe 10 'Elite'",
+                "modelNumber": "Kobe 10",
+                "releaseYear": 2015,
+                "price": 200,
+                "brand": "Nike",
+                "description": "Featuring Kobe's fadeaway logo on the heel, this Elite model provided superior support and was worn during his final seasons.",
+                "image": "/assets/images/sneakers/kobe-bryant/kobe-10-elite.jpg",
+                "colorway": "Black / Metallic Gold",
+                "isFeatured": true
+            },
+            {
+                "id": 607,
+                "name": "Nike Kobe 11 'Elite'",
+                "modelNumber": "Kobe 11",
+                "releaseYear": 2016,
+                "price": 210,
+                "brand": "Nike",
+                "description": "Kobe's final signature shoe, released after his retirement. It honored his legacy with premium materials and innovative design.",
+                "image": "/assets/images/sneakers/kobe-bryant/kobe-11-elite.jpg",
+                "colorway": "Black / Mamba Yellow",
+                "isFeatured": true
+            }
+        ]
     }
 ]

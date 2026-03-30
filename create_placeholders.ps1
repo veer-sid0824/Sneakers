@@ -1,7 +1,7 @@
 # PowerShell script to create placeholder sneaker images
 Add-Type -AssemblyName System.Drawing
 
-$baseDir = "d:\lil jwrld\Sneakers\sneakers-react-app\public\assets\images\sneakers"
+$baseDir = "d:\liljwrld\Sneakers\sneakers-react-app\public\assets\images\sneakers"
 
 # Define all sneakers
 $allSneakers = @{
@@ -10,6 +10,7 @@ $allSneakers = @{
     "giannis-antetokounmpo" = @("freak-5-greece.jpg", "freak-4-knowledge.jpg", "freak-3-dutch-blue.jpg", "freak-2-bamo.jpg", "freak-1-america.jpg", "freak-5-sepolia.jpg", "freak-4-unbelievable.jpg", "freak-3-cherry.jpg", "freak-5-oreo.jpg", "freak-6-roses.jpg")
     "james-harden" = @("harden-7-black.jpg", "harden-8-white.jpg", "harden-6-lucky.jpg", "harden-5-natural.jpg", "harden-4-lemonade.jpg", "harden-7-cyan.jpg", "harden-8-flamingo.jpg", "harden-3-mission.jpg", "harden-1-pioneer.jpg", "harden-7-yellow.jpg")
     "kyrie-irving" = @("kyrie-8-infinity.jpg", "kyrie-7-soundwave.jpg", "kyrie-6-preheat.jpg", "kyrie-5-spongebob.jpg", "kyrie-4-confetti.jpg", "kyrie-low-5-community.jpg", "kyrie-7-daybreak.jpg", "kyrie-3-mamba.jpg", "kyrie-2-whatthe.jpg", "kyrie-1-red.jpg")
+    "kobe-bryant" = @("kobe-1-black.jpg", "kobe-4-grape.jpg", "kobe-5-black.jpg", "kobe-8-system.jpg", "kobe-9-elite.jpg", "kobe-10-elite.jpg", "kobe-11-elite.jpg")
 }
 
 Write-Host "Creating Sneaker Placeholder Images..." -ForegroundColor Cyan
@@ -19,6 +20,9 @@ $totalSkipped = 0
 
 foreach ($player in $allSneakers.Keys) {
     $playerDir = Join-Path $baseDir $player
+    if (!(Test-Path $playerDir)) {
+        New-Item -ItemType Directory -Force $playerDir | Out-Null
+    }
     Write-Host "Processing $player..." -ForegroundColor Yellow
     
     foreach ($filename in $allSneakers[$player]) {

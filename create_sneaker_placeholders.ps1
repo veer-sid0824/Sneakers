@@ -1,7 +1,7 @@
 # PowerShell script to create placeholder sneaker images
 # Creates simple colored rectangles as placeholders
 
-$baseDir = "d:\lil jwrld\Sneakers\sneakers-react-app\public\assets\images\sneakers"
+$baseDir = "d:\liljwrld\Sneakers\sneakers-react-app\public\assets\images\sneakers"
 
 # Define sneakers for each player
 $sneakers = @{
@@ -65,6 +65,15 @@ $sneakers = @{
         "kyrie-2-whatthe.jpg",
         "kyrie-1-red.jpg"
     )
+    "kobe-bryant" = @(
+        "kobe-1-black.jpg",
+        "kobe-4-grape.jpg",
+        "kobe-5-black.jpg",
+        "kobe-8-system.jpg",
+        "kobe-9-elite.jpg",
+        "kobe-10-elite.jpg",
+        "kobe-11-elite.jpg"
+    )
 }
 
 Write-Host "🏀 Creating Sneaker Placeholder Images..." -ForegroundColor Cyan
@@ -75,6 +84,9 @@ $totalSkipped = 0
 
 foreach ($player in $sneakers.Keys) {
     $playerDir = Join-Path $baseDir $player
+    if (!(Test-Path $playerDir)) {
+        New-Item -ItemType Directory -Force $playerDir | Out-Null
+    }
     
     Write-Host "`n📁 Processing $player..." -ForegroundColor Yellow
     
