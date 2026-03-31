@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
@@ -152,7 +152,7 @@ const Login = () => {
                                 type="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="••••••••"
+                                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                                 className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 font-medium"
                             />
                             {errors.password && (
@@ -216,13 +216,13 @@ const Login = () => {
                         </Link>
                     </p>
 
-                    {/* Demo Credentials */}
+                    {/* Quick Test Credentials */}
                     <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-                        <p className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Demo Credentials</p>
+                        <p className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Quick Test Credentials</p>
                         <div className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
                             <p>Email: <span className="font-mono font-bold">demo@sneakers.com</span></p>
                             <p>Password: <span className="font-mono font-bold">anypassword123</span></p>
-                            <p className="font-medium text-slate-500 dark:text-slate-500 mt-2">✓ Frontend-only demo (no server required)</p>
+                            <p className="font-medium text-slate-500 dark:text-slate-500 mt-2">Use signup first to create this account in PostgreSQL.</p>
                         </div>
                     </div>
                 </div>
@@ -232,3 +232,5 @@ const Login = () => {
 };
 
 export default Login;
+
+

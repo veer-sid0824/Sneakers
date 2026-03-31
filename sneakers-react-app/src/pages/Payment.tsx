@@ -1,13 +1,15 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import Button from '../components/Button';
 import PageTransition from '../components/PageTransition';
+import { getApiUrl } from '../utils/api';
+import type { Order } from '../types/order';
 
 const COUNTRIES = [
-    "United States", "United Kingdom", "Canada", "Germany", "France",
-    "Italy", "Spain", "Australia", "Japan", "India"
+    'United States', 'United Kingdom', 'Canada', 'Germany', 'France',
+    'Italy', 'Spain', 'Australia', 'Japan', 'India'
 ];
 
 const Payment = () => {
@@ -17,6 +19,7 @@ const Payment = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [apiError, setApiError] = useState('');
 
     const [formData, setFormData] = useState({
         email: '',
@@ -47,6 +50,7 @@ const Payment = () => {
         }
 
         setFormData(prev => ({ ...prev, [name]: val }));
+        setApiError('');
         if (errors[name]) {
             setErrors(prev => {
                 const newErrors = { ...prev };
@@ -63,6 +67,7 @@ const Payment = () => {
         if (formData.cardNumber.replace(/\s/g, '').length < 16) newErrors.cardNumber = 'Invalid card number';
         if (formData.expiry.length < 7) newErrors.expiry = 'Invalid expiry';
         if (formData.cvc.length < 3) newErrors.cvc = 'Invalid CVC';
+        if (cartItems.length === 0) newErrors.cart = 'Your cart is empty';
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -72,40 +77,44 @@ const Payment = () => {
         e.preventDefault();
         if (!validateForm()) return;
 
+        setApiError('');
         setIsLoading(true);
-        // Simulate processing
-        await new Promise(resolve => setTimeout(resolve, 2500));
 
-        setIsSuccess(true);
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        try {
+            const response = await fetch(getApiUrl('/api/payments/checkout'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...formData,
+                    items: cartItems,
+                    total: totalAmount,
+                }),
+            });
 
-        const orderId = Math.random().toString(36).substring(2, 11).toUpperCase();
-        const estDate = new Date();
-        estDate.setDate(estDate.getDate() + 5);
-
-        const orderDetails = {
-            orderId,
-            total: totalAmount,
-            items: cartItems,
-            date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-            status: 'ordered',
-            estimatedDelivery: estDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-            customerInfo: {
-                name: formData.cardName,
-                email: formData.email,
-                country: formData.country
+            const payload = await response.json();
+            if (!response.ok) {
+                throw new Error(payload?.message || 'Payment failed');
             }
-        };
 
-        localStorage.setItem('lastOrder', JSON.stringify(orderDetails));
-        // Also add to an orders list for tracking
-        const allOrders = JSON.parse(localStorage.getItem('sneakers_orders') || '[]');
-        allOrders.push(orderDetails);
-        localStorage.setItem('sneakers_orders', JSON.stringify(allOrders));
+            const order: Order = payload.order;
 
-        clearCart();
-        setIsLoading(false);
-        navigate('/order-confirmation');
+            setIsSuccess(true);
+            localStorage.setItem('lastOrder', JSON.stringify(order));
+
+            const allOrders = JSON.parse(localStorage.getItem('sneakers_orders') || '[]');
+            allOrders.push(order);
+            localStorage.setItem('sneakers_orders', JSON.stringify(allOrders));
+
+            clearCart();
+            setTimeout(() => {
+                navigate(`/order-confirmation?orderId=${order.orderId}`);
+            }, 700);
+        } catch (error) {
+            setApiError(error instanceof Error ? error.message : 'Payment failed. Please try again.');
+            setIsSuccess(false);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -113,7 +122,6 @@ const Payment = () => {
             <div className="min-h-screen bg-white dark:bg-slate-950 pt-32 pb-20 px-4 md:px-8">
                 <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-12 items-start justify-center">
 
-                    {/* Left: Payment Form */}
                     <div className="flex-1 w-full max-w-xl mx-auto lg:mx-0">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -124,6 +132,16 @@ const Payment = () => {
                                 <div>
                                     <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">Payment Details</h2>
                                     <div className="space-y-4">
+                                        {apiError && (
+                                            <div className="bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/50 rounded-xl px-4 py-3">
+                                                <p className="text-rose-600 dark:text-rose-300 text-sm font-semibold">{apiError}</p>
+                                            </div>
+                                        )}
+                                        {errors.cart && (
+                                            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-xl px-4 py-3">
+                                                <p className="text-amber-700 dark:text-amber-300 text-sm font-semibold">{errors.cart}</p>
+                                            </div>
+                                        )}
                                         <div className="space-y-2">
                                             <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Email Address</label>
                                             <input
@@ -215,13 +233,12 @@ const Payment = () => {
 
                                 <div className="flex items-center justify-center gap-2 text-slate-400 dark:text-slate-500">
                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                                    <span className="text-[10px] font-bold uppercase tracking-widest">Payments are secure and encrypted</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest">Demo payment endpoint (no real card charge)</span>
                                 </div>
                             </form>
                         </motion.div>
                     </div>
 
-                    {/* Right: Sticky Order Summary */}
                     <div className="w-full lg:w-80 space-y-8 sticky top-32">
                         <div className="space-y-6">
                             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Order Summary</h3>

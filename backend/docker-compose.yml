@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: sneakers-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sneakers_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - sneakers_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  sneakers_postgres_data:

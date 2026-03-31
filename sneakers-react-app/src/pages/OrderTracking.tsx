@@ -1,58 +1,84 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import Button from '../components/Button';
 import type { Order } from '../types/order';
 import { ORDER_STATUS_STEPS } from '../types/order';
+import { getApiUrl } from '../utils/api';
 
 const OrderTracking = () => {
     const { orderId } = useParams<{ orderId: string }>();
     const [order, setOrder] = useState<Order | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState('');
     const [currentStep, setCurrentStep] = useState(0);
 
     useEffect(() => {
-        const orders = JSON.parse(localStorage.getItem('sneakers_orders') || '[]');
-        const foundOrder = orders.find((o: Order) => o.orderId === orderId);
-
-        if (foundOrder) {
-            setOrder(foundOrder);
-            // Find current status index
-            const statusIndex = ORDER_STATUS_STEPS.findIndex(s => s.id === foundOrder.status);
-            setCurrentStep(statusIndex >= 0 ? statusIndex : 0);
+        if (!orderId) {
+            setError('Order id missing');
+            setIsLoading(false);
+            return;
         }
+
+        let cancelled = false;
+
+        const fetchOrder = async () => {
+            try {
+                const response = await fetch(getApiUrl(`/api/orders/${orderId}`));
+                const payload = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(payload?.message || 'Unable to load order');
+                }
+
+                if (cancelled) return;
+
+                const nextOrder = payload.order as Order;
+                setOrder(nextOrder);
+                localStorage.setItem('lastOrder', JSON.stringify(nextOrder));
+
+                const statusIndex = ORDER_STATUS_STEPS.findIndex((step) => step.id === nextOrder.status);
+                setCurrentStep(statusIndex >= 0 ? statusIndex : 0);
+                setError('');
+            } catch (apiError) {
+                if (!cancelled) {
+                    setError(apiError instanceof Error ? apiError.message : 'Unable to load order');
+                }
+            } finally {
+                if (!cancelled) {
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        fetchOrder();
+        const intervalId = setInterval(fetchOrder, 8000);
+
+        return () => {
+            cancelled = true;
+            clearInterval(intervalId);
+        };
     }, [orderId]);
 
-    // Simulate status progression for demonstration
-    useEffect(() => {
-        if (order && currentStep < ORDER_STATUS_STEPS.length - 1) {
-            const timer = setTimeout(() => {
-                const nextStep = currentStep + 1;
-                setCurrentStep(nextStep);
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <p className="text-slate-500 font-bold uppercase tracking-widest animate-pulse">Locating Order...</p>
+            </div>
+        );
+    }
 
-                // Update in local storage
-                const orders = JSON.parse(localStorage.getItem('sneakers_orders') || '[]');
-                const updatedOrders = orders.map((o: Order) =>
-                    o.orderId === orderId ? { ...o, status: ORDER_STATUS_STEPS[nextStep].id } : o
-                );
-                localStorage.setItem('sneakers_orders', JSON.stringify(updatedOrders));
-
-                // Also update last order if it matches
-                const lastOrder = JSON.parse(localStorage.getItem('lastOrder') || '{}');
-                if (lastOrder.orderId === orderId) {
-                    localStorage.setItem('lastOrder', JSON.stringify({ ...lastOrder, status: ORDER_STATUS_STEPS[nextStep].id }));
-                }
-            }, 8000); // Progress every 8 seconds for demo purposes
-
-            return () => clearTimeout(timer);
-        }
-    }, [order, currentStep, orderId]);
-
-    if (!order) return (
-        <div className="min-h-screen flex items-center justify-center">
-            <p className="text-slate-500 font-bold uppercase tracking-widest animate-pulse">Locating Order...</p>
-        </div>
-    );
+    if (error || !order) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-4 text-center">
+                <p className="text-rose-500 font-bold uppercase tracking-widest">{error || 'Order not found'}</p>
+                <Link to="/sneakers">
+                    <Button variant="primary">Continue Shopping</Button>
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <PageTransition>
@@ -76,17 +102,14 @@ const OrderTracking = () => {
                     </div>
 
                     <div className="bg-slate-50 dark:bg-slate-900/50 rounded-[3rem] p-8 md:p-12 border border-slate-100 dark:border-slate-800 relative overflow-hidden">
-                        {/* Progress Stepper */}
                         <div className="relative mb-20">
-                            {/* Track Background */}
                             <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-200 dark:bg-slate-800 -translate-y-1/2 z-0 rounded-full" />
 
-                            {/* Animated Track Progress */}
                             <motion.div
                                 className="absolute top-1/2 left-0 h-1 bg-indigo-600 -translate-y-1/2 z-0 rounded-full"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${(currentStep / (ORDER_STATUS_STEPS.length - 1)) * 100}%` }}
-                                transition={{ duration: 1, ease: "easeOut" }}
+                                transition={{ duration: 1, ease: 'easeOut' }}
                             />
 
                             <div className="relative z-10 flex justify-between">
@@ -103,7 +126,7 @@ const OrderTracking = () => {
                                                     backgroundColor: isCompleted ? '#4f46e5' : '#e2e8f0',
                                                     borderColor: isCurrent ? '#4f46e5' : 'transparent'
                                                 }}
-                                                className={`w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center text-lg md:text-2xl shadow-xl transition-colors duration-500`}
+                                                className="w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center text-lg md:text-2xl shadow-xl transition-colors duration-500"
                                             >
                                                 {isCompleted && !isCurrent ? (
                                                     <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -182,7 +205,7 @@ const OrderTracking = () => {
                             </Button>
                         </div>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic opacity-60">
-                            The status is updated in real-time as your grails move closer to you.
+                            The status is updated by backend demo progression every few seconds.
                         </p>
                     </div>
 

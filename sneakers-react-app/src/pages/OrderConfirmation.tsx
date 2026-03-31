@@ -1,25 +1,69 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 import Button from '../components/Button';
 import type { Order } from '../types/order';
+import { getApiUrl } from '../utils/api';
 
 const OrderConfirmation = () => {
     const [order, setOrder] = useState<Order | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        const lastOrder = localStorage.getItem('lastOrder');
-        if (lastOrder) {
-            setOrder(JSON.parse(lastOrder));
-        } else {
-            // Redirect if no order found
-            navigate('/');
-        }
-    }, [navigate]);
+        const loadOrder = async () => {
+            const lastOrder = localStorage.getItem('lastOrder');
+            const fallbackOrder = lastOrder ? (JSON.parse(lastOrder) as Order) : null;
+            const queryOrderId = searchParams.get('orderId') || fallbackOrder?.orderId;
 
-    if (!order) return null;
+            if (!queryOrderId) {
+                navigate('/');
+                return;
+            }
+
+            try {
+                const response = await fetch(getApiUrl(`/api/orders/${queryOrderId}`));
+                const payload = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(payload?.message || 'Unable to load order');
+                }
+
+                setOrder(payload.order as Order);
+                localStorage.setItem('lastOrder', JSON.stringify(payload.order));
+            } catch (apiError) {
+                if (fallbackOrder && fallbackOrder.orderId === queryOrderId) {
+                    setOrder(fallbackOrder);
+                } else {
+                    setError(apiError instanceof Error ? apiError.message : 'Unable to load order');
+                }
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadOrder();
+    }, [navigate, searchParams]);
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <p className="text-slate-500 font-bold uppercase tracking-widest animate-pulse">Loading order...</p>
+            </div>
+        );
+    }
+
+    if (error || !order) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-4 text-center">
+                <p className="text-rose-500 font-bold uppercase tracking-widest">{error || 'Order not found'}</p>
+                <Button variant="primary" onClick={() => navigate('/sneakers')}>Continue Shopping</Button>
+            </div>
+        );
+    }
 
     return (
         <PageTransition>

@@ -1,21 +1,47 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+﻿import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { User, AuthContextType } from '../types';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const AUTH_USER_STORAGE_KEY = 'sneakers_auth_user';
+const AUTH_TOKEN_STORAGE_KEY = 'sneakers_auth_token';
+const REMEMBER_EMAIL_STORAGE_KEY = 'sneakers_remember_email';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
+interface AuthApiResponse {
+    message: string;
+    token: string;
+    user: User;
+}
+
+const getErrorMessage = async (response: Response): Promise<string> => {
+    try {
+        const data = await response.json();
+        return data.message || 'Request failed';
+    } catch {
+        return `Request failed with status ${response.status}`;
+    }
+};
+
+const withAvatar = (user: User): User => ({
+    ...user,
+    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.email)}`,
+});
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Load user from localStorage on mount
     useEffect(() => {
-        const savedUser = localStorage.getItem('sneakers_auth_user');
+        const savedUser = localStorage.getItem(AUTH_USER_STORAGE_KEY);
         if (savedUser) {
             try {
-                setUser(JSON.parse(savedUser));
+                const parsedUser = JSON.parse(savedUser) as User;
+                setUser(withAvatar(parsedUser));
             } catch (e) {
                 console.error('Failed to parse user from localStorage', e);
-                localStorage.removeItem('sneakers_auth_user');
+                localStorage.removeItem(AUTH_USER_STORAGE_KEY);
+                localStorage.removeItem(AUTH_TOKEN_STORAGE_KEY);
             }
         }
     }, []);
@@ -23,33 +49,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const login = async (email: string, password: string, rememberMe: boolean = true) => {
         setIsLoading(true);
         try {
-            // Simulate API call delay
-            await new Promise(resolve => setTimeout(resolve, 800));
+            const response = await fetch(`${API_BASE_URL}/api/auth/signin`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
 
-            // Mock validation
-            if (!email || !password) {
-                throw new Error('Email and password are required');
+            if (!response.ok) {
+                throw new Error(await getErrorMessage(response));
             }
 
-            // Create mock user
-            const newUser: User = {
-                id: `user_${Date.now()}`,
-                fullName: email.split('@')[0].replace(/[._-]/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-                email,
-                avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
-                createdAt: new Date().toISOString(),
-            };
+            const data = (await response.json()) as AuthApiResponse;
+            const hydratedUser = withAvatar(data.user);
 
-            setUser(newUser);
-            localStorage.setItem('sneakers_auth_user', JSON.stringify(newUser));
-            
+            setUser(hydratedUser);
+            localStorage.setItem(AUTH_USER_STORAGE_KEY, JSON.stringify(hydratedUser));
+            localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, data.token);
+
             if (rememberMe) {
-                localStorage.setItem('sneakers_remember_email', email);
+                localStorage.setItem(REMEMBER_EMAIL_STORAGE_KEY, email);
             } else {
-                localStorage.removeItem('sneakers_remember_email');
+                localStorage.removeItem(REMEMBER_EMAIL_STORAGE_KEY);
             }
-        } catch (error) {
-            throw error;
         } finally {
             setIsLoading(false);
         }
@@ -58,28 +79,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const signup = async (fullName: string, email: string, password: string) => {
         setIsLoading(true);
         try {
-            // Simulate API call delay
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fullName, email, password }),
+            });
 
-            // Mock validation
-            if (!fullName || !email || !password) {
-                throw new Error('All fields are required');
+            if (!response.ok) {
+                throw new Error(await getErrorMessage(response));
             }
 
-            // Create mock user
-            const newUser: User = {
-                id: `user_${Date.now()}`,
-                fullName,
-                email,
-                avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
-                createdAt: new Date().toISOString(),
-            };
+            const data = (await response.json()) as AuthApiResponse;
+            const hydratedUser = withAvatar(data.user);
 
-            setUser(newUser);
-            localStorage.setItem('sneakers_auth_user', JSON.stringify(newUser));
-            localStorage.removeItem('sneakers_remember_email');
-        } catch (error) {
-            throw error;
+            setUser(hydratedUser);
+            localStorage.setItem(AUTH_USER_STORAGE_KEY, JSON.stringify(hydratedUser));
+            localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, data.token);
+            localStorage.removeItem(REMEMBER_EMAIL_STORAGE_KEY);
         } finally {
             setIsLoading(false);
         }
@@ -87,8 +103,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const logout = () => {
         setUser(null);
-        localStorage.removeItem('sneakers_auth_user');
-        localStorage.removeItem('sneakers_remember_email');
+        localStorage.removeItem(AUTH_USER_STORAGE_KEY);
+        localStorage.removeItem(AUTH_TOKEN_STORAGE_KEY);
+        localStorage.removeItem(REMEMBER_EMAIL_STORAGE_KEY);
     };
 
     const value: AuthContextType = {
